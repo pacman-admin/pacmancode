@@ -193,15 +193,15 @@ public class pac_man extends PApplet {
         //chUpdateVersion(true);
         changeAppIcon();
         //println(System.getProperty("os.name"));
-        if (askUpdate) {
+        //if (askUpdate) {
             //String temp = loadString("https://raw.githubusercontent.com/pacman-admin/pacmancode/main/myversion.txt");
             //newVersion = parseFloat(temp);
             //println("Newest version", newVersion, "current version", version);
-        } else {
+        //} else {
             fill(255);
             background(0);
             text("Loading...\nBy Langdon Staab", round(width/2.0f), round(height/2.0f));
-        }
+        //}
         if (newVersion > updateVersion && askUpdate) {
             updating = true;
             askUpdate();
