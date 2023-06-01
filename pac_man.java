@@ -11,24 +11,25 @@ public class pac_man extends PApplet {
     // By Langdon S.
     //current version:
     final float version = 10.2f;
-    //______________________________________
-//      G A M E  S E T T I N G S        |
-//                                      |
-    boolean startsWMouth = false; //        |
-    int lives = 3; //                       |
-    int chompSpeed = 8; //                 |
-    boolean eyesMove = true; //             |
-    boolean showGhostWhenStopped = true; // |
-    boolean useOpenGL = false;//            |
-    boolean other = false; //               |
-    float ghostSpeed = 2; //                |
-    float pacmanSpeed = 3; //               |
-    boolean turnAround = true; //           |
-    boolean playStartSound = true; //       |
-    boolean playPauseBeat = true; //        |
-//______________________________________|
+//      
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+//            G A M E  S E T T I N G S            |
+    final boolean startsWMouth = false; //        |
+    int lives = 3; //                             |
+    int chompSpeed = 8; //                        |
+    final boolean eyesMove = true; //             |
+    final boolean showGhostWhenStopped = true;//  |
+    final boolean useOpenGL = false;//            |
+    final boolean other = false; //               |
+    final float ghostSpeed = 2; //                |
+    final float pacmanSpeed = 3; //               |
+    final boolean turnAround = true; //           |
+    boolean playStartSound = true; //             |
+    boolean playPauseBeat = true; //              |
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 
     final static String TITLE = "Pac-Man ";
+    float cellWidth = 32;
 
     //booleans
     boolean runSetup = true,
@@ -41,16 +42,16 @@ public class pac_man extends PApplet {
             keyToggle = false,
             lostLife = false,
             startVal = true,
-            startsuccess = false,
+            startSuccess = false,
             start = true,
             updating = false;
             //askUpdate = true;
 
 
     //ints
-    int pelletWorth = 10, cellWidth = 32, startMillis,
-            chomp = 30, canvasWidth = cellWidth * 13, canvasHeight = cellWidth * 13,
-            level = 0, gsize = 2, lastScore = 0,
+    int pelletWorth = 10,  startMillis,
+            chomp = 30, canvasWidth = parseInt(cellWidth * 13f), canvasHeight = parseInt(cellWidth * 13f),
+            level = 0, gSize = 2, lastScore = 0,
             pelletsEaten = 0, time = 0, pelletErrors = 0, cellCount = 0,
             highScore = 0, fruitWorth = 100, flashCount = 0, score = 0,
             livesClaimed = 0, duration = 0,
@@ -89,6 +90,7 @@ public class pac_man extends PApplet {
 
     //float newVersion = 10.0f;
     float tempFPSVal = 0;
+    
     //float updateVersion = version;
 
     PImage cherry, strawberry, apple, orange, melon, galaxian, bell, keyI, restartB, noPauseBeatB;
@@ -119,20 +121,6 @@ public class pac_man extends PApplet {
     Pixel[][] ghostBottom2Px = {
             new Pixel[16], new Pixel[16]
     };
-    enum Dir {
-        UP,
-        DOWN,
-        RIGHT,
-        LEFT,
-        STOPPED
-    }
-    Dir up = Dir.UP;
-    Dir down = Dir.DOWN;
-    Dir right = Dir.RIGHT;
-    Dir left = Dir.LEFT;
-    Dir STOPPED = Dir.STOPPED;
-
-
     byte[][] gDesign = {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0},
@@ -151,7 +139,6 @@ public class pac_man extends PApplet {
             {0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     };
-
     int[][] altGhostBottom = {
             {0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0},
             {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0}
@@ -287,7 +274,7 @@ public class pac_man extends PApplet {
         } else {
             if (frameCount % 2 == 0 && !paused) {
                 if (millis() < duration) {
-                    startsuccess = false;
+                    startSuccess = false;
                     pacman.stop();
                     pacman.stopped = true;
                     finishedDelay = false;
@@ -302,14 +289,14 @@ public class pac_man extends PApplet {
                     ghost2.up();
                     ghost3.up();
                     finishedDelay = true;
-                    startsuccess = true;
-                } else if (!startsuccess) {
+                    startSuccess = true;
+                } else if (!startSuccess) {
                     start = true;
                     ghost1.up();
                     ghost2.up();
                     ghost3.up();
                     finishedDelay = true;
-                    startsuccess = true;
+                    startSuccess = true;
                 }
 
                 destroyUselessMessages();
@@ -341,9 +328,9 @@ public class pac_man extends PApplet {
                     if (dieS.isPlaying()) {
                         chomp += 2;
                     } else {
-                        ghost1.newgame();
-                        ghost2.newgame();
-                        ghost3.newgame();
+                        ghost1.newGame();
+                        ghost2.newGame();
+                        ghost3.newGame();
                         pacman.x = cellWidth * 1.5f;
                         pacman.y = cellWidth * 1.5f;
                         first1 = true;
@@ -512,9 +499,9 @@ public class pac_man extends PApplet {
     }
 
     public int createPosition(boolean dirIsX) {
-        int newPos = round(random(cellWidth, canvasHeight - cellWidth * 2) / cellWidth) * cellWidth + cellWidth/2;
+        int newPos = parseInt(round(random(cellWidth, canvasHeight - cellWidth * 2) / cellWidth) * cellWidth + cellWidth/2);
         while (dirIsX && newPos <= cellWidth * 2.5) {
-            newPos = round(random(cellWidth, canvasHeight - cellWidth * 2) / cellWidth) * cellWidth + cellWidth/2;
+            newPos = parseInt(round(random(cellWidth, canvasHeight - cellWidth * 2) / cellWidth) * cellWidth + cellWidth/2);
         }
         return newPos;
     }
@@ -541,7 +528,7 @@ class Ghost {
     Ghost() {
         x = createPosition(true);
         y = createPosition(false);
-        size = cellWidth;
+        size = parseInt(cellWidth);
         stopped = true;
         dir = "up";
     }
@@ -590,35 +577,14 @@ class Ghost {
     public void up() {
         dir = "up";
     }
-    public void down() {
-        dir = "down";
-    }
     public void right() {
         dir = "right";
     }
-    public void left() {
-        dir = "left";
-    }
-    public void halt() {
-        stopped = true;
-        dir = "stopped";
-    }
-    public void newgame() {
-        x = createPosition(true);
-        y = createPosition(false);
-    }
-    /*public void move(String dir){
-        switch (dir) {
-            case "up" -> dir = "up";
-            case "down" -> dir = "down";
-            case "right" -> dir = "right";
-            case "left" -> dir = "left";
-            case "stopped" -> this.halt();
-        }
-    }*/
+    public void halt() {stopped = true;dir = "stopped";}
+    public void newGame() {x = createPosition(true);y = createPosition(false);}
     public void goodPosition(int coordsX, int coordsY) {
         if (!cells[coordsX][coordsY].open) {
-            newgame();
+            newGame();
             messages = splice(messages, "Adjustment in Progress...", 0);
         }
         if (coordsX == 1) {
@@ -626,7 +592,7 @@ class Ghost {
         }
         if (x > canvasWidth - cellWidth || x < cellWidth || y > canvasHeight - cellWidth || y < cellWidth) {
             messages = splice(messages, "Adjustment in Progress...", 0);
-            newgame();
+            newGame();
         }
     }
 }
@@ -665,12 +631,12 @@ class Ghost {
     public void pxInit() {
         for (int i = 0; i < ghostPx.length; i++) {
             for (int j = 0; j < ghostPx.length; j++) {
-                ghostPx[i][j] = new Pixel(gDesign[i][j], gsize, j * gsize, i * gsize);
+                ghostPx[i][j] = new Pixel(gDesign[i][j], gSize, j * gSize, i * gSize);
             }
         }
         for (int i = 0; i < altGhostBottom.length; i++) {
             for (int j = 0; j < altGhostBottom[0].length; j++) {
-                ghostBottom2Px[i][j] = new Pixel(altGhostBottom[i][j], gsize, j * gsize, (i + 13) * gsize);
+                ghostBottom2Px[i][j] = new Pixel(altGhostBottom[i][j], gSize, j * gSize, (i + 13) * gSize);
             }
         }
     }
@@ -725,7 +691,7 @@ class Ghost {
     public void createMaze() {
         for (int i = 0; i < cellMap[1].length + 1; i++) {
             for (int j = 0; j < cellMap[1].length + 1; j++) {
-                cells[i][j] = new Cell(i * cellWidth, j * cellWidth);
+                cells[i][j] = new Cell(parseInt(i * cellWidth), parseInt(j * cellWidth));
             }
         }
     }
@@ -746,7 +712,7 @@ class Ghost {
                     //noinspection StatementWithEmptyBody
                     if (col==1 && row==1) {
                     }else{
-                        pellet = (Pellet[]) append(pellet, new Pellet(col*cellWidth + cellWidth/2, row*cellWidth + cellWidth/2));
+                        pellet = (Pellet[]) append(pellet, new Pellet(parseInt(col*cellWidth + cellWidth/2), parseInt(row*cellWidth + cellWidth/2)));
                         coords2 = (Coordinate[]) append(coords2, new Coordinate());
                         cellCount++;
                     }
@@ -817,7 +783,7 @@ class Ghost {
         score = 0;
         determineFruitType();
         startVal = true;
-        startsuccess = false;
+        startSuccess = false;
         for (Pellet value : pellet) {
             value.update();
         }
@@ -826,16 +792,16 @@ class Ghost {
     }
 
     public void restartButton() {
-        int x = cellWidth * 4,
-                y = cellWidth * 12;
+        int x = parseInt(cellWidth * 4),
+                y = parseInt(cellWidth * 12);
         if (hitBoxCollision(x, y, mouseX, mouseY)) {
             restart();
         }
     }
 
     public void pauseButton(boolean drawButton) {
-        int x = cellWidth * 5,
-                y = cellWidth * 12;
+        int x = parseInt(cellWidth * 5),
+                y = parseInt(cellWidth * 12);
         if (drawButton) {
             rect(x, y, cellWidth, cellWidth);
         }
@@ -856,8 +822,8 @@ class Ghost {
     }
 
     public void pauseBeatOffButton() {
-        int x = cellWidth * 3,
-                y = cellWidth * 12;
+        int x = parseInt(cellWidth * 3),
+                y = parseInt(cellWidth * 12);
         if (hitBoxCollision(x, y, mouseX, mouseY)) {
             playPauseBeat = !playPauseBeat;
             messages = splice(messages, "You have turned pause_beat " + (playPauseBeat ? "on" : "off"), 0);
@@ -990,7 +956,7 @@ class Ghost {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Pacman~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     class Pacman {
         boolean stopped = true;
-        int size = cellWidth - 1;
+        int size = parseInt(cellWidth - 1);
         float x = cellWidth / 2.0f + cellWidth,
                 speed = pacmanSpeed*((cellWidth+32)/2)/32f,
                 y = cellWidth / 2.0f + cellWidth;
@@ -1020,21 +986,21 @@ class Ghost {
             }
             mouthOpenTop = map(mouthSize, 0, 60, 0, 0.52f);
             mouthOpenBottom = map(mouthSize, 0, 60, TWO_PI, 5.76f);
-            arc(0, 0, (cellWidth*15)/16, (cellWidth*15)/16, mouthOpenTop, mouthOpenBottom);
+            arc(0, 0, (cellWidth*15)/16f, (cellWidth*15)/16f, mouthOpenTop, mouthOpenBottom);
             resetMatrix();
         }
         public void update() {
-            float offsetx = 0.2f,
-                    offsety = 0.1f,
+            float offsetX = 0.2f,
+                    offsetY = 0.1f,
                     a = 3, b = 1;
             switch (dir) {
-                case "up" -> offsety += cellWidth / a + b;
-                case "down" -> offsety -= cellWidth / a + b;
-                case "right" -> offsetx -= cellWidth / a + b;
-                case "left" -> offsetx += cellWidth / a + b;
+                case "up" -> offsetY += cellWidth / a + b;
+                case "down" -> offsetY -= cellWidth / a + b;
+                case "right" -> offsetX -= cellWidth / a + b;
+                case "left" -> offsetX += cellWidth / a + b;
             }
-            coordsX = round((x + offsetx) / cellWidth + 0.5f) - 1;
-            coordsY = round((y + offsety) / cellWidth + 0.5f) - 1;
+            coordsX = round((x + offsetX) / cellWidth + 0.5f) - 1;
+            coordsY = round((y + offsetY) / cellWidth + 0.5f) - 1;
             if (pelletsEaten >= pellet.length - 1) {
                 for (Pellet value : pellet) {
                     value.update();
@@ -1176,8 +1142,8 @@ class Ghost {
                 x = 0;
                 y = cellWidth + size/2.0f;
             }
-            coordsX = round((x + offsetx) / cellWidth + 0.5f) - 1;
-            coordsY = round((y + offsety) / cellWidth + 0.5f) - 1;
+            coordsX = round((x + offsetX) / cellWidth + 0.5f) - 1;
+            coordsY = round((y + offsetY) / cellWidth + 0.5f) - 1;
         }
         public void up() {
             coordsX = round((x) / cellWidth + 0.5f) - 1;
@@ -1290,8 +1256,7 @@ class Ghost {
         public void colourInit() {
             switch (colourCode) {
                 case 0 -> colour = color(255, 0);
-                case 2 -> colour = color(255);
-                case 3 -> colour = color(255);
+                case 2, 3 -> colour = color(255);
                 default -> colour = color(255, 0, 0);
             }
         }
@@ -1313,16 +1278,16 @@ class Ghost {
 
     public Coordinate getGhostCoords(Ghost curGhost) {
         float a = 3, b = 1;
-        float offsety = 0, offsetx = 0;
+        float offsetY = 0, offsetX = 0;
         Coordinate curGhostCoords = new Coordinate();
         switch (curGhost.dir) {
-            case "up" -> offsety += cellWidth / a + b;
-            case "down" -> offsety -= cellWidth / a + b;
-            case "right" -> offsetx -= cellWidth / a + b;
-            case "left" -> offsetx += cellWidth / a + b;
+            case "up" -> offsetY += cellWidth / a + b;
+            case "down" -> offsetY -= cellWidth / a + b;
+            case "right" -> offsetX -= cellWidth / a + b;
+            case "left" -> offsetX += cellWidth / a + b;
         }
-        curGhostCoords.x = PApplet.parseInt(round((curGhost.x + offsetx) / cellWidth + 0.5f) - 1);
-        curGhostCoords.y = PApplet.parseInt(round((curGhost.y + offsety) / cellWidth + 0.5f) - 1);
+        curGhostCoords.x = PApplet.parseInt(round((curGhost.x + offsetX) / cellWidth + 0.5f) - 1);
+        curGhostCoords.y = PApplet.parseInt(round((curGhost.y + offsetY) / cellWidth + 0.5f) - 1);
         return curGhostCoords;
     }
     public void drawGhostEyes(Ghost cGhost) {
