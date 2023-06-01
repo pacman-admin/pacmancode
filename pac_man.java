@@ -126,10 +126,10 @@ public class pac_man extends PApplet {
         LEFT,
         STOPPED
     }
-    Dir UP = Dir.UP;
-    Dir DOWN = Dir.DOWN;
-    Dir RIGHT = Dir.RIGHT;
-    Dir LEFT = Dir.LEFT;
+    Dir up = Dir.UP;
+    Dir down = Dir.DOWN;
+    Dir right = Dir.RIGHT;
+    Dir left = Dir.LEFT;
     Dir STOPPED = Dir.STOPPED;
 
 
