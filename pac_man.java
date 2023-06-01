@@ -119,6 +119,18 @@ public class pac_man extends PApplet {
     Pixel[][] ghostBottom2Px = {
             new Pixel[16], new Pixel[16]
     };
+    enum Dir {
+        UP,
+        DOWN,
+        RIGHT,
+        LEFT,
+        STOPPED
+    }
+    Dir UP = Dir.UP;
+    Dir DOWN = Dir.DOWN;
+    Dir RIGHT = Dir.RIGHT;
+    Dir LEFT = Dir.LEFT;
+    Dir STOPPED = Dir.STOPPED;
 
 
     byte[][] gDesign = {
