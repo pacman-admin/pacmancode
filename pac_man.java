@@ -148,19 +148,19 @@ public class pac_man extends PApplet {
             {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0}
     };
     // Map layout
-    boolean f = false, t = true;
+    boolean c = false, o = true;
     boolean[][] cellMap = {
-            {f, t, f, t, t, t, t, t, t, t, t, t},
-            {f, t, t, t, f, f, f, f, f, f, f, t},
-            {f, t, f, t, t, t, t, t, t, t, f, t},
-            {f, t, f, t, f, f, f, f, f, t, f, t},
-            {f, t, t, t, t, t, t, t, t, t, t, t},
-            {f, t, f, t, f, t, f, f, t, f, t, t},
-            {f, t, f, t, f, t, f, t, t, f, t, t},
-            {f, t, f, t, t, t, t, f, t, f, f, t},
-            {f, t, f, f, f, t, f, f, t, f, t, t},
-            {f, t, t, t, t, t, t, f, t, f, t, t},
-            {f, t, t, f, f, f, t, t, t, f, t, t}
+            {c, o, c, o, o, o, o, o, o, o, o, o},
+            {c, o, o, o, c, c, c, c, c, c, c, o},
+            {c, o, c, o, o, o, o, o, o, o, c, o},
+            {c, o, c, o, c, c, c, c, c, o, c, o},
+            {c, o, o, o, o, o, o, o, o, o, o, o},
+            {c, o, c, o, c, o, c, c, o, c, o, o},
+            {c, o, c, o, c, o, c, o, o, c, o, o},
+            {c, o, c, o, o, o, o, c, o, c, c, o},
+            {c, o, c, c, c, o, c, c, o, c, o, o},
+            {c, o, o, o, o, o, o, c, o, c, o, o},
+            {c, o, o, c, c, c, o, o, o, c, o, o}
     };
 
 
