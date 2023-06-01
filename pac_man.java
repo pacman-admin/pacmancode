@@ -39,9 +39,6 @@ public class pac_man extends PApplet {
             finishedDelay = false,
             pelletFirst = true,
             keyToggle = false,
-            goodGhost1Dir = true,
-            goodGhost2Dir = true,
-            goodGhost3Dir = true,
             lostLife = false,
             startVal = true,
             startsuccess = false,
@@ -148,7 +145,7 @@ public class pac_man extends PApplet {
             {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0}
     };
     // Map layout
-    boolean c = false, o = true;
+    final static boolean c = false, o = true;
     boolean[][] cellMap = {
             {c, o, c, o, o, o, o, o, o, o, o, o},
             {c, o, o, o, c, c, c, c, c, c, c, o},
@@ -598,7 +595,7 @@ class Ghost {
         x = createPosition(true);
         y = createPosition(false);
     }
-    public void move(String dir){
+    /*public void move(String dir){
         switch (dir) {
             case "up" -> dir = "up";
             case "down" -> dir = "down";
@@ -606,7 +603,7 @@ class Ghost {
             case "left" -> dir = "left";
             case "stopped" -> this.halt();
         }
-    }
+    }*/
     public void goodPosition(int coordsX, int coordsY) {
         if (!cells[coordsX][coordsY].open) {
             newgame();
@@ -734,6 +731,7 @@ class Ghost {
             for(int col = 0; col < cellMap[row-1].length; col++ ){
                 cells[col][row].open = cellMap[row-1][col];
                 if(cellMap[row-1][col]){
+                    //noinspection StatementWithEmptyBody
                     if (col==1 && row==1) {
                     }else{
                         pellet = (Pellet[]) append(pellet, new Pellet(col*cellWidth + cellWidth/2, row*cellWidth + cellWidth/2));
