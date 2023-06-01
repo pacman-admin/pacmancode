@@ -7,6 +7,6 @@ Thanks to freepacman.org, Hatch Coding, convertico.com, and The Processing Found
 
 Copyright:
 fruit sprites and sounds are taken from freepacman.org
-Source code produced by Langdon Staab 2019 - 2022 with help from Peter Petrone
+Source code produced by Langdon Staab 2019 - 2023 with help from Peter Petrone
 
-Source code was adapted from the Processing.JS code located at https://stampgame.ml/pacman
+www.getpacman.gq
