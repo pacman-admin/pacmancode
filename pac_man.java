@@ -10,7 +10,7 @@ import processing.sound.SoundFile;
 public class pac_man extends PApplet {
     // By Langdon S.
     //current version:
-    final float version = 10.22f;
+    final float version = 10.23f;
 //      
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 //            G A M E  S E T T I N G S            |
