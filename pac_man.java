@@ -10,7 +10,7 @@ import processing.sound.SoundFile;
 public class pac_man extends PApplet {
     // By Langdon S.
     //current version:
-    final float version = 10.21f;
+    final float version = 10.22f;
 //      
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 //            G A M E  S E T T I N G S            |
@@ -29,33 +29,36 @@ public class pac_man extends PApplet {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 
     final static String TITLE = "Pac-Man ";
-    float cellWidth = 32;
+    final float cellWidth = 32;
 
     //booleans
-    boolean runSetup = true,
+    boolean doneFlash = true,
+            finishedDelay = false,
             first = false,
             first1 = true,
-            doneFlash = true,
-            paused = false,
-            finishedDelay = false,
-            pelletFirst = true,
             keyToggle = false,
             lostLife = false,
-            startVal = true,
-            startSuccess = false,
+            paused = false,
+            pelletFirst = true,
+            runSetup = true,
             start = true,
-            updating = false;
+            startSuccess = false,
+            startVal = true;
+    final boolean updating = false;
             //askUpdate = true;
 
 
     //ints
-    int pelletWorth = 10,  startMillis,
-            chomp = 30, canvasWidth = parseInt(cellWidth * 13f), canvasHeight = parseInt(cellWidth * 13f),
-            level = 0, gSize = 2, lastScore = 0,
-            pelletsEaten = 0, time = 0, pelletErrors = 0, cellCount = 0,
-            highScore = 0, fruitWorth = 100, flashCount = 0, score = 0,
-            livesClaimed = 0, duration = 0,
-            frameCount1 = 0, startFrames = 1, durationStart = millis();
+    int startMillis,
+            chomp = 30, cellCount = 0, duration = 0, flashCount = 0,
+            durationStart = millis(), frameCount1 = 0,
+            fruitWorth = 100, highScore = 0, lastScore = 0, level = 0, livesClaimed = 0, pelletErrors = 0, pelletsEaten = 0,
+            score = 0, time = 0,
+            startFrames = 1;
+    final int pelletWorth = 10,
+            canvasWidth = parseInt(cellWidth * 13f),
+            canvasHeight = parseInt(cellWidth * 13f),
+            gSize = 2;
 
 
     int coordsX = 0, coordsY = 0,
@@ -71,7 +74,7 @@ public class pac_man extends PApplet {
     //String OS = "unknown";
 
     String[] messages = {};
-    String[] fruitPoints = {
+    final String[] fruitPoints = {
             "cherry",
             "strawberry",
             "orange",
@@ -99,29 +102,29 @@ public class pac_man extends PApplet {
             dotSound1, dotSound2, fruit,
             extra_life, pause, pause_beat;
 
-    Ghost ghost1 = new Ghost();
-    Ghost ghost2 = new Ghost();
-    Ghost ghost3 = new Ghost();
+    final Ghost ghost1 = new Ghost();
+    final Ghost ghost2 = new Ghost();
+    final Ghost ghost3 = new Ghost();
 
-    Pacman pacman = new Pacman();
+    final Pacman pacman = new Pacman();
 
     Pellet[] pellet = {};
     Coordinate[] coords2 = {};
 
-    Cell[][] cells = {new Cell[13], new Cell[13], new Cell[13],
+    final Cell[][] cells = {new Cell[13], new Cell[13], new Cell[13],
             new Cell[13], new Cell[13], new Cell[13], new Cell[13],
             new Cell[13], new Cell[13], new Cell[13], new Cell[13],
             new Cell[13], new Cell[13]};
 
-    Pixel[][] ghostPx = {new Pixel[16], new Pixel[16], new Pixel[16],
+    final Pixel[][] ghostPx = {new Pixel[16], new Pixel[16], new Pixel[16],
             new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16],
             new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16],
             new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16],
             new Pixel[16]};
-    Pixel[][] ghostBottom2Px = {
+    final Pixel[][] ghostBottom2Px = {
             new Pixel[16], new Pixel[16]
     };
-    byte[][] gDesign = {
+    final byte[][] gDesign = {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0},
@@ -139,13 +142,13 @@ public class pac_man extends PApplet {
             {0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     };
-    int[][] altGhostBottom = {
+    final int[][] altGhostBottom = {
             {0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0},
             {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0}
     };
     // Map layout
     final static boolean c = false, o = true;
-    boolean[][] cellMap = {
+    final boolean[][] cellMap = {
             {c, o, c, o, o, o, o, o, o, o, o, o},
             {c, o, o, o, c, c, c, c, c, c, c, o},
             {c, o, c, o, o, o, o, o, o, o, c, o},
