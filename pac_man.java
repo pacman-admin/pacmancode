@@ -11,7 +11,7 @@ public class pac_man extends PApplet {
     // By Langdon S.
     //current version:
     final float version = 10.22f;
-//      
+    //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 //            G A M E  S E T T I N G S            |
     final boolean startsWMouth = false; //        |
@@ -32,39 +32,17 @@ public class pac_man extends PApplet {
     final float cellWidth = 32;
 
     //booleans
-    boolean doneFlash = true,
-            finishedDelay = false,
-            first = false,
-            first1 = true,
-            keyToggle = false,
-            lostLife = false,
-            paused = false,
-            pelletFirst = true,
-            runSetup = true,
-            start = true,
-            startSuccess = false,
-            startVal = true;
+    boolean doneFlash = true, finishedDelay = false, first = false, first1 = true, keyToggle = false, lostLife = false, paused = false, pelletFirst = true, runSetup = true, start = true, startSuccess = false, startVal = true;
     final boolean updating = false;
-            //askUpdate = true;
+    //askUpdate = true;
 
 
     //ints
-    int startMillis,
-            chomp = 30, cellCount = 0, duration = 0, flashCount = 0,
-            durationStart = millis(), frameCount1 = 0,
-            fruitWorth = 100, highScore = 0, lastScore = 0, level = 0, livesClaimed = 0, pelletErrors = 0, pelletsEaten = 0,
-            score = 0, time = 0,
-            startFrames = 1;
-    final int pelletWorth = 10,
-            canvasWidth = parseInt(cellWidth * 13f),
-            canvasHeight = parseInt(cellWidth * 13f),
-            gSize = 2;
+    int startMillis, chomp = 30, cellCount = 0, duration = 0, flashCount = 0, durationStart = millis(), frameCount1 = 0, fruitWorth = 100, highScore = 0, lastScore = 0, level = 0, livesClaimed = 0, pelletErrors = 0, pelletsEaten = 0, score = 0, time = 0, startFrames = 1;
+    final int pelletWorth = 10, canvasWidth = parseInt(cellWidth * 13f), canvasHeight = parseInt(cellWidth * 13f), gSize = 2;
 
 
-    int coordsX = 0, coordsY = 0,
-            coords3X = 0, coords3Y = 0,
-            coords4X = 0, coords4Y = 0,
-            coords5X = 0, coords5Y = 0;
+    int coordsX = 0, coordsY = 0, coords3X = 0, coords3Y = 0, coords4X = 0, coords4Y = 0, coords5X = 0, coords5Y = 0;
 
     int prevHighScore = 0;
 
@@ -74,33 +52,16 @@ public class pac_man extends PApplet {
     //String OS = "unknown";
 
     String[] messages = {};
-    final String[] fruitPoints = {
-            "cherry",
-            "strawberry",
-            "orange",
-            "orange",
-            "apple",
-            "apple",
-            "melon",
-            "melon",
-            "galaxian",
-            "galaxian",
-            "bell",
-            "bell",
-            "key",
-            "key"
-    };
+    final String[] fruitPoints = {"cherry", "strawberry", "orange", "orange", "apple", "apple", "melon", "melon", "galaxian", "galaxian", "bell", "bell", "key", "key"};
 
     //float newVersion = 10.0f;
     float tempFPSVal = 0;
-    
+
     //float updateVersion = version;
 
     PImage cherry, strawberry, apple, orange, melon, galaxian, bell, keyI, restartB, noPauseBeatB;
 
-    SoundFile dieS, startSound,
-            dotSound1, dotSound2, fruit,
-            extra_life, pause, pause_beat;
+    SoundFile dieS, startSound, dotSound1, dotSound2, fruit, extra_life, pause, pause_beat;
 
     final Ghost ghost1 = new Ghost();
     final Ghost ghost2 = new Ghost();
@@ -111,58 +72,15 @@ public class pac_man extends PApplet {
     Pellet[] pellet = {};
     Coordinate[] coords2 = {};
 
-    final Cell[][] cells = {new Cell[13], new Cell[13], new Cell[13],
-            new Cell[13], new Cell[13], new Cell[13], new Cell[13],
-            new Cell[13], new Cell[13], new Cell[13], new Cell[13],
-            new Cell[13], new Cell[13]};
+    final Cell[][] cells = {new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13]};
 
-    final Pixel[][] ghostPx = {new Pixel[16], new Pixel[16], new Pixel[16],
-            new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16],
-            new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16],
-            new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16],
-            new Pixel[16]};
-    final Pixel[][] ghostBottom2Px = {
-            new Pixel[16], new Pixel[16]
-    };
-    final byte[][] gDesign = {
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0},
-            {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0},
-            {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-            {0, 0, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 0, 0},
-            {0, 0, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 0, 0},
-            {0, 1, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 1, 0},
-            {0, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0},
-            {0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    };
-    final int[][] altGhostBottom = {
-            {0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0},
-            {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0}
-    };
+    final Pixel[][] ghostPx = {new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16]};
+    final Pixel[][] ghostBottom2Px = {new Pixel[16], new Pixel[16]};
+    final byte[][] gDesign = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0}, {0, 0, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 0, 0}, {0, 0, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 0, 0}, {0, 1, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 1, 0}, {0, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0}, {0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+    final int[][] altGhostBottom = {{0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0}, {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0}};
     // Map layout
     final static boolean c = false, o = true;
-    final boolean[][] cellMap = {
-            {c, o, c, o, o, o, o, o, o, o, o, o},
-            {c, o, o, o, c, c, c, c, c, c, c, o},
-            {c, o, c, o, o, o, o, o, o, o, c, o},
-            {c, o, c, o, c, c, c, c, c, o, c, o},
-            {c, o, o, o, o, o, o, o, o, o, o, o},
-            {c, o, c, o, c, o, c, c, o, c, o, o},
-            {c, o, c, o, c, o, c, o, o, c, o, o},
-            {c, o, c, o, o, o, o, c, o, c, c, o},
-            {c, o, c, c, c, o, c, c, o, c, o, o},
-            {c, o, o, o, o, o, o, c, o, c, o, o},
-            {c, o, o, c, c, c, o, o, o, c, o, o}
-    };
-
-
+    final boolean[][] cellMap = {{c, o, c, o, o, o, o, o, o, o, o, o}, {c, o, o, o, c, c, c, c, c, c, c, o}, {c, o, c, o, o, o, o, o, o, o, c, o}, {c, o, c, o, c, c, c, c, c, o, c, o}, {c, o, o, o, o, o, o, o, o, o, o, o}, {c, o, c, o, c, o, c, c, o, c, o, o}, {c, o, c, o, c, o, c, o, o, c, o, o}, {c, o, c, o, o, o, o, c, o, c, c, o}, {c, o, c, c, c, o, c, c, o, c, o, o}, {c, o, o, o, o, o, o, c, o, c, o, o}, {c, o, o, c, c, c, o, o, o, c, o, o}};
 
 
     public void settings() {
@@ -183,10 +101,11 @@ public class pac_man extends PApplet {
         frameRate(120);
         fill(255);
         background(0);
-        text("Loading...\nBy Langdon Staab", round(width/2.0f), round(height/2.0f));
+        text("Loading...\nBy Langdon Staab", round(width / 2.0f), round(height / 2.0f));
         startMillis = millis();
         //check setup2() for setup
     }
+
     public void setup2() {
         noStroke();
         imageMode(CENTER);
@@ -206,33 +125,33 @@ public class pac_man extends PApplet {
             updating = true;
             askUpdate();
         } else {*/
-            pause_beat = new SoundFile(this, "pause_beat.mp3");
-            dieS = new SoundFile(this, "death.mp3");
-            startSound = new SoundFile(this, "game_start.mp3");
-            dotSound1 = new SoundFile(this, "dot_1.mp3");
-            dotSound2 = new SoundFile(this, "dot_2.mp3");
-            fruit = new SoundFile(this, "fruit.mp3");
-            extra_life = new SoundFile(this, "extra_life.mp3");
-            pause = new SoundFile(this, "pause.mp3");
-            println("Sound load success!");
-            prevHighScore = parseInt(loadString("highscore.txt"));
-            noPauseBeatB = loadImage("pause_beat off.png");
-            cherry = loadImage("cherry.png");
-            strawberry = loadImage("strawberry.png");
-            orange = loadImage("orange.png");
-            apple = loadImage("apple.png");
-            melon = loadImage("melon.png");
-            galaxian = loadImage("galaxian.png");
-            bell = loadImage("bell.png");
-            keyI = loadImage("key.png");
-            restartB = loadImage("restart.png");
-            println("Image load success!");
-            createMaze();
-            initializeMaze();
-            makePelletCoords();
-            pxInit();
-            startMillis = millis();
-            pellet[5].isFruit = true;
+        pause_beat = new SoundFile(this, "pause_beat.mp3");
+        dieS = new SoundFile(this, "death.mp3");
+        startSound = new SoundFile(this, "game_start.mp3");
+        dotSound1 = new SoundFile(this, "dot_1.mp3");
+        dotSound2 = new SoundFile(this, "dot_2.mp3");
+        fruit = new SoundFile(this, "fruit.mp3");
+        extra_life = new SoundFile(this, "extra_life.mp3");
+        pause = new SoundFile(this, "pause.mp3");
+        println("Sound load success!");
+        prevHighScore = parseInt(loadString("highscore.txt"));
+        noPauseBeatB = loadImage("pause_beat off.png");
+        cherry = loadImage("cherry.png");
+        strawberry = loadImage("strawberry.png");
+        orange = loadImage("orange.png");
+        apple = loadImage("apple.png");
+        melon = loadImage("melon.png");
+        galaxian = loadImage("galaxian.png");
+        bell = loadImage("bell.png");
+        keyI = loadImage("key.png");
+        restartB = loadImage("restart.png");
+        println("Image load success!");
+        createMaze();
+        initializeMaze();
+        makePelletCoords();
+        pxInit();
+        startMillis = millis();
+        pellet[5].isFruit = true;
         //}
         surface.setTitle(TITLE + version);
 
@@ -241,7 +160,9 @@ public class pac_man extends PApplet {
 
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ A FEW RANDOM FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~///
-    void askUpdate(){}
+    void askUpdate() {
+    }
+
     public String loadString(String filename) {
         //println("Accessing content of", filename, "...");
         String[] ret;
@@ -387,8 +308,7 @@ public class pac_man extends PApplet {
                     ghost2.halt();
                     ghost3.halt();
                     pacman.stop();
-                    if ((millis() - durationStart < 250) || (millis() - durationStart < 750 && millis() - durationStart > 500) || (millis() - durationStart < 1250 && millis() - durationStart > 1000)
-                            || (millis() - durationStart < 1750 && millis() - durationStart > 1500)) {
+                    if ((millis() - durationStart < 250) || (millis() - durationStart < 750 && millis() - durationStart > 500) || (millis() - durationStart < 1250 && millis() - durationStart > 1000) || (millis() - durationStart < 1750 && millis() - durationStart > 1500)) {
                         showMaze(color(222, 222, 255), true);
                         doneFlash = true;
                     }
@@ -438,13 +358,13 @@ public class pac_man extends PApplet {
 
     public void display() {
         //if(frameCount%8 == 0){
-            //println("Ghost1: "+ghost1.dir+"Ghost2: "+ghost2.dir+"Ghost3: "+ghost3.dir);
+        //println("Ghost1: "+ghost1.dir+"Ghost2: "+ghost2.dir+"Ghost3: "+ghost3.dir);
         //}
         drawButtons();
         fill(255);
         textAlign(CENTER);
         textSize(12);
-        text("HIGH SCORE\n" + highScore, width/2f, 12);
+        text("HIGH SCORE\n" + highScore, width / 2f, 12);
         makeTime();
         tempFPSVal = (time / 1000f) > 0 ? (time / 1000f) : 1;
         text(str(round((frameCount - startFrames) / tempFPSVal)), 330, 10);
@@ -461,8 +381,8 @@ public class pac_man extends PApplet {
             background(0);
             fill(255, 0, 0);
             textAlign(CENTER);
-            text("GAME OVER", canvasWidth/2.0f, canvasHeight/2.0f);
-            text("Click the screen to play again", canvasWidth/2.0f, canvasHeight/2.0f + 40);
+            text("GAME OVER", canvasWidth / 2.0f, canvasHeight / 2.0f);
+            text("Click the screen to play again", canvasWidth / 2.0f, canvasHeight / 2.0f + 40);
             if (mousePressed) {
                 restart();
             }
@@ -502,9 +422,9 @@ public class pac_man extends PApplet {
     }
 
     public int createPosition(boolean dirIsX) {
-        int newPos = parseInt(round(random(cellWidth, canvasHeight - cellWidth * 2) / cellWidth) * cellWidth + cellWidth/2);
+        int newPos = parseInt(round(random(cellWidth, canvasHeight - cellWidth * 2) / cellWidth) * cellWidth + cellWidth / 2);
         while (dirIsX && newPos <= cellWidth * 2.5) {
-            newPos = parseInt(round(random(cellWidth, canvasHeight - cellWidth * 2) / cellWidth) * cellWidth + cellWidth/2);
+            newPos = parseInt(round(random(cellWidth, canvasHeight - cellWidth * 2) / cellWidth) * cellWidth + cellWidth / 2);
         }
         return newPos;
     }
@@ -521,84 +441,95 @@ public class pac_man extends PApplet {
     }
 
 
-//// OBJECTS \\\\
-class Ghost {
-    float x, y;
-    static int size;
-    static boolean stopped;
-    String dir;
+    //// OBJECTS \\\\
+    class Ghost {
+        float x, y;
+        static int size;
+        static boolean stopped;
+        String dir;
 
-    Ghost() {
-        x = createPosition(true);
-        y = createPosition(false);
-        size = parseInt(cellWidth);
-        stopped = true;
-        dir = "up";
-    }
+        Ghost() {
+            x = createPosition(true);
+            y = createPosition(false);
+            size = parseInt(cellWidth);
+            stopped = true;
+            dir = "up";
+        }
 
-    public void update(int coordsX, int coordsY) {
-        switch (dir) {
-            case "up" -> {
-                if (coordsY - 1 >= 0) {
-                    if (cells[coordsX][coordsY - 1].open) {
-                        x = coordsX * cellWidth + (cellWidth / 2.0f);
-                        y -= ghostSpeed;
+        public void update(int coordsX, int coordsY) {
+            switch (dir) {
+                case "up" -> {
+                    if (coordsY - 1 >= 0) {
+                        if (cells[coordsX][coordsY - 1].open) {
+                            x = coordsX * cellWidth + (cellWidth / 2.0f);
+                            y -= ghostSpeed;
+                        }
+                    }
+                }
+                case "down" -> {
+                    if (coordsY + 1 <= height / cellWidth) {
+                        if (cells[coordsX][coordsY + 1].open) {
+                            x = coordsX * cellWidth + (cellWidth / 2.0f);
+                            y += ghostSpeed;
+                        }
+                    }
+                }
+                case "right" -> {
+                    if (coordsX + 1 <= width / cellWidth) {
+                        if (cells[coordsX + 1][coordsY].open) {
+                            y = coordsY * cellWidth + (cellWidth / 2.0f);
+                            x += ghostSpeed;
+                        }
+                    }
+                }
+                case "left" -> {
+                    if (coordsX - 1 >= 0) {
+                        if (cells[coordsX - 1][coordsY].open) {
+                            y = coordsY * cellWidth + (cellWidth / 2.0f);
+                            x -= ghostSpeed;
+                        }
                     }
                 }
             }
-            case "down" -> {
-                if (coordsY + 1 <= height / cellWidth) {
-                    if (cells[coordsX][coordsY + 1].open) {
-                        x = coordsX * cellWidth + (cellWidth / 2.0f);
-                        y += ghostSpeed;
-                    }
-                }
-            }
-            case "right" -> {
-                if (coordsX + 1 <= width / cellWidth) {
-                    if (cells[coordsX + 1][coordsY].open) {
-                        y = coordsY * cellWidth + (cellWidth / 2.0f);
-                        x += ghostSpeed;
-                    }
-                }
-            }
-            case "left" -> {
-                if (coordsX - 1 >= 0) {
-                    if (cells[coordsX - 1][coordsY].open) {
-                        y = coordsY * cellWidth + (cellWidth / 2.0f);
-                        x -= ghostSpeed;
-                    }
+            if (dist(x, y, pacman.x, pacman.y) < cellWidth / 2.0f) {
+                if (x >= cellWidth * 2) {
+                    lostLife = true;
                 }
             }
         }
-        if (dist(x, y, pacman.x, pacman.y) < cellWidth / 2.0f) {
-            if (x >= cellWidth * 2) {
-                lostLife = true;
+
+        public void up() {
+            dir = "up";
+        }
+
+        public void right() {
+            dir = "right";
+        }
+
+        public void halt() {
+            stopped = true;
+            dir = "stopped";
+        }
+
+        public void newGame() {
+            x = createPosition(true);
+            y = createPosition(false);
+        }
+
+        public void goodPosition(int coordsX, int coordsY) {
+            if (!cells[coordsX][coordsY].open) {
+                newGame();
+                messages = splice(messages, "Adjustment in Progress...", 0);
+            }
+            if (coordsX == 1) {
+                right();
+            }
+            if (x > canvasWidth - cellWidth || x < cellWidth || y > canvasHeight - cellWidth || y < cellWidth) {
+                messages = splice(messages, "Adjustment in Progress...", 0);
+                newGame();
             }
         }
     }
-    public void up() {
-        dir = "up";
-    }
-    public void right() {
-        dir = "right";
-    }
-    public void halt() {stopped = true;dir = "stopped";}
-    public void newGame() {x = createPosition(true);y = createPosition(false);}
-    public void goodPosition(int coordsX, int coordsY) {
-        if (!cells[coordsX][coordsY].open) {
-            newGame();
-            messages = splice(messages, "Adjustment in Progress...", 0);
-        }
-        if (coordsX == 1) {
-            right();
-        }
-        if (x > canvasWidth - cellWidth || x < cellWidth || y > canvasHeight - cellWidth || y < cellWidth) {
-            messages = splice(messages, "Adjustment in Progress...", 0);
-            newGame();
-        }
-    }
-}
 
     static class Coordinate {
         int x = 0, y = 0;
@@ -609,10 +540,12 @@ class Ghost {
     class Cell {
         int x, y;
         boolean open;
+
         Cell(int x1, int y1) {
             x = x1;
             y = y1;
         }
+
         public void show(int colour, boolean all) {
             if (all) {
                 if (!open) {
@@ -708,14 +641,14 @@ class Ghost {
             cells[0][i].open = false;
             cells[cells.length - 1][i].open = false;
         }
-        for (int row = 1; row < cellMap.length+1;row++){
-            for(int col = 0; col < cellMap[row-1].length; col++ ){
-                cells[col][row].open = cellMap[row-1][col];
-                if(cellMap[row-1][col]){
+        for (int row = 1; row < cellMap.length + 1; row++) {
+            for (int col = 0; col < cellMap[row - 1].length; col++) {
+                cells[col][row].open = cellMap[row - 1][col];
+                if (cellMap[row - 1][col]) {
                     //noinspection StatementWithEmptyBody
-                    if (col==1 && row==1) {
-                    }else{
-                        pellet = (Pellet[]) append(pellet, new Pellet(parseInt(col*cellWidth + cellWidth/2), parseInt(row*cellWidth + cellWidth/2)));
+                    if (col == 1 && row == 1) {
+                    } else {
+                        pellet = (Pellet[]) append(pellet, new Pellet(parseInt(col * cellWidth + cellWidth / 2), parseInt(row * cellWidth + cellWidth / 2)));
                         coords2 = (Coordinate[]) append(coords2, new Coordinate());
                         cellCount++;
                     }
@@ -795,16 +728,14 @@ class Ghost {
     }
 
     public void restartButton() {
-        int x = parseInt(cellWidth * 4),
-                y = parseInt(cellWidth * 12);
+        int x = parseInt(cellWidth * 4), y = parseInt(cellWidth * 12);
         if (hitBoxCollision(x, y, mouseX, mouseY)) {
             restart();
         }
     }
 
     public void pauseButton(boolean drawButton) {
-        int x = parseInt(cellWidth * 5),
-                y = parseInt(cellWidth * 12);
+        int x = parseInt(cellWidth * 5), y = parseInt(cellWidth * 12);
         if (drawButton) {
             rect(x, y, cellWidth, cellWidth);
         }
@@ -825,8 +756,7 @@ class Ghost {
     }
 
     public void pauseBeatOffButton() {
-        int x = parseInt(cellWidth * 3),
-                y = parseInt(cellWidth * 12);
+        int x = parseInt(cellWidth * 3), y = parseInt(cellWidth * 12);
         if (hitBoxCollision(x, y, mouseX, mouseY)) {
             playPauseBeat = !playPauseBeat;
             messages = splice(messages, "You have turned pause_beat " + (playPauseBeat ? "on" : "off"), 0);
@@ -864,10 +794,12 @@ class Ghost {
         int x, y;
         boolean eaten = false, isFruit = false;
         String fruitType = "cherry";
+
         Pellet(int x1, int y1) {
             x = x1;
             y = y1;
         }
+
         public void update() {
             pelletsEaten = 0;
             eaten = false;
@@ -875,6 +807,7 @@ class Ghost {
                 fruitWorth = 100;
             }
         }
+
         public void isBEaten() {
             giveLives();
             if (!eaten && dist(x, y, pacman.x, pacman.y) < cellWidth / 8f + pacman.size / 8f) {
@@ -905,6 +838,7 @@ class Ghost {
                 eaten = true;
             }
         }
+
         public void draw() {
             if (!eaten) {
                 noStroke();
@@ -926,6 +860,7 @@ class Ghost {
                 }
             }
         }
+
         public void goodPosition(int coordsX1, int coordsY1) {
             boolean a = false;
             if (coordsY1 == 1 && !isFruit) {
@@ -955,18 +890,13 @@ class Ghost {
     }
 
 
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Pacman~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Pacman~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     class Pacman {
         boolean stopped = true;
         int size = parseInt(cellWidth - 1);
-        float x = cellWidth / 2.0f + cellWidth,
-                speed = pacmanSpeed*((cellWidth+32)/2)/32f,
-                y = cellWidth / 2.0f + cellWidth;
+        float x = cellWidth / 2.0f + cellWidth, speed = pacmanSpeed * ((cellWidth + 32) / 2) / 32f, y = cellWidth / 2.0f + cellWidth;
 
-        String nextDir = "stopped",
-                dir = "stopped",
-                lastDir = dir;
+        String nextDir = "stopped", dir = "stopped", lastDir = dir;
 
         public void show(float mouthSize) {
             float mouthOpenTop, mouthOpenBottom;
@@ -989,13 +919,12 @@ class Ghost {
             }
             mouthOpenTop = map(mouthSize, 0, 60, 0, 0.52f);
             mouthOpenBottom = map(mouthSize, 0, 60, TWO_PI, 5.76f);
-            arc(0, 0, (cellWidth*15)/16f, (cellWidth*15)/16f, mouthOpenTop, mouthOpenBottom);
+            arc(0, 0, (cellWidth * 15) / 16f, (cellWidth * 15) / 16f, mouthOpenTop, mouthOpenBottom);
             resetMatrix();
         }
+
         public void update() {
-            float offsetX = 0.2f,
-                    offsetY = 0.1f,
-                    a = 3, b = 1;
+            float offsetX = 0.2f, offsetY = 0.1f, a = 3, b = 1;
             switch (dir) {
                 case "up" -> offsetY += cellWidth / a + b;
                 case "down" -> offsetY -= cellWidth / a + b;
@@ -1143,11 +1072,12 @@ class Ghost {
             fill(255, 0, 0);
             if (x > 400) {
                 x = 0;
-                y = cellWidth + size/2.0f;
+                y = cellWidth + size / 2.0f;
             }
             coordsX = round((x + offsetX) / cellWidth + 0.5f) - 1;
             coordsY = round((y + offsetY) / cellWidth + 0.5f) - 1;
         }
+
         public void up() {
             coordsX = round((x) / cellWidth + 0.5f) - 1;
             coordsY = round((y) / cellWidth + 0.5f) - 1;
@@ -1170,6 +1100,7 @@ class Ghost {
                 }
             }
         }
+
         public void down() {
             coordsX = round((x) / cellWidth + 0.5f) - 1;
             coordsY = round((y) / cellWidth + 0.5f) - 1;
@@ -1192,6 +1123,7 @@ class Ghost {
                 }
             }
         }
+
         public void right() {
             coordsX = round((x) / cellWidth + 0.5f) - 1;
             coordsY = round((y) / cellWidth + 0.5f) - 1;
@@ -1214,6 +1146,7 @@ class Ghost {
                 }
             }
         }
+
         public void left() {
             coordsX = round((x) / cellWidth + 0.5f) - 1;
             coordsY = round((y) / cellWidth + 0.5f) - 1;
@@ -1236,6 +1169,7 @@ class Ghost {
                 }
             }
         }
+
         public void stop() {
             dir = "stopped";
             stopped = false;
@@ -1244,18 +1178,19 @@ class Ghost {
     }
 
 
-
     class Pixel {
         int colourCode;
         static int size;
         float x, y;
         int colour;
+
         Pixel(int colourCode1, int size1, float x1, float y1) {
             colourCode = colourCode1;
             size = size1;
             x = x1;
             y = y1;
         }
+
         public void colourInit() {
             switch (colourCode) {
                 case 0 -> colour = color(255, 0);
@@ -1293,6 +1228,7 @@ class Ghost {
         curGhostCoords.y = PApplet.parseInt(round((curGhost.y + offsetY) / cellWidth + 0.5f) - 1);
         return curGhostCoords;
     }
+
     public void drawGhostEyes(Ghost cGhost) {
         int x = 7;
         int y = 11;
@@ -1310,6 +1246,7 @@ class Ghost {
         rect(x, y, 4, 4);
         rect(x + 12, y, 4, 4);
     }
+
     public void drawGhosts() {
         if (!ghost1.dir.equals("stopped") || showGhostWhenStopped) {
             translate(ghost1.x - 15, ghost1.y - 15);
