@@ -3,6 +3,9 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.sound.SoundFile;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
 // By Langdon S.
 //import http.requests.*;
 
@@ -10,12 +13,12 @@ import processing.sound.SoundFile;
 public class pac_man extends PApplet {
     // By Langdon S.
     //current version:
-    final float version = 10.22f;
+    final float version = 10.23f;
     //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 //            G A M E  S E T T I N G S            |
     final boolean startsWMouth = false; //        |
-    int lives = 3; //                             |
+    int lives = 5; //                             |
     int chompSpeed = 8; //                        |
     final boolean eyesMove = true; //             |
     final boolean showGhostWhenStopped = true;//  |
@@ -185,178 +188,190 @@ public class pac_man extends PApplet {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN PROGRAM ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     public void draw() {
-        if (millis() - startMillis < 1000) {
-            if (runSetup) {
-                setup2();
-                runSetup = false;
-                startFrames = frameCount;
-                durationStart = millis();
-                duration = 4500 + millis();
-            }
-        } else if (updating) {
-            askUpdate();
-        } else {
-            if (frameCount % 2 == 0 && !paused) {
-                if (millis() < duration) {
-                    startSuccess = false;
-                    pacman.stop();
-                    pacman.stopped = true;
-                    finishedDelay = false;
-                    ghost1.halt();
-                    ghost2.halt();
-                    ghost3.halt();
-                    startVal = true;
-                    start = true;
-                } else if (millis() <= duration + 100 && !finishedDelay) {
-                    start = true;
-                    ghost1.up();
-                    ghost2.up();
-                    ghost3.up();
-                    finishedDelay = true;
-                    startSuccess = true;
-                } else if (!startSuccess) {
-                    start = true;
-                    ghost1.up();
-                    ghost2.up();
-                    ghost3.up();
-                    finishedDelay = true;
-                    startSuccess = true;
+        try {
+            if (millis() - startMillis < 1000) {
+                if (runSetup) {
+                    setup2();
+                    runSetup = false;
+                    startFrames = frameCount;
+                    durationStart = millis();
+                    duration = 4500 + millis();
                 }
+            } else if (updating) {
+                askUpdate();
+            } else {
+                if (frameCount % 2 == 0 && !paused) {
+                    if (millis() < duration) {
+                        startSuccess = false;
+                        pacman.stop();
+                        pacman.stopped = true;
+                        finishedDelay = false;
+                        ghost1.halt();
+                        ghost2.halt();
+                        ghost3.halt();
+                        startVal = true;
+                        start = true;
+                    } else if (millis() <= duration + 100 && !finishedDelay) {
+                        start = true;
+                        ghost1.up();
+                        ghost2.up();
+                        ghost3.up();
+                        finishedDelay = true;
+                        startSuccess = true;
+                    } else if (!startSuccess) {
+                        start = true;
+                        ghost1.up();
+                        ghost2.up();
+                        ghost3.up();
+                        finishedDelay = true;
+                        startSuccess = true;
+                    }
 
-                destroyUselessMessages();
-                increaseHighScore();
-                ghostPx[1][1].colourInit();
-                coords3X = getGhostCoords(ghost1).x;
-                coords3Y = getGhostCoords(ghost1).y;
-                coords4X = getGhostCoords(ghost2).x;
-                coords4Y = getGhostCoords(ghost2).y;
-                coords5X = getGhostCoords(ghost3).x;
-                coords5Y = getGhostCoords(ghost3).y;
-                if (lostLife) {
-                    if (chomp < 60) {
-                        chomp++;
-                    }
-                    if (first1) {
-                        frameCount1 = 1;
-                        first1 = false;
-                        delay(100);
+                    destroyUselessMessages();
+                    increaseHighScore();
+                    ghostPx[1][1].colourInit();
+                    coords3X = getGhostCoords(ghost1).x;
+                    coords3Y = getGhostCoords(ghost1).y;
+                    coords4X = getGhostCoords(ghost2).x;
+                    coords4Y = getGhostCoords(ghost2).y;
+                    coords5X = getGhostCoords(ghost3).x;
+                    coords5Y = getGhostCoords(ghost3).y;
+                    if (lostLife) {
                         if (chomp < 60) {
-                            chomp = 60;
+                            chomp++;
                         }
-                        playSound(dieS);
-                    }
-                    pacman.stop();
-                    ghost1.halt();
-                    ghost2.halt();
-                    ghost3.halt();
-                    if (dieS.isPlaying()) {
-                        chomp += 2;
-                    } else {
-                        ghost1.newGame();
-                        ghost2.newGame();
-                        ghost3.newGame();
-                        pacman.x = cellWidth * 1.5f;
-                        pacman.y = cellWidth * 1.5f;
-                        first1 = true;
-                        lostLife = false;
-                        chomp = 16;
-                        duration = 2000 + millis();
-                        ghost1.up();
-                        ghost2.up();
-                        ghost3.up();
+                        if (first1) {
+                            frameCount1 = 1;
+                            first1 = false;
+                            delay(100);
+                            if (chomp < 60) {
+                                chomp = 60;
+                            }
+                            playSound(dieS);
+                        }
                         pacman.stop();
-                        pacman.stopped = true;
-                        lives--;
+                        ghost1.halt();
+                        ghost2.halt();
+                        ghost3.halt();
+                        if (dieS.isPlaying()) {
+                            chomp += 2;
+                        } else {
+                            ghost1.newGame();
+                            ghost2.newGame();
+                            ghost3.newGame();
+                            pacman.x = cellWidth * 1.5f;
+                            pacman.y = cellWidth * 1.5f;
+                            first1 = true;
+                            lostLife = false;
+                            chomp = 16;
+                            duration = 2000 + millis();
+                            ghost1.up();
+                            ghost2.up();
+                            ghost3.up();
+                            pacman.stop();
+                            pacman.stopped = true;
+                            lives--;
+                        }
                     }
-                }
-                if (!pacman.dir.equals("stopped")) {
-                    if (chomp > 60) {
-                        chompSpeed = -chompSpeed;
+                    if (!pacman.dir.equals("stopped")) {
+                        if (chomp > 60) {
+                            chompSpeed = -chompSpeed;
+                        }
+                        if (chomp < 10) {
+                            chompSpeed = -chompSpeed;
+                        }
+                        chomp += chompSpeed;
                     }
-                    if (chomp < 10) {
-                        chompSpeed = -chompSpeed;
-                    }
-                    chomp += chompSpeed;
-                }
-                if (pelletsEaten < pellet.length - 1 && !lostLife) {
-                    pacman.update();
-                }
-                ghost1.update(coords3X, coords3Y);
-                ghost2.update(coords4X, coords4Y);
-                ghost3.update(coords5X, coords5Y);
-                ghost1.goodPosition(coords3X, coords3Y);
-                ghost2.goodPosition(coords4X, coords4Y);
-                ghost3.goodPosition(coords5X, coords5Y);
-                controlGhostMovement(coords3X, coords3Y, coords4X, coords4Y, coords5X, coords5Y);
-                //moveGhosts();
-                for (int b = 0; b < coords2.length; b++) {
-                    pellet[b].goodPosition(coords2[b].x, coords2[b].y);
-                    pellet[b].isBEaten();
-                }
-                background(0);
-                showMaze(color(33, 33, 255), true);
-                if (pelletsEaten >= pellet.length - 1 && !lostLife) {
-                    if (!first) {
-                        first = true;
-                        frameCount1 = 0;
-                        level++;
-                        determineFruitType();
-                        durationStart = millis();
-                        duration = 2000 + millis();
-                    }
-                    ghost1.halt();
-                    ghost2.halt();
-                    ghost3.halt();
-                    pacman.stop();
-                    if ((millis() - durationStart < 250) || (millis() - durationStart < 750 && millis() - durationStart > 500) || (millis() - durationStart < 1250 && millis() - durationStart > 1000) || (millis() - durationStart < 1750 && millis() - durationStart > 1500)) {
-                        showMaze(color(222, 222, 255), true);
-                        doneFlash = true;
-                    }
-                    if (millis() - durationStart >= 2000) {
-                        determineFruitType();
+                    if (pelletsEaten < pellet.length - 1 && !lostLife) {
                         pacman.update();
-                        ghost1.up();
-                        ghost2.up();
-                        ghost3.up();
-                        pacman.stopped = true;
+                    }
+                    ghost1.update(coords3X, coords3Y);
+                    ghost2.update(coords4X, coords4Y);
+                    ghost3.update(coords5X, coords5Y);
+                    ghost1.goodPosition(coords3X, coords3Y);
+                    ghost2.goodPosition(coords4X, coords4Y);
+                    ghost3.goodPosition(coords5X, coords5Y);
+                    controlGhostMovement(coords3X, coords3Y, coords4X, coords4Y, coords5X, coords5Y);
+                    //moveGhosts();
+                    for (int b = 0; b < coords2.length; b++) {
+                        pellet[b].goodPosition(coords2[b].x, coords2[b].y);
+                        pellet[b].isBEaten();
+                    }
+
+                    if (pelletsEaten >= pellet.length - 1 && !lostLife) {
+                        if (!first) {
+                            first = true;
+                            frameCount1 = 0;
+                            level++;
+                            determineFruitType();
+                            durationStart = millis();
+                            duration = 2000 + millis();
+                        }
+                        ghost1.halt();
+                        ghost2.halt();
+                        ghost3.halt();
                         pacman.stop();
-                        makePelletCoords();
-                        pelletErrors = 0;
-                        flashCount = 0;
-                        playStartSound = false;
+                        if ((millis() - durationStart < 250) || (millis() - durationStart < 750 && millis() - durationStart > 500) || (millis() - durationStart < 1250 && millis() - durationStart > 1000) || (millis() - durationStart < 1750 && millis() - durationStart > 1500)) {
+                            showMaze(color(222, 222, 255), true);
+                            doneFlash = true;
+                        }
+                        if (millis() - durationStart >= 2000) {
+                            determineFruitType();
+                            pacman.update();
+                            ghost1.up();
+                            ghost2.up();
+                            ghost3.up();
+                            pacman.stopped = true;
+                            pacman.stop();
+                            makePelletCoords();
+                            pelletErrors = 0;
+                            flashCount = 0;
+                            playStartSound = false;
+                        }
+                    }
+                    if (lastScore != score) {
+                        messages = splice(messages, "Your score is:" + str(score), 0);
+                    }
+                    display();
+                    start = false;
+                    lastScore = score;
+                    //int useless = 5/0;
+                }
+                if (keyPressed) {
+                    keyToggle = true;
+                    switch (keyCode) {
+                        case UP -> pacman.up();
+                        case DOWN -> pacman.down();
+                        case RIGHT -> pacman.right();
+                        case LEFT -> pacman.left();
                     }
                 }
-                if (lastScore != score) {
-                    messages = splice(messages, "Your score is:" + str(score), 0);
-                }
-                display();
-                start = false;
-                lastScore = score;
-            }
-            if (keyPressed) {
-                keyToggle = true;
-                switch (keyCode) {
-                    case UP -> pacman.up();
-                    case DOWN -> pacman.down();
-                    case RIGHT -> pacman.right();
-                    case LEFT -> pacman.left();
+                if (keyToggle) {
+                    switch (keyCode) {
+                        case 87 -> pacman.up();
+                        case 83 -> pacman.down();
+                        case 68 -> pacman.right();
+                        case 65 -> pacman.left();
+                    }
+                    if (keyCode != 0) {
+                        keyToggle = false;
+                    }
                 }
             }
-            if (keyToggle) {
-                switch (keyCode) {
-                    case 87 -> pacman.up();
-                    case 83 -> pacman.down();
-                    case 68 -> pacman.right();
-                    case 65 -> pacman.left();
-                }
-                if (keyCode != 0) {
-                    keyToggle = false;
-                }
-            }
+        }catch(Exception e){
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            messages = splice(messages, sw.toString(), 0);
+            display();
+            println(e);
+            paused = true;
         }
     }
 
     public void display() {
+        background(0);
+        showMaze(color(33, 33, 255), true);
         //if(frameCount%8 == 0){
         //println("Ghost1: "+ghost1.dir+"Ghost2: "+ghost2.dir+"Ghost3: "+ghost3.dir);
         //}
@@ -404,11 +419,12 @@ public class pac_man extends PApplet {
     public void giveLives() {
         int w;
         if (score >= 1000) {
-            w = round(score / 1000f);
-            for (int i = 0; i < livesOrder.length; i++) {
+            w = floor(score / 1000);
+            for (int i = livesClaimed; i < livesOrder.length; i++) {
                 if (w >= livesOrder[i]) {
                     if (livesClaimed < i + 1) {
                         lives++;
+                        messages = splice(messages, "Claimed life:" + str(livesOrder[i])+"000", 0);
                         livesClaimed++;
                         playSound(extra_life);
                     }
