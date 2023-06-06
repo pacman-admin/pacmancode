@@ -18,7 +18,7 @@ public class pac_man extends PApplet {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 //            G A M E  S E T T I N G S            |
     final boolean startsWMouth = false; //        |
-    int lives = 5; //                             |
+    int lives = 3; //                             |
     int chompSpeed = 8; //                        |
     final boolean eyesMove = true; //             |
     final boolean showGhostWhenStopped = true;//  |
