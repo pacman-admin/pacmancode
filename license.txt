@@ -1,7 +1,0 @@
-Pac-Man is a free program!
-
-You may use it for any purpose and may edit its code, provided you give credit to Langdon Staab.
-
-If you see any bugs or have suggestions, feel free to email me at pacman@getpacman.gq
-
-I hope you like Pac-Man!
