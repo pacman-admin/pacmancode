@@ -29,7 +29,7 @@ public class pac_man extends PApplet {
     final float pacmanSpeed = 3; //               |
     final boolean turnAround = true; //           |
     final float cellWidth = 32;
-    final boolean updating = false;
+    boolean updating = false;
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
     final int pelletWorth = 10, canvasWidth = parseInt(cellWidth * 13f), canvasHeight = parseInt(cellWidth * 13f), gSize = 2;
     final int[] livesOrder = {1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000};
@@ -171,7 +171,94 @@ public class pac_man extends PApplet {
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ A FEW RANDOM FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~///
-    void askUpdate() {
+    public void chUpdateVersion(boolean mine){
+        String[] temp = {str(mine ? version : newVersion)};
+        println(str(mine ? version : newVersion));
+        if(mine){
+
+
+        }else{
+
+
+
+
+        }
+    }
+
+    public void askUpdate(){
+        int[] c;
+        fill(192, 224, 255);
+        strokeWeight(2);
+        background(4, 4, 32);
+        c = drawUpButtons();
+        if(mousePressed) {
+            if (mouseX > c[0] - (c[2] / 2) && mouseX < c[0] + (c[2] / 2)) {
+                println("Baloney!");
+                if (mouseY > c[1] - (c[3] / 2) && mouseY < c[1] + (c[3] / 2)) {
+                    println("Baloney2!");
+                    //update();
+                }
+            }
+            if (mouseX > (width - c[0]) - (c[2] / 2) && mouseX < (width - c[0]) + (c[2] / 2)) {
+                println("Baloney3!");
+                if (mouseY > c[1] - (c[4] / 2) && mouseY < c[1] + (c[4] / 2)) {
+                    fill(255);
+                    background(0);
+                    text("Loading...\nBy Langdon Staab", round(width / 2f), round(height / 2f));
+                    startMillis = millis();
+                    updating = false;
+                    runSetup = true;
+                    startMillis = millis();
+                }
+            }
+        }
+    }
+
+    public void update(){
+        println("Updating...");
+        println("a"+OS+"b");
+        if(OS.equals("Mac")){
+            println("You are using MacOS.");
+            /*
+            //try{
+                byte[] newJAR = loadBytes("https://raw.githubusercontent.com/pacman-admin/pacmancode/main/pac_man.jar");
+                saveBytes("pac_man.app/Contents/Java/new.jar", newJAR);
+                println("Sucessfully saved new version!");
+                launch("update.command");
+                exit();
+           // }catch (Exception e){
+               // text(e.toString(),200,200);
+            //}*/
+        }else if(OS.equals("Windows")){
+            print("You are using Microsoft Windows.");
+            byte[] newJAR = loadBytes("https://raw.githubusercontent.com/pacman-admin/pacmancode/main/pac_man.jar");
+            saveBytes("app/new.jar", newJAR);
+            launch("update.cmd");
+            exit();
+        }else{
+            println("error");
+        }
+    }
+
+
+    public int[] drawUpButtons(){
+        rectMode(CENTER);
+        textAlign(CENTER, CENTER);
+        int a = 100,
+                b = 200,
+                c = 2,
+                bWidth = 180,
+                bHeight1 = 60,
+                bHeight2 = 40;
+
+        int[] coords = {a, a+b, bWidth, bHeight1, bHeight2};
+        fill(255, 64, 64);
+        rect(a, a+b, bWidth, bHeight1, 10);
+        rect(width-a, a+b, bWidth, bHeight2, 10);
+        fill(192, 224, 255);
+        text("Download update\n(recommended)", a, (a+b)-c);
+        text("No, Start Pac-Man", width-a, (a+b)-c);
+        return coords;
     }
 
     public String loadString(String filename) {
@@ -453,6 +540,7 @@ public class pac_man extends PApplet {
     public void playSound(SoundFile sound) {
         sound.play();
     }
+
 
     public int createPosition(boolean dirIsX) {
         int newPos = parseInt(round(random(cellWidth, canvasHeight - cellWidth * 2) / cellWidth) * cellWidth + cellWidth / 2);
