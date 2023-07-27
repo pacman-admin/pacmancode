@@ -35,7 +35,6 @@ public class pac_man extends PApplet {
     final int[] livesOrder = {1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000};
     final String[] fruitPoints = {"cherry", "strawberry", "orange", "orange", "apple", "apple", "melon", "melon", "galaxian", "galaxian", "bell", "bell", "key", "key"};
     final Ghost ghost1 = new Ghost();
-    //askUpdate = true;
     final Ghost ghost2 = new Ghost();
     final Ghost ghost3 = new Ghost();
     final Pacman pacman = new Pacman();
@@ -56,7 +55,7 @@ public class pac_man extends PApplet {
     boolean playStartSound = true; //             |
     boolean playPauseBeat = true; //              |
     //booleans
-    boolean error = false, doneFlash = true, finishedDelay = false, first = false, first1 = true, keyToggle = false, lostLife = false, paused = false, pelletFirst = true, runSetup = true, start = true, startSuccess = false, startVal = true;
+    boolean askToUpdate, error = false, doneFlash = true, finishedDelay = false, first = false, first1 = true, keyToggle = false, lostLife = false, paused = false, pelletFirst = true, runSetup = true, start = true, startSuccess = false, startVal = true;
     //ints
     int startMillis, chomp = 30, cellCount = 0, duration = 0, flashCount = 0, durationStart = millis(), frameCount1 = 0, fruitWorth = 100, highScore = 0, lastScore = 0, level = 0, livesClaimed = 0, pelletErrors = 0, pelletsEaten = 0, score = 0, time = 0, startFrames = 1;
     int coordsX = 0, coordsY = 0, coords3X = 0, coords3Y = 0, coords4X = 0, coords4Y = 0, coords5X = 0, coords5Y = 0;
@@ -64,7 +63,7 @@ public class pac_man extends PApplet {
     String[] messages = {};
     String errorInfo = "Nothin'";
     //float newVersion = 10.0f;
-    float tempFPSVal = 0;
+    float tempFPSVal = 0, newVersion, updateVersion;
     PImage cherry, strawberry, apple, orange, melon, galaxian, bell, keyI, restartB, noPauseBeatB;
     SoundFile dieS, startSound, dotSound1, dotSound2, fruit, extra_life, pause, pause_beat;
     Pellet[] pellet = {};
@@ -112,7 +111,7 @@ public class pac_man extends PApplet {
         OS = System.getProperty("os.name");
         println(OS);
 
-        /*if (askUpdate) {
+        if (askToUpdate) {
             String temp = loadString("https://raw.githubusercontent.com/pacman-admin/pacmancode/main/myversion.txt");
             newVersion = parseFloat(temp);
             println("Newest version", newVersion, "current version", version);
@@ -121,10 +120,10 @@ public class pac_man extends PApplet {
             background(0);
             text("Loading...\nBy Langdon Staab", round(width/2.0f), round(height/2.0f));
         }
-        if (newVersion > updateVersion && askUpdate) {
+        if (newVersion > updateVersion && askToUpdate) {
             updating = true;
             askUpdate();
-        } else {*/
+        } else {
         pause_beat = new SoundFile(this, "pause_beat.mp3");
         dieS = new SoundFile(this, "death.mp3");
         startSound = new SoundFile(this, "game_start.mp3");
@@ -164,7 +163,7 @@ public class pac_man extends PApplet {
         pxInit();
         startMillis = millis();
         pellet[5].isFruit = true;
-        //}
+        }
         surface.setTitle(TITLE + version);
 
         println("Setup success!");
@@ -221,7 +220,7 @@ public class pac_man extends PApplet {
             println("You are using MacOS.");
             /*
             //try{
-                byte[] newJAR = loadBytes("https://raw.githubusercontent.com/pacman-admin/pacmancode/main/pac_man.jar");
+                byte[] newJAR = loadBytes("https://raw.githubusercontent.com/pacman-admin/Big-storage/main/Pac-Man.jar");
                 saveBytes("pac_man.app/Contents/Java/new.jar", newJAR);
                 println("Sucessfully saved new version!");
                 launch("update.command");
@@ -231,7 +230,7 @@ public class pac_man extends PApplet {
             //}*/
         }else if(OS.equals("Windows")){
             print("You are using Microsoft Windows.");
-            byte[] newJAR = loadBytes("https://raw.githubusercontent.com/pacman-admin/pacmancode/main/pac_man.jar");
+            byte[] newJAR = loadBytes("https://raw.githubusercontent.com/pacman-admin/Big-storage/main/Pac-Man.jar");
             saveBytes("app/new.jar", newJAR);
             launch("update.cmd");
             exit();
