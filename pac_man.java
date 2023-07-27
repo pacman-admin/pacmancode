@@ -16,7 +16,7 @@ public class pac_man extends PApplet {
     final static boolean c = false, o = true;
     // By Langdon S.
     //current version:
-    final float version = 10.24f;
+    final float version = 10.25f;
     //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 //            G A M E  S E T T I N G S            |
@@ -43,7 +43,8 @@ public class pac_man extends PApplet {
     final Pixel[][] ghostPx = {new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16]};
 
     //Strings
-    //String OS = "unknown";
+    String highScorePath = "highscore.txt";
+    String OS = "unknown";
     final Pixel[][] ghostBottom2Px = {new Pixel[16], new Pixel[16]};
     final byte[][] gDesign = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0}, {0, 0, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 0, 0}, {0, 0, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 0, 0}, {0, 1, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 1, 0}, {0, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0}, {0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
     final int[][] altGhostBottom = {{0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0}, {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0}};
@@ -106,10 +107,12 @@ public class pac_man extends PApplet {
         surface.setResizable(true);
 
         imageMode(CENTER);
-        changeAppIcon();/*
-        chUpdateVersion(true);
-        println(System.getProperty("os.name"));
-        if (askUpdate) {
+        changeAppIcon();
+        //chUpdateVersion(true);
+        OS = System.getProperty("os.name");
+        println(OS);
+
+        /*if (askUpdate) {
             String temp = loadString("https://raw.githubusercontent.com/pacman-admin/pacmancode/main/myversion.txt");
             newVersion = parseFloat(temp);
             println("Newest version", newVersion, "current version", version);
@@ -131,7 +134,19 @@ public class pac_man extends PApplet {
         extra_life = new SoundFile(this, "extra_life.mp3");
         pause = new SoundFile(this, "pause.mp3");
         println("Sound load success!");
-        prevHighScore = parseInt(loadString("highscore.txt"));
+        if(OS.equals("Mac OS X")){
+            highScorePath = System.getProperty("user.home")+"/highscore.txt";
+            String temp = loadString(highScorePath);
+            if(temp.equals("error")){
+                String[] t = {"0"};
+                saveStrings(highScorePath,t);
+                prevHighScore = 0;
+            }else {
+                prevHighScore = parseInt(temp);
+            }
+        }else{
+            prevHighScore = parseInt(loadString("highscore.txt"));
+        }
         noPauseBeatB = loadImage("pause_beat off.png");
         cherry = loadImage("cherry.png");
         strawberry = loadImage("strawberry.png");
@@ -368,6 +383,7 @@ public class pac_man extends PApplet {
             errorInfo = sw.toString();
             error = true;
             delay(100);
+            textSize(12);
             windowResize(1000,canvasHeight);
         }
     }
@@ -594,7 +610,7 @@ public class pac_man extends PApplet {
         }
         if (highScore > prevHighScore) {
             String[] newHighScore = {str(highScore)};
-            saveStrings("highscore.txt", newHighScore);
+            saveStrings(highScorePath, newHighScore);
         }
     }
 
