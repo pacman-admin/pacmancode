@@ -42,7 +42,7 @@ public class pac_man extends PApplet {
     final Pixel[][] ghostPx = {new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16]};
 
     //Strings
-    String highScorePath = "highscore.txt";
+    String path = "";
     String OS = "unknown";
     final Pixel[][] ghostBottom2Px = {new Pixel[16], new Pixel[16]};
     final byte[][] gDesign = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0}, {0, 0, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 0, 0}, {0, 0, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 0, 0}, {0, 1, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 1, 0}, {0, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0}, {0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
@@ -107,7 +107,6 @@ public class pac_man extends PApplet {
 
         imageMode(CENTER);
         changeAppIcon();
-        //chUpdateVersion(true);
         OS = System.getProperty("os.name");
         println(OS);
 
@@ -115,10 +114,9 @@ public class pac_man extends PApplet {
             String temp = loadString("https://raw.githubusercontent.com/pacman-admin/pacmancode/main/myversion.txt");
             newVersion = parseFloat(temp);
             println("Newest version", newVersion, "current version", version);
-        } else {
-            fill(255);
-            background(0);
-            text("Loading...\nBy Langdon Staab", round(width / 2.0f), round(height / 2.0f));
+            if(newVersion > version){
+                prepareForUpdate();
+            }
         }
         if (newVersion > updateVersion && askToUpdate) {
             updating = true;
@@ -134,11 +132,11 @@ public class pac_man extends PApplet {
             pause = new SoundFile(this, "pause.mp3");
             println("Sound load success!");
             if (OS.equals("Mac OS X")) {
-                highScorePath = System.getProperty("user.home") + "/highscore.txt";
-                String temp = loadString(highScorePath);
+                path = System.getProperty("user.home")+"/";
+                String temp = loadString(path+"highscore.txt");
                 if (temp.equals("error")) {
                     String[] t = {"0"};
-                    saveStrings(highScorePath, t);
+                    saveStrings(path+"highscore.txt", t);
                     prevHighScore = 0;
                 } else {
                     prevHighScore = parseInt(temp);
@@ -170,10 +168,25 @@ public class pac_man extends PApplet {
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ A FEW RANDOM FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~///
+    void prepareForUpdate(){
+        String updateString = "error";
+        updateString = loadString(path+"update.txt");
+        if(updateString.equals("error")){
+            String[] temp = {str(version)};
+            saveStrings(path+"update.txt",temp);
+            updateVersion = version;
+        }else{
+        updateVersion = parse;
+        }//hehehehaw
+
+
+    }
+    
     public void chUpdateVersion(boolean mine) {
         String[] temp = {str(mine ? version : newVersion)};
         println(str(mine ? version : newVersion));
         if (mine) {
+            saveStrings("update.txt",temp);
 
 
         } else {
@@ -695,7 +708,7 @@ public class pac_man extends PApplet {
         }
         if (highScore > prevHighScore) {
             String[] newHighScore = {str(highScore)};
-            saveStrings(highScorePath, newHighScore);
+            saveStrings(path+"highscore.txt", newHighScore);
         }
     }
 
