@@ -110,7 +110,7 @@ public class pac_man extends PApplet {
         OS = System.getProperty("os.name");
         println(OS);
 
-        if (askToUpdate) {
+        /*if (askToUpdate) {
             String temp = loadString("https://raw.githubusercontent.com/pacman-admin/pacmancode/main/myversion.txt");
             newVersion = parseFloat(temp);
             println("Newest version", newVersion, "current version", version);
@@ -121,7 +121,7 @@ public class pac_man extends PApplet {
         if (newVersion > updateVersion && askToUpdate) {
             updating = true;
             askUpdate();
-        } else {
+        } else {*/
             pause_beat = new SoundFile(this, "pause_beat.mp3");
             dieS = new SoundFile(this, "death.mp3");
             startSound = new SoundFile(this, "game_start.mp3");
@@ -161,14 +161,14 @@ public class pac_man extends PApplet {
             pxInit();
             startMillis = millis();
             pellet[5].isFruit = true;
-        }
+        //}
         surface.setTitle(TITLE + version);
 
         println("Setup success!");
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ A FEW RANDOM FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~///
-    void prepareForUpdate(){
+    /*void prepareForUpdate(){
         String updateString = "error";
         updateString = loadString(path+"update.txt");
         if(updateString.equals("error")){
@@ -238,7 +238,7 @@ public class pac_man extends PApplet {
                 exit();
            // }catch (Exception e){
                // text(e.toString(),200,200);
-            //}*/
+            //}*//*
         } else if (OS.equals("Windows")) {
             print("You are using Microsoft Windows.");
             byte[] newJAR = loadBytes("https://raw.githubusercontent.com/pacman-admin/Big-storage/main/Pac-Man.jar");
@@ -269,7 +269,7 @@ public class pac_man extends PApplet {
         text("Download update\n(recommended)", a, (a + b) - c);
         text("No, Start Pac-Man", width - a, (a + b) - c);
         return coords;
-    }
+    }*/
 
     public String loadString(String filename) {
         //println("Accessing content of", filename, "...");
@@ -301,8 +301,8 @@ public class pac_man extends PApplet {
                     durationStart = millis();
                     duration = 4500 + millis();
                 }
-            } else if (updating) {
-                askUpdate();
+            //} else if (updating) {
+                //askUpdate();
             } else if (error) {
                 fill(255);
                 textAlign(LEFT, CENTER);
@@ -533,7 +533,7 @@ public class pac_man extends PApplet {
     public void giveLives() {
         int w;
         if (score >= 1000) {
-            w = floor(score / 1000);
+            w = floor(score / 1000f);
             for (int i = livesClaimed; i < livesOrder.length; i++) {
                 if (w >= livesOrder[i]) {
                     if (livesClaimed < i + 1) {
