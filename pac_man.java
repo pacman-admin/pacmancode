@@ -131,7 +131,7 @@ public class pac_man extends PApplet {
             extra_life = new SoundFile(this, "extra_life.mp3");
             pause = new SoundFile(this, "pause.mp3");
             println("Sound load success!");
-            if (OS.equals("Mac OS X")) {
+            if (OS.equals("Mac OS X") || OS.equals("Linux")) {
                 path = System.getProperty("user.home")+"/";
                 String temp = loadString(path+"highscore.txt");
                 if (temp.equals("error")) {
