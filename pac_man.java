@@ -29,7 +29,6 @@ public class pac_man extends PApplet {
     final float pacmanSpeed = 3; //               |
     final boolean turnAround = true; //           |
     final float cellWidth = 32;
-    boolean updating = false;
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
     final int pelletWorth = 10, canvasWidth = parseInt(cellWidth * 13f), canvasHeight = parseInt(cellWidth * 13f), gSize = 2;
     final int[] livesOrder = {1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000};
@@ -40,15 +39,14 @@ public class pac_man extends PApplet {
     final Pacman pacman = new Pacman();
     final Cell[][] cells = {new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13]};
     final Pixel[][] ghostPx = {new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16]};
-
-    //Strings
-    String path = "";
-    String OS = "unknown";
     final Pixel[][] ghostBottom2Px = {new Pixel[16], new Pixel[16]};
     final byte[][] gDesign = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0}, {0, 0, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 0, 0}, {0, 0, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 0, 0}, {0, 1, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 1, 0}, {0, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0}, {0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
     final int[][] altGhostBottom = {{0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0}, {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0}};
     final boolean[][] cellMap = {{c, o, c, o, o, o, o, o, o, o, o, o}, {c, o, o, o, c, c, c, c, c, c, c, o}, {c, o, c, o, o, o, o, o, o, o, c, o}, {c, o, c, o, c, c, c, c, c, o, c, o}, {c, o, o, o, o, o, o, o, o, o, o, o}, {c, o, c, o, c, o, c, c, o, c, o, o}, {c, o, c, o, c, o, c, o, o, c, o, o}, {c, o, c, o, o, o, o, c, o, c, c, o}, {c, o, c, c, c, o, c, c, o, c, o, o}, {c, o, o, o, o, o, o, c, o, c, o, o}, {c, o, o, c, c, c, o, o, o, c, o, o}};
-
+    boolean updating = false;
+    //Strings
+    String path = "";
+    String OS = "unknown";
     //float updateVersion = version;
     int lives = 3; //                             |
     int chompSpeed = 8; //                        |
@@ -110,18 +108,19 @@ public class pac_man extends PApplet {
         OS = System.getProperty("os.name");
         println(OS);
 
-        /*if (askToUpdate) {
+        if (askToUpdate && OS.equals("Windows")) {
             String temp = loadString("https://raw.githubusercontent.com/pacman-admin/pacmancode/main/myversion.txt");
             newVersion = parseFloat(temp);
             println("Newest version", newVersion, "current version", version);
-            if(newVersion > version){
+            if (newVersion > version) {
                 prepareForUpdate();
             }
         }
         if (newVersion > updateVersion && askToUpdate) {
             updating = true;
             askUpdate();
-        } else {*/
+
+        } else {
             pause_beat = new SoundFile(this, "pause_beat.mp3");
             dieS = new SoundFile(this, "death.mp3");
             startSound = new SoundFile(this, "game_start.mp3");
@@ -132,11 +131,11 @@ public class pac_man extends PApplet {
             pause = new SoundFile(this, "pause.mp3");
             println("Sound load success!");
             if (OS.equals("Mac OS X") || OS.equals("Linux")) {
-                path = System.getProperty("user.home")+"/";
-                String temp = loadString(path+"highscore.txt");
+                path = System.getProperty("user.home") + "/";
+                String temp = loadString(path + "highscore.txt");
                 if (temp.equals("error")) {
                     String[] t = {"0"};
-                    saveStrings(path+"highscore.txt", t);
+                    saveStrings(path + "highscore.txt", t);
                     prevHighScore = 0;
                 } else {
                     prevHighScore = parseInt(temp);
@@ -161,34 +160,32 @@ public class pac_man extends PApplet {
             pxInit();
             startMillis = millis();
             pellet[5].isFruit = true;
-        //}
+        }
         surface.setTitle(TITLE + version);
 
         println("Setup success!");
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ A FEW RANDOM FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~///
-    /*void prepareForUpdate(){
+    void prepareForUpdate() {
         String updateString = "error";
-        updateString = loadString(path+"update.txt");
-        if(updateString.equals("error")){
+        updateString = loadString(path + "update.txt");
+        if (updateString.equals("error")) {
             String[] temp = {str(version)};
-            saveStrings(path+"update.txt",temp);
+            saveStrings(path + "update.txt", temp);
             updateVersion = version;
-        }else{
-        updateVersion = parse;
-        }//hehehehaw
+        } else {
+            updateVersion = parseFloat(updateString);
+        }
 
 
     }
-    
+
     public void chUpdateVersion(boolean mine) {
         String[] temp = {str(mine ? version : newVersion)};
         println(str(mine ? version : newVersion));
         if (mine) {
-            saveStrings("update.txt",temp);
-
-
+            saveStrings("update.txt", temp);
         } else {
 
 
@@ -227,18 +224,18 @@ public class pac_man extends PApplet {
     public void update() {
         println("Updating...");
         println("a" + OS + "b");
-        if (OS.equals("Mac")) {
+        if (OS.equals("Mac OS X")) {
             println("You are using MacOS.");
             /*
             //try{
                 byte[] newJAR = loadBytes("https://raw.githubusercontent.com/pacman-admin/Big-storage/main/Pac-Man.jar");
-                saveBytes("pac_man.app/Contents/Java/new.jar", newJAR);
+                saveBytes("pac_man.app/Contents/app/new.jar", newJAR);
                 println("Sucessfully saved new version!");
                 launch("update.command");
                 exit();
            // }catch (Exception e){
                // text(e.toString(),200,200);
-            //}*//*
+            //}*/
         } else if (OS.equals("Windows")) {
             print("You are using Microsoft Windows.");
             byte[] newJAR = loadBytes("https://raw.githubusercontent.com/pacman-admin/Big-storage/main/Pac-Man.jar");
@@ -269,7 +266,7 @@ public class pac_man extends PApplet {
         text("Download update\n(recommended)", a, (a + b) - c);
         text("No, Start Pac-Man", width - a, (a + b) - c);
         return coords;
-    }*/
+    }
 
     public String loadString(String filename) {
         //println("Accessing content of", filename, "...");
@@ -301,7 +298,7 @@ public class pac_man extends PApplet {
                     durationStart = millis();
                     duration = 4500 + millis();
                 }
-            //} else if (updating) {
+                //} else if (updating) {
                 //askUpdate();
             } else if (error) {
                 fill(255);
@@ -708,7 +705,7 @@ public class pac_man extends PApplet {
         }
         if (highScore > prevHighScore) {
             String[] newHighScore = {str(highScore)};
-            saveStrings(path+"highscore.txt", newHighScore);
+            saveStrings(path + "highscore.txt", newHighScore);
         }
     }
 
