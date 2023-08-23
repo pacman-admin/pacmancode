@@ -4,10 +4,14 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import processing.sound.SoundFile;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.time.LocalDateTime;
+
+
 // By Langdon S.
-//import http.requests.*;
 
 
 public class pac_man extends PApplet {
@@ -16,7 +20,7 @@ public class pac_man extends PApplet {
     final static boolean c = false, o = true;
     // By Langdon S.
     //current version:
-    final float version = 10.25f;
+    final float version = 10.26f;
     //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 //            G A M E  S E T T I N G S            |
@@ -45,23 +49,23 @@ public class pac_man extends PApplet {
     final boolean[][] cellMap = {{c, o, c, o, o, o, o, o, o, o, o, o}, {c, o, o, o, c, c, c, c, c, c, c, o}, {c, o, c, o, o, o, o, o, o, o, c, o}, {c, o, c, o, c, c, c, c, c, o, c, o}, {c, o, o, o, o, o, o, o, o, o, o, o}, {c, o, c, o, c, o, c, c, o, c, o, o}, {c, o, c, o, c, o, c, o, o, c, o, o}, {c, o, c, o, o, o, o, c, o, c, c, o}, {c, o, c, c, c, o, c, c, o, c, o, o}, {c, o, o, o, o, o, o, c, o, c, o, o}, {c, o, o, c, c, c, o, o, o, c, o, o}};
     boolean updating = false;
     //Strings
-    String path = "";
-    String OS = "unknown";
+    String path;
+    //String OS = "unknown";
     //float updateVersion = version;
     int lives = 3; //                             |
     int chompSpeed = 8; //                        |
     boolean playStartSound = true; //             |
     boolean playPauseBeat = true; //              |
     //booleans
-    boolean askToUpdate, error = false, doneFlash = true, finishedDelay = false, first = false, first1 = true, keyToggle = false, lostLife = false, paused = false, pelletFirst = true, runSetup = true, start = true, startSuccess = false, startVal = true;
+    boolean /*askToUpdate, */error = false, doneFlash = true, finishedDelay = false, first = false, first1 = true, keyToggle = false, lostLife = false, paused = false, pelletFirst = true, runSetup = true, start = true, startSuccess = false, startVal = true;
     //ints
-    int startMillis, chomp = 30, cellCount = 0, duration = 0, flashCount = 0, durationStart = millis(), frameCount1 = 0, fruitWorth = 100, highScore = 0, lastScore = 0, level = 0, livesClaimed = 0, pelletErrors = 0, pelletsEaten = 0, score = 0, time = 0, startFrames = 1;
-    int coordsX = 0, coordsY = 0, coords3X = 0, coords3Y = 0, coords4X = 0, coords4Y = 0, coords5X = 0, coords5Y = 0;
-    int prevHighScore = 0;
+    int startMillis, chomp = 30, cellCount, duration, flashCount, durationStart = millis(), frameCount1, fruitWorth = 100, highScore, level, livesClaimed, pelletErrors, pelletsEaten, score, time, startFrames = 1;
+    int coordsX, coordsY, coords3X, coords3Y, coords4X, coords4Y, coords5X, coords5Y;
+    int prevHighScore;
     String[] messages = {};
-    String errorInfo = "Nothin'";
+    String errorInfo;
     //float newVersion = 10.0f;
-    float tempFPSVal = 0, newVersion, updateVersion;
+    float tempFPSVal;//, newVersion, updateVersion;
     PImage cherry, strawberry, apple, orange, melon, galaxian, bell, keyI, restartB, noPauseBeatB;
     SoundFile dieS, startSound, dotSound1, dotSound2, fruit, extra_life, pause, pause_beat;
     Pellet[] pellet = {};
@@ -76,98 +80,8 @@ public class pac_man extends PApplet {
         }
     }
 
-    public void settings() {
-        if (useOpenGL) {
-            size(canvasWidth, canvasHeight, P2D);
-            smooth(8);
-        } else {
-            size(canvasWidth, canvasHeight);
-        }
-    }
-
-    public void setup() {
-        surface.setTitle("Loading...");
-        println("Please wait...");
-        noStroke();
-        textSize(20);
-        textAlign(CENTER);
-        fill(255);
-        background(0);
-        text("Loading...\nBy Langdon Staab", round(width / 2.0f), round(height / 2.0f));
-        startMillis = millis();
-        frameRate(120);
-        //check setup2() for setup
-    }
-
-    public void setup2() {
-        noStroke();
-        surface.setResizable(true);
-
-        imageMode(CENTER);
-        changeAppIcon();
-        OS = System.getProperty("os.name");
-        println(OS);
-
-        if (askToUpdate && OS.equals("Windows")) {
-            String temp = loadString("https://raw.githubusercontent.com/pacman-admin/pacmancode/main/myversion.txt");
-            newVersion = parseFloat(temp);
-            println("Newest version", newVersion, "current version", version);
-            if (newVersion > version) {
-                prepareForUpdate();
-            }
-        }
-        if (newVersion > updateVersion && askToUpdate) {
-            updating = true;
-            askUpdate();
-
-        } else {
-            pause_beat = new SoundFile(this, "pause_beat.mp3");
-            dieS = new SoundFile(this, "death.mp3");
-            startSound = new SoundFile(this, "game_start.mp3");
-            dotSound1 = new SoundFile(this, "dot_1.mp3");
-            dotSound2 = new SoundFile(this, "dot_2.mp3");
-            fruit = new SoundFile(this, "fruit.mp3");
-            extra_life = new SoundFile(this, "extra_life.mp3");
-            pause = new SoundFile(this, "pause.mp3");
-            println("Sound load success!");
-            if (OS.equals("Mac OS X") || OS.equals("Linux")) {
-                path = System.getProperty("user.home") + "/";
-                String temp = loadString(path + "highscore.txt");
-                if (temp.equals("error")) {
-                    String[] t = {"0"};
-                    saveStrings(path + "highscore.txt", t);
-                    prevHighScore = 0;
-                } else {
-                    prevHighScore = parseInt(temp);
-                }
-            } else {
-                prevHighScore = parseInt(loadString("highscore.txt"));
-            }
-            noPauseBeatB = loadImage("pause_beat off.png");
-            cherry = loadImage("cherry.png");
-            strawberry = loadImage("strawberry.png");
-            orange = loadImage("orange.png");
-            apple = loadImage("apple.png");
-            melon = loadImage("melon.png");
-            galaxian = loadImage("galaxian.png");
-            bell = loadImage("bell.png");
-            keyI = loadImage("key.png");
-            restartB = loadImage("restart.png");
-            println("Image load success!");
-            createMaze();
-            initializeMaze();
-            makePelletCoords();
-            pxInit();
-            startMillis = millis();
-            pellet[5].isFruit = true;
-        }
-        surface.setTitle(TITLE + version);
-
-        println("Setup success!");
-    }
-
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ A FEW RANDOM FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~///
-    void prepareForUpdate() {
+    /*void prepareForUpdate() {
         String updateString = "error";
         updateString = loadString(path + "update.txt");
         if (updateString.equals("error")) {
@@ -177,8 +91,6 @@ public class pac_man extends PApplet {
         } else {
             updateVersion = parseFloat(updateString);
         }
-
-
     }
 
     public void chUpdateVersion(boolean mine) {
@@ -187,8 +99,6 @@ public class pac_man extends PApplet {
         if (mine) {
             saveStrings("update.txt", temp);
         } else {
-
-
         }
     }
 
@@ -203,7 +113,7 @@ public class pac_man extends PApplet {
                 println("Baloney!");
                 if (mouseY > c[1] - (c[3] / 2) && mouseY < c[1] + (c[3] / 2)) {
                     println("Baloney2!");
-                    //update();
+                    update();
                 }
             }
             if (mouseX > (width - c[0]) - (c[2] / 2) && mouseX < (width - c[0]) + (c[2] / 2)) {
@@ -236,7 +146,7 @@ public class pac_man extends PApplet {
            // }catch (Exception e){
                // text(e.toString(),200,200);
             //}*/
-        } else if (OS.equals("Windows")) {
+        /*} else if (OS.equals("Windows")) {
             print("You are using Microsoft Windows.");
             byte[] newJAR = loadBytes("https://raw.githubusercontent.com/pacman-admin/Big-storage/main/Pac-Man.jar");
             saveBytes("app/new.jar", newJAR);
@@ -257,7 +167,6 @@ public class pac_man extends PApplet {
                 bWidth = 180,
                 bHeight1 = 60,
                 bHeight2 = 40;
-
         int[] coords = {a, a + b, bWidth, bHeight1, bHeight2};
         fill(255, 64, 64);
         rect(a, a + b, bWidth, bHeight1, 10);
@@ -266,6 +175,127 @@ public class pac_man extends PApplet {
         text("Download update\n(recommended)", a, (a + b) - c);
         text("No, Start Pac-Man", width - a, (a + b) - c);
         return coords;
+    }
+    public static String readURL(String address, boolean oneLine) throws Exception {
+        URL url = new URL(address);
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(url.openStream()));
+
+        if (oneLine) {
+            String inputLine = in.readLine();
+            in.close();
+            return inputLine;
+        } else {
+            StringBuilder builder = new StringBuilder();
+            String line;
+            while ((line = in.readLine()) != null) {
+                builder.append(line);
+            }
+            in.close();
+            return builder.toString();
+        }
+
+    }
+*/
+    public void settings() {
+        if (useOpenGL) {
+            size(canvasWidth, canvasHeight, P2D);
+            smooth(8);
+        } else {
+            size(canvasWidth, canvasHeight);
+        }
+    }
+
+    public void setup() {
+        surface.setTitle("Loading...");
+        println("Please wait...");
+        noStroke();
+        textSize(20);
+        textAlign(CENTER);
+        fill(255);
+        background(0);
+        text("Loading...\nBy Langdon Staab", round(width / 2.0f), round(height / 2.0f));
+        startMillis = millis();
+        frameRate(120);
+        //check setup2() for setup
+    }
+
+    public void setup2() {
+        noStroke();
+        surface.setResizable(true);
+
+        imageMode(CENTER);
+        changeAppIcon();
+        //OS = System.getProperty("os.name");
+        //println(OS);
+
+        /*if (askToUpdate && OS.equals("Windows")) {
+            String temp = loadString("https://raw.githubusercontent.com/pacman-admin/pacmancode/main/myversion.txt");
+            newVersion = parseFloat(temp);
+            println("Newest version", newVersion, "current version", version);
+            if (newVersion > version) {
+                prepareForUpdate();
+            }
+        }
+        if (newVersion > updateVersion && askToUpdate) {
+            updating = true;
+            askUpdate();
+
+        } else {*/
+        pause_beat = new SoundFile(this, "pause_beat.mp3");
+        dieS = new SoundFile(this, "death.mp3");
+        startSound = new SoundFile(this, "game_start.mp3");
+        dotSound1 = new SoundFile(this, "dot_1.mp3");
+        dotSound2 = new SoundFile(this, "dot_2.mp3");
+        fruit = new SoundFile(this, "fruit.mp3");
+        extra_life = new SoundFile(this, "extra_life.mp3");
+        pause = new SoundFile(this, "pause.mp3");
+        println("Sound load success!");
+        //if (OS.equals("Mac OS X") || OS.equals("Linux")) {
+        path = System.getProperty("user.home") + "/";
+        String temp = loadString(path + "highscore.txt");
+        if (temp.equals("error")) {
+            String[] t = {"0"};
+            saveStrings(path + "highscore.txt", t);
+            prevHighScore = 0;
+        } else {
+            prevHighScore = parseInt(temp);
+        }
+        //} else {
+        //prevHighScore = parseInt(loadString("highscore.txt"));
+        //}
+        noPauseBeatB = loadImage("pause_beat off.png");
+        cherry = loadImage("cherry.png");
+        strawberry = loadImage("strawberry.png");
+        orange = loadImage("orange.png");
+        apple = loadImage("apple.png");
+        melon = loadImage("melon.png");
+        galaxian = loadImage("galaxian.png");
+        bell = loadImage("bell.png");
+        keyI = loadImage("key.png");
+        restartB = loadImage("restart.png");
+        println("Image load success!");
+        createMaze();
+        initializeMaze();
+        makePelletCoords();
+        pxInit();
+        startMillis = millis();
+        pellet[5].isFruit = true;
+        //}
+        surface.setTitle(TITLE + version);
+
+        println("Setup success!");
+    }
+
+    public void logError(Exception e) {
+        try {
+            FileWriter fstream = new FileWriter(path + "Desktop/pacmanerror - " + LocalDateTime.now() + ".txt", true);
+            BufferedWriter out = new BufferedWriter(fstream);
+            PrintWriter pWriter = new PrintWriter(out, true);
+            e.printStackTrace(pWriter);
+        } catch (Exception ie) {
+            throw new RuntimeException("Could not write Exception to file", ie);
+        }
     }
 
     public String loadString(String filename) {
@@ -281,7 +311,7 @@ public class pac_man extends PApplet {
             data = ret[0];
             //println("Success!", data);
             return data;
-        } catch (Exception e) {
+        } catch (Exception ignored) {
             //println("Could not load information. Please check your internet connection.", e);
             return "error";
         }
@@ -301,10 +331,10 @@ public class pac_man extends PApplet {
                 //} else if (updating) {
                 //askUpdate();
             } else if (error) {
-                fill(255);
-                textAlign(LEFT, CENTER);
                 background(0);
+                textAlign(LEFT, CENTER);
                 text(errorInfo, 4, height / 2f);
+
             } else {
                 if (frameCount % 2 == 0 && !paused) {
                     if (millis() < duration) {
@@ -334,7 +364,7 @@ public class pac_man extends PApplet {
                     }
 
                     destroyUselessMessages();
-                    increaseHighScore();
+
                     ghostPx[1][1].colourInit();
                     coords3X = getGhostCoords(ghost1).x;
                     coords3Y = getGhostCoords(ghost1).y;
@@ -398,7 +428,6 @@ public class pac_man extends PApplet {
                     ghost2.goodPosition(coords4X, coords4Y);
                     ghost3.goodPosition(coords5X, coords5Y);
                     controlGhostMovement(coords3X, coords3Y, coords4X, coords4Y, coords5X, coords5Y);
-                    //moveGhosts();
                     for (int b = 0; b < coords2.length; b++) {
                         pellet[b].goodPosition(coords2[b].x, coords2[b].y);
                         pellet[b].isBEaten();
@@ -439,32 +468,19 @@ public class pac_man extends PApplet {
                             playStartSound = false;
                         }
                     }
-                    if (lastScore != score) {
-                        messages = splice(messages, "Your score is:" + str(score), 0);
-                    }
                     display();
-                    start = false;
-                    lastScore = score;
+                    if (start) {
+                        start = false;
+                    }
                     //int useless = 5/0;
                 }
                 if (keyPressed) {
                     keyToggle = true;
                     switch (keyCode) {
-                        case UP -> pacman.up();
-                        case DOWN -> pacman.down();
-                        case RIGHT -> pacman.right();
-                        case LEFT -> pacman.left();
-                    }
-                }
-                if (keyToggle) {
-                    switch (keyCode) {
-                        case 87 -> pacman.up();
-                        case 83 -> pacman.down();
-                        case 68 -> pacman.right();
-                        case 65 -> pacman.left();
-                    }
-                    if (keyCode != 0) {
-                        keyToggle = false;
+                        case UP, 87 -> pacman.up();
+                        case DOWN, 83 -> pacman.down();
+                        case RIGHT, 68 -> pacman.right();
+                        case LEFT, 65 -> pacman.left();
                     }
                 }
             }
@@ -475,10 +491,13 @@ public class pac_man extends PApplet {
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
             errorInfo = sw.toString();
+            logError(e);
+
             error = true;
-            delay(100);
             textSize(12);
+            fill(255);
             windowResize(1000, canvasHeight);
+            frameRate(30);
         }
     }
 
@@ -1038,7 +1057,6 @@ public class pac_man extends PApplet {
         }
 
         public void isBEaten() {
-            giveLives();
             if (!eaten && dist(x, y, pacman.x, pacman.y) < cellWidth / 8f + pacman.size / 8f) {
                 if (isFruit) {
                     switch (fruitType) {
@@ -1065,6 +1083,9 @@ public class pac_man extends PApplet {
                     pelletsEaten++;
                 }
                 eaten = true;
+                giveLives();
+                messages = splice(messages, "Your score is:" + str(score), 0);
+                increaseHighScore();
             }
         }
 
