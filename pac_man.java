@@ -57,7 +57,7 @@ public class pac_man extends PApplet {
     boolean playStartSound = true; //             |
     boolean playPauseBeat = true; //              |
     //booleans
-    boolean /*askToUpdate, */error = false, doneFlash = true, finishedDelay = false, first = false, first1 = true, keyToggle = false, lostLife = false, paused = false, pelletFirst = true, runSetup = true, start = true, startSuccess = false, startVal = true;
+    boolean /*askToUpdate, */error, doneFlash = true, finishedDelay, first, first1 = true, keyToggle, lostLife, paused, pelletFirst = true, runSetup = true, start = true, startVal = true;
     //ints
     int startMillis, chomp = 30, cellCount, duration, flashCount, durationStart = millis(), frameCount1, fruitWorth = 100, highScore, level, livesClaimed, pelletErrors, pelletsEaten, score, time, startFrames = 1;
     int coordsX, coordsY, coords3X, coords3Y, coords4X, coords4Y, coords5X, coords5Y;
@@ -329,7 +329,16 @@ public class pac_man extends PApplet {
                     duration = 4500 + millis();
                 }
                 //} else if (updating) {
-                //askUpdate();
+                //askUpdate();\
+            } else if (lives <= 0) {
+                background(0);
+                fill(255, 64, 64);
+                textAlign(CENTER);
+                text("GAME OVER", canvasWidth / 2.0f, canvasHeight / 2.0f);
+                text("Click the screen to play again", canvasWidth / 2.0f, canvasHeight / 2.0f + 40);
+                if (mousePressed) {
+                    restart();
+                }
             } else if (error) {
                 background(0);
                 textAlign(LEFT, CENTER);
@@ -338,7 +347,6 @@ public class pac_man extends PApplet {
             } else {
                 if (frameCount % 2 == 0 && !paused) {
                     if (millis() < duration) {
-                        startSuccess = false;
                         pacman.stop();
                         pacman.stopped = true;
                         finishedDelay = false;
@@ -347,20 +355,12 @@ public class pac_man extends PApplet {
                         ghost3.halt();
                         startVal = true;
                         start = true;
-                    } else if (millis() <= duration + 100 && !finishedDelay) {
+                    } else if (!finishedDelay) {
                         start = true;
                         ghost1.up();
                         ghost2.up();
                         ghost3.up();
                         finishedDelay = true;
-                        startSuccess = true;
-                    } else if (!startSuccess) {
-                        start = true;
-                        ghost1.up();
-                        ghost2.up();
-                        ghost3.up();
-                        finishedDelay = true;
-                        startSuccess = true;
                     }
 
                     destroyUselessMessages();
@@ -744,7 +744,7 @@ public class pac_man extends PApplet {
         score = 0;
         determineFruitType();
         startVal = true;
-        startSuccess = false;
+        //startSuccess = false;
         for (Pellet value : pellet) {
             value.update();
         }
@@ -972,7 +972,7 @@ public class pac_man extends PApplet {
                     }
                 }
             }
-            if (dist(x, y, pacman.x, pacman.y) < cellWidth / 2.0f) {
+            if (dist(x, y, pacman.x, pacman.y) < cellWidth) {
                 if (x >= cellWidth * 2) {
                     lostLife = true;
                 }
