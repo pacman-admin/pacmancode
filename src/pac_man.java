@@ -11,12 +11,11 @@ import java.io.StringWriter;
 import java.time.LocalDateTime;
 
 
-// By Langdon S.
-
+/** @author Langdon S.
+*/
 
 public class pac_man extends PApplet {
     final static String TITLE = "Pac-Man ";
-    // Map layout
     // By Langdon S.
     //current version:
     final float version = 10.26f;
