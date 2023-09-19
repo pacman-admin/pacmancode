@@ -18,7 +18,7 @@ public class pac_man extends PApplet {
     final static String TITLE = "Pac-Man ";
     // By Langdon S.
     //current version:
-    final float version = 10.26f;
+    final float version = 10.27f;
     //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 //            G A M E  S E T T I N G S            |
