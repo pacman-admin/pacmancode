@@ -7,7 +7,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime;
 
 
 /** @author Langdon S.
@@ -262,14 +262,14 @@ public class pac_man extends PApplet {
         restartB = loadImage("restart.png");
         System.out.println("Image load success!");
 
-        pause_beat = new Sound(cwd+"/pause_beat.wav");
-        dieS = new Sound(cwd+"/death.wav");
-        startSound = new Sound(cwd+"/game_start.wav");
-        dotSound1 = new Sound(cwd+"/dot_1.wav");
-        dotSound2 = new Sound(cwd+"/dot_2.wav");
-        fruit = new Sound(cwd+"/fruit.wav");
-        extra_life = new Sound(cwd+"/extra_life.wav");
-        pause = new Sound(cwd+"/pause.wav");
+        pause_beat = new Sound(/*cwd+"/*/"pause_beat.wav");
+        dieS = new Sound(/*cwd+"/*/"death.wav");
+        startSound = new Sound(/*cwd+"/*/"game_start.wav");
+        dotSound1 = new Sound(/*cwd+"/*/"dot_1.wav");
+        dotSound2 = new Sound(/*cwd+"/*/"dot_2.wav");
+        fruit = new Sound(/*cwd+"/*/"fruit.wav");
+        extra_life = new Sound(/*cwd+"/*/"extra_life.wav");
+        pause = new Sound(/*cwd+"/*/"pause.wav");
         System.out.println("Sound load success!");
 
         createMaze();
