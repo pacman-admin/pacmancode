@@ -2,7 +2,6 @@
 
 import processing.core.PApplet;
 import processing.core.PImage;
-import processing.sound.SoundFile;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -47,7 +46,7 @@ public class pac_man extends PApplet {
     final boolean[][] cellMap = {{false, true, false, true, true, true, true, true, true, true, true, true}, {false, true, true, true, false, false, false, false, false, false, false, true}, {false, true, false, true, true, true, true, true, true, true, false, true}, {false, true, false, true, false, false, false, false, false, true, false, true}, {false, true, true, true, true, true, true, true, true, true, true, true}, {false, true, false, true, false, true, false, false, true, false, true, true}, {false, true, false, true, false, true, false, true, true, false, true, true}, {false, true, false, true, true, true, true, false, true, false, false, true}, {false, true, false, false, false, true, false, false, true, false, true, true}, {false, true, true, true, true, true, true, false, true, false, true, true}, {false, true, true, false, false, false, true, true, true, false, true, true}};
     boolean updating = false;
     //Strings
-    String path;
+    String path, cwd;
     //String OS = "unknown";
     //float updateVersion = version;
     int lives = 3; //                             |
@@ -65,7 +64,7 @@ public class pac_man extends PApplet {
     //float newVersion = 10.0f;
     float tempFPSVal;//, newVersion, updateVersion;
     PImage cherry, strawberry, apple, orange, melon, galaxian, bell, keyI, restartB, noPauseBeatB;
-    SoundFile dieS, startSound, dotSound1, dotSound2, fruit, extra_life, pause, pause_beat;
+    Sound dieS, startSound, dotSound1, dotSound2, fruit, extra_life, pause, pause_beat;
     Pellet[] pellet = {};
     Coordinate[] coords2 = {};
 
@@ -93,7 +92,7 @@ public class pac_man extends PApplet {
 
     public void chUpdateVersion(boolean mine) {
         String[] temp = {str(mine ? version : newVersion)};
-        println(str(mine ? version : newVersion));
+        System.out.println(str(mine ? version : newVersion));
         if (mine) {
             saveStrings("update.txt", temp);
         } else {
@@ -108,14 +107,14 @@ public class pac_man extends PApplet {
         c = drawUpButtons();
         if (mousePressed) {
             if (mouseX > c[0] - (c[2] / 2) && mouseX < c[0] + (c[2] / 2)) {
-                println("Baloney!");
+                System.out.println("Baloney!");
                 if (mouseY > c[1] - (c[3] / 2) && mouseY < c[1] + (c[3] / 2)) {
-                    println("Baloney2!");
+                    System.out.println("Baloney2!");
                     update();
                 }
             }
             if (mouseX > (width - c[0]) - (c[2] / 2) && mouseX < (width - c[0]) + (c[2] / 2)) {
-                println("Baloney3!");
+                System.out.println("Baloney3!");
                 if (mouseY > c[1] - (c[4] / 2) && mouseY < c[1] + (c[4] / 2)) {
                     fill(255);
                     background(0);
@@ -130,15 +129,15 @@ public class pac_man extends PApplet {
     }
 
     public void update() {
-        println("Updating...");
-        println("a" + OS + "b");
+        System.out.println("Updating...");
+        System.out.println("a" + OS + "b");
         if (OS.equals("Mac OS X")) {
-            println("You are using MacOS.");
+            System.out.println("You are using MacOS.");
             /*
             //try{
                 byte[] newJAR = loadBytes("https://raw.githubusercontent.com/pacman-admin/Big-storage/main/Pac-Man.jar");
                 saveBytes("pac_man.app/Contents/app/new.jar", newJAR);
-                println("Sucessfully saved new version!");
+                System.out.println("Sucessfully saved new version!");
                 launch("update.command");
                 exit();
            // }catch (Exception e){
@@ -151,7 +150,7 @@ public class pac_man extends PApplet {
             launch("update.cmd");
             exit();
         } else {
-            println("error");
+            System.out.println("error");
         }
     }
 
@@ -206,13 +205,13 @@ public class pac_man extends PApplet {
 
     public void setup() {
         surface.setTitle("Loading...");
-        println("Please wait...");
+        System.out.println("Please wait...");
         noStroke();
         textSize(20);
         textAlign(CENTER);
         fill(255);
         background(0);
-        text("Loading...\nBy Langdon Staab", round(width / 2f), round(height / 2f));
+        text("Loading...\nBy Langdon Staab\n\nSound manager by Tyler Tomas", round(width / 2f), round(height / 2f));
         startMillis = millis();
         frameRate(120);
         //check setup2() for setup
@@ -224,13 +223,16 @@ public class pac_man extends PApplet {
 
         imageMode(CENTER);
         changeAppIcon();
-        //OS = System.getProperty("os.name");
-        //println(OS);
+        path = System.getProperty("user.home") + "/";
+        cwd = System. getProperty("user.dir");
+        println(cwd);
 
+        //OS = System.getProperty("os.name");
+        //System.out.println(OS);
         /*if (askToUpdate && OS.equals("Windows")) {
             String temp = loadString("https://raw.githubusercontent.com/pacman-admin/pacmancode/main/myversion.txt");
             newVersion = parseFloat(temp);
-            println("Newest version", newVersion, "current version", version);
+            System.out.println("Newest version", newVersion, "current version", version);
             if (newVersion > version) {
                 prepareForUpdate();
             }
@@ -238,19 +240,8 @@ public class pac_man extends PApplet {
         if (newVersion > updateVersion && askToUpdate) {
             updating = true;
             askUpdate();
-
         } else {*/
-        pause_beat = new SoundFile(this, "pause_beat.mp3");
-        dieS = new SoundFile(this, "death.mp3");
-        startSound = new SoundFile(this, "game_start.mp3");
-        dotSound1 = new SoundFile(this, "dot_1.mp3");
-        dotSound2 = new SoundFile(this, "dot_2.mp3");
-        fruit = new SoundFile(this, "fruit.mp3");
-        extra_life = new SoundFile(this, "extra_life.mp3");
-        pause = new SoundFile(this, "pause.mp3");
-        println("Sound load success!");
-        //if (OS.equals("Mac OS X") || OS.equals("Linux")) {
-        path = System.getProperty("user.home") + "/";
+
         String temp = loadString(path + "highscore.txt");
         if (temp.equals("error")) {
             String[] t = {"0"};
@@ -259,9 +250,6 @@ public class pac_man extends PApplet {
         } else {
             prevHighScore = parseInt(temp);
         }
-        //} else {
-        //prevHighScore = parseInt(loadString("highscore.txt"));
-        //}
         noPauseBeatB = loadImage("pause_beat off.png");
         cherry = loadImage("cherry.png");
         strawberry = loadImage("strawberry.png");
@@ -272,7 +260,18 @@ public class pac_man extends PApplet {
         bell = loadImage("bell.png");
         keyI = loadImage("key.png");
         restartB = loadImage("restart.png");
-        println("Image load success!");
+        System.out.println("Image load success!");
+
+        pause_beat = new Sound(cwd+"/pause_beat.wav");
+        dieS = new Sound(cwd+"/death.wav");
+        startSound = new Sound(cwd+"/game_start.wav");
+        dotSound1 = new Sound(cwd+"/dot_1.wav");
+        dotSound2 = new Sound(cwd+"/dot_2.wav");
+        fruit = new Sound(cwd+"/fruit.wav");
+        extra_life = new Sound(cwd+"/extra_life.wav");
+        pause = new Sound(cwd+"/pause.wav");
+        System.out.println("Sound load success!");
+
         createMaze();
         initializeMaze();
         makePelletCoords();
@@ -282,22 +281,23 @@ public class pac_man extends PApplet {
         //}
         surface.setTitle(TITLE + version);
 
-        println("Setup success!");
+        System.out.println("Setup success!");
     }
 
     public void logError(Exception e) {
         try {
-            FileWriter fstream = new FileWriter(path + "Desktop/pacmanerror - " + LocalDateTime.now() + ".txt", true);
+            FileWriter fstream = new FileWriter(path + "Desktop/pacmanerror.txt", true);
             BufferedWriter out = new BufferedWriter(fstream);
             PrintWriter pWriter = new PrintWriter(out, true);
             e.printStackTrace(pWriter);
         } catch (Exception ie) {
-            throw new RuntimeException("Could not write Exception to file", ie);
+            System.out.println("Could not write Exception to file");
+            ie.printStackTrace();
         }
     }
 
     public String loadString(String filename) {
-        //println("Accessing content of", filename, "...");
+        //System.out.println("Accessing content of", filename, "...");
         String[] ret;
         String data;
         try {
@@ -307,10 +307,10 @@ public class pac_man extends PApplet {
     String ret=get.getContent();*/
             ret = loadStrings(filename);
             data = ret[0];
-            //println("Success!", data);
+            //System.out.println("Success!", data);
             return data;
         } catch (Exception ignored) {
-            //println("Could not load information. Please check your internet connection.", e);
+            //System.out.println("Could not load information. Please check your internet connection.", e);
             return "error";
         }
     }
@@ -482,11 +482,11 @@ public class pac_man extends PApplet {
             }
         } catch (Exception e) {
             paused = true;
-            println(e);
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
             errorInfo = sw.toString();
+            System.out.println(errorInfo);
             logError(e);
 
             error = true;
@@ -499,7 +499,7 @@ public class pac_man extends PApplet {
 
     public void display() {
         //if(frameCount%8 == 0){
-        //println("Ghost1: "+ghost1.dir+"Ghost2: "+ghost2.dir+"Ghost3: "+ghost3.dir);
+        //System.out.println("Ghost1: "+ghost1.dir+"Ghost2: "+ghost2.dir+"Ghost3: "+ghost3.dir);
         //}
         drawButtons();
         fill(255);
@@ -559,7 +559,8 @@ public class pac_man extends PApplet {
         }
     }
 
-    public void playSound(SoundFile sound) {
+    public void playSound(Sound sound) {
+
         sound.play();
     }
 
