@@ -3,8 +3,10 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 
-import java.io.*;
-import java.net.URISyntaxException;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 /**
  * @author Langdon S.
@@ -214,7 +216,7 @@ public class pac_man extends PApplet {
         //check setup2() for setup
     }
 
-    public void setup2() throws URISyntaxException, IOException {
+    public void setup2() {
         noStroke();
         surface.setResizable(true);
 

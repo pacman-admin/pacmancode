@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 
 /**
  * Handles playing, stopping, and looping of sounds for the game.
+ *
  * @author Langdon Staab
  * @author Tyler Thomas
  */
@@ -14,6 +15,7 @@ public class Sound {
 
     public Sound(String filename) {
         try (InputStream in = getClass().getResourceAsStream(filename)) {
+            assert in != null;
             InputStream bufferedIn = new BufferedInputStream(in);
             try (AudioInputStream audioIn = AudioSystem.getAudioInputStream(bufferedIn)) {
                 clip = AudioSystem.getClip();
