@@ -1,37 +1,23 @@
 import javax.sound.sampled.*;
-import java.io.File;
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
 
 /**
  * Handles playing, stopping, and looping of sounds for the game.
- *
+ * @author Langdon Staab
  * @author Tyler Thomas
  */
 public class Sound {
-    private Clip clip;
+    Clip clip;
 
     public Sound(String filename) {
-        // specify the sound to play
-        // (assuming the sound can be played by the audio system)
-        // from a wave File
-        try {
-            URL url = getClass().getResource(filename);
-            assert url != null;
-            //File file = new File(url.getPath().replace("%20"," "));
-            File file = new File(url.toURI().getPath());
-            //System.out.println(url.toURI().getPath());
-            //System.out.println(url.toURI());
-
-            if (file.exists()) {
-                AudioInputStream sound = AudioSystem.getAudioInputStream(file);
-                // load the sound into memory (a Clip)
+        try (InputStream in = getClass().getResourceAsStream(filename)) {
+            InputStream bufferedIn = new BufferedInputStream(in);
+            try (AudioInputStream audioIn = AudioSystem.getAudioInputStream(bufferedIn)) {
                 clip = AudioSystem.getClip();
-                clip.open(sound);
-            } else {
-                System.out.println("Sound: file not found: " + url.toURI().getPath());
+                clip.open(audioIn);
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -45,8 +31,8 @@ public class Sound {
         } catch (LineUnavailableException e) {
             e.printStackTrace();
             throw new RuntimeException("Sound: Line Unavailable Exception Error: " + e);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         // play, stop, loop the sound clip
@@ -66,6 +52,7 @@ public class Sound {
     }
 
     public boolean isPlaying() {
+        //return false;
         return clip.getMicrosecondLength() > clip.getMicrosecondPosition();
     }
 }
@@ -74,6 +61,6 @@ public class Sound {
 /*
 //System.out.println(url.toURI());
             //System.out.println(url.getPath());
-            //System.out.println();
+            //
  //System.out.println(file.getAbsolutePath());
  */

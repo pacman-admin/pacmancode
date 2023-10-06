@@ -10,6 +10,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0f76c9c-c62b-4bdd-8b11-4708cba682da" name="Changes" comment="Add files">
+      <change afterPath="$PROJECT_DIR$/jar/apple.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jar/bell.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jar/cherry.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jar/galaxian.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jar/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jar/key.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jar/melon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jar/orange.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jar/pause_beat off.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jar/restart.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jar/strawberry.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/apple.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/bell.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/cherry.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/galaxian.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/key.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/melon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/orange.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/pause_beat off.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/restart.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/strawberry.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jar/Pac-Man.jar" beforeDir="false" afterPath="$PROJECT_DIR$/jar/Pac-Man.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Sound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sound.java" afterDir="false" />
@@ -124,8 +146,27 @@
       <option name="project" value="LOCAL" />
       <updated>1695842578303</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Add files">
+      <option name="closed" value="true" />
+      <created>1696448227276</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1696448227276</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />

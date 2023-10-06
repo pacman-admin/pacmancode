@@ -3,10 +3,8 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
+import java.net.URISyntaxException;
 
 /**
  * @author Langdon S.
@@ -55,7 +53,7 @@ public class pac_man extends PApplet {
     //booleans
     boolean /*askToUpdate, */error, finishedDelay, first, first1 = true, keyToggle, lostLife, paused, pelletFirst = true, runSetup = true, start = true, startVal = true;
     //ints
-    int startMillis, chomp = 30, cellCount, duration, flashCount, durationStart = millis(), frameCount1, fruitWorth = 100, highScore, level, livesClaimed, pelletErrors, pelletsEaten, score, time, startFrames = 1;
+    int startMillis, chomp = 30, cellCount, duration, flashCount, durationStart = millis()/*, frameCount1*/, fruitWorth = 100, highScore, level, livesClaimed, pelletErrors, pelletsEaten, score, time, startFrames = 1;
     int coordsX, coordsY, coords3X, coords3Y, coords4X, coords4Y, coords5X, coords5Y;
     int prevHighScore;
     String[] messages = {};
@@ -216,7 +214,7 @@ public class pac_man extends PApplet {
         //check setup2() for setup
     }
 
-    public void setup2() {
+    public void setup2() throws URISyntaxException, IOException {
         noStroke();
         surface.setResizable(true);
 
@@ -376,7 +374,7 @@ public class pac_man extends PApplet {
                             chomp++;
                         }
                         if (first1) {
-                            frameCount1 = 1;
+                            //frameCount1 = 1;
                             first1 = false;
                             delay(100);
                             if (chomp < 60) {
@@ -438,7 +436,7 @@ public class pac_man extends PApplet {
                     if (pelletsEaten >= pellet.length - 1 && !lostLife) {
                         if (!first) {
                             first = true;
-                            frameCount1 = 0;
+                            //frameCount1 = 0;
                             level++;
                             determineFruitType();
                             durationStart = millis();

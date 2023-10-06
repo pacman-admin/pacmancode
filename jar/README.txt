@@ -5,10 +5,12 @@ Avoid the ghosts and eat pellets
 If you encounter an error, bug, or issue, e-mail bugs@getpacman.gq
 
 Acknowledgements:
-Thanks to freepacman.org, Hatch Coding, convertico.com, and The Processing Foundation
+Thanks to freepacman.org, Hatch Coding, convertico.com, XMedia Recode, and The Processing Foundation
 
 Copyright:
 Fruit sprites and sounds are taken from freepacman.org
+Game Sounds converted to .wav with XMedia Recode (xmedia-recode.de)
 Source code produced by Langdon Staab 2018 - 2023 with help from Peter Petrone
-
+Sound manager by Langdon Staab and Tyler Tomas.
+Special Thanks to the McDowell for this post: https://stackoverflow.com/a/5529906
 www.getpacman.gq
