@@ -53,9 +53,10 @@ public class pac_man extends PApplet {
     boolean playStartSound = true; //             |
     boolean playPauseBeat = true; //              |
     //booleans
-    boolean /*askToUpdate, */error, finishedDelay, first, first1 = true, keyToggle, lostLife, paused, pelletFirst = true, runSetup = true, start = true, startVal = true;
+    boolean /*askToUpdate, */error, finishedDelay, first, first1 = true, /*keyToggle,*/
+            lostLife, paused, pelletFirst = true, runSetup = true, start = true;//, startVal = true;
     //ints
-    int startMillis, chomp = 30, cellCount, duration, flashCount, durationStart = millis()/*, frameCount1*/, fruitWorth = 100, highScore, level, livesClaimed, pelletErrors, pelletsEaten, score, time, startFrames = 1;
+    int startMillis, chomp = 30, cellCount, duration/*, flashCount*/, durationStart = millis()/*, frameCount1*/, fruitWorth = 100, highScore, level, livesClaimed, pelletErrors, pelletsEaten, score, time, startFrames = 1;
     int coordsX, coordsY, coords3X, coords3Y, coords4X, coords4Y, coords5X, coords5Y;
     int prevHighScore;
     String[] messages = {};
@@ -63,13 +64,21 @@ public class pac_man extends PApplet {
     //float newVersion = 10.0f;
     float tempFPSVal;//, newVersion, updateVersion;
     PImage cherry, strawberry, apple, orange, melon, galaxian, bell, keyI, restartB, noPauseBeatB;
-    PImage test;
     Sound dieS, startSound, dotSound1, dotSound2, fruit, extra_life, pause, pause_beat;
     Pellet[] pellet = {};
     Coordinate[] coords2 = {};
 
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ A FEW RANDOM FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~///
+
+    static public void main(String[] passedArgs) {
+        String[] appletArgs = new String[]{"pac_man"};
+        if (passedArgs != null) {
+            PApplet.main(concat(appletArgs, passedArgs));
+        } else {
+            PApplet.main(appletArgs);
+        }
+    }
 
     public void settings() {
         /*if (useOpenGL) {
@@ -83,14 +92,14 @@ public class pac_man extends PApplet {
     public void setup() {
         surface.setTitle("Loading...");
         System.out.println("Please wait...");
+        background(0);
         noStroke();
         textSize(20);
         textAlign(CENTER);
         fill(255);
-        background(0);
         text("Loading...\nBy Langdon Staab\n\nSound manager by Tyler Tomas", round(width / 2f), round(height / 2f));
-        //startMillis = millis();
         frameRate(120);
+        //
         //check setup2() for setup
     }
 
@@ -98,12 +107,9 @@ public class pac_man extends PApplet {
 
         noStroke();
         surface.setResizable(true);
-
         imageMode(CENTER);
         changeAppIcon();
         path = System.getProperty("user.home") + "/";
-
-
 
 
         String temp = loadString(path + "highscore.txt");
@@ -189,6 +195,7 @@ public class pac_man extends PApplet {
                 startFrames = frameCount;
                 durationStart = millis();
                 duration = 4500 + millis();
+                startMillis = millis();
 
                 //}
                 //} else if (updating) {
@@ -218,7 +225,7 @@ public class pac_man extends PApplet {
                         ghost1.halt();
                         ghost2.halt();
                         ghost3.halt();
-                        startVal = true;
+                        //startVal = true;
                         start = true;
                     } else if (!finishedDelay) {
                         start = true;
@@ -327,7 +334,6 @@ public class pac_man extends PApplet {
                             pacman.stop();
                             makePelletCoords();
                             pelletErrors = 0;
-                            flashCount = 0;
                             playStartSound = false;
                         }
                     }
@@ -338,7 +344,6 @@ public class pac_man extends PApplet {
                     //int useless = 5/0;
                 }
                 if (keyPressed) {
-                    keyToggle = true;
                     switch (keyCode) {
                         case UP, 87 -> pacman.up();
                         case DOWN, 83 -> pacman.down();
@@ -375,7 +380,7 @@ public class pac_man extends PApplet {
         textAlign(CENTER);
         textSize(12);
         text("HIGH SCORE\n" + highScore, width / 2f, 12);
-        makeTime();
+        time = millis() - startMillis;
         tempFPSVal = (time / 1000f) > 0 ? (time / 1000f) : 1;
         text(str(round((frameCount - startFrames) / tempFPSVal)), 330, 10);
         showLives();
@@ -443,7 +448,6 @@ public class pac_man extends PApplet {
         }
     }
 
-
     public int createPosition(boolean dirIsX) {
         int newPos = parseInt(round(random(cellWidth, canvasHeight - cellWidth * 2) / cellWidth) * cellWidth + cellWidth / 2);
         while (dirIsX && newPos <= cellWidth * 2.5) {
@@ -476,6 +480,9 @@ public class pac_man extends PApplet {
         }
     }
 
+
+////// Calling Things //////
+
     public boolean checkGoodDir(String dir, int posX, int posY) {
         boolean goodDir = true;
         switch (dir) {
@@ -504,7 +511,7 @@ public class pac_man extends PApplet {
     }
 
 
-////// Calling Things //////
+//////// FUNCTIONS ////////
 
     public String makeDir(int Var) {
         return switch (Var) {
@@ -515,9 +522,6 @@ public class pac_man extends PApplet {
             default -> "stopped";
         };
     }
-
-
-//////// FUNCTIONS ////////
 
     public int makeDirNum() {
         float tempDirNum = random(-0.1f, 4);
@@ -568,7 +572,7 @@ public class pac_man extends PApplet {
     }
 
     public void destroyUselessMessages() {
-        makeTime();
+        time = millis() - startMillis;
         while (messages.length > 6) {
             messages = shorten(messages);
         }
@@ -604,10 +608,6 @@ public class pac_man extends PApplet {
         }
     }
 
-    public void makeTime() {
-        time = millis() - startMillis;
-    }
-
     public void restart() {
         lives = 3;
         lostLife = false;
@@ -619,7 +619,7 @@ public class pac_man extends PApplet {
         pacman.y = cellWidth * 1.5f;
         score = 0;
         determineFruitType();
-        startVal = true;
+        //startVal = true;
         //startSuccess = false;
         for (Pellet value : pellet) {
             value.update();
@@ -794,19 +794,18 @@ public class pac_man extends PApplet {
         }
     }
 
-
     //// OBJECTS \\\\
     public class Ghost {
-        static int size;
-        static boolean stopped;
+        //static int size;
+        //static boolean stopped;
         float x, y;
         String dir;
 
         Ghost() {
             x = createPosition(true);
             y = createPosition(false);
-            size = parseInt(cellWidth);
-            stopped = true;
+            //size = parseInt(cellWidth);
+            //stopped = true;
             dir = "up";
         }
 
@@ -861,7 +860,7 @@ public class pac_man extends PApplet {
         }
 
         public void halt() {
-            stopped = true;
+            //stopped = true;
             dir = "stopped";
         }
 
@@ -1015,10 +1014,10 @@ public class pac_man extends PApplet {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Pacman~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     class Pacman {
-        boolean stopped = true;
         final int size = parseInt(cellWidth - 1);
-        float x = cellWidth / 2f + cellWidth;
         final float speed = pacmanSpeed * ((cellWidth + 32) / 2) / 32f;
+        boolean stopped = true;
+        float x = cellWidth / 2f + cellWidth;
         float y = cellWidth / 2f + cellWidth;
 
         String nextDir = "stopped", dir = "stopped", lastDir = dir;
@@ -1320,15 +1319,6 @@ public class pac_man extends PApplet {
             fill(colour);
             rect(x, y, size, size);
             rectMode(CORNER);
-        }
-    }
-
-    static public void main(String[] passedArgs) {
-        String[] appletArgs = new String[]{"pac_man"};
-        if (passedArgs != null) {
-            PApplet.main(concat(appletArgs, passedArgs));
-        } else {
-            PApplet.main(appletArgs);
         }
     }
 }
