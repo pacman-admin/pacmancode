@@ -58,11 +58,3 @@ public class Sound {
         return clip.getMicrosecondLength() > clip.getMicrosecondPosition();
     }
 }
-
-
-/*
-//System.out.println(url.toURI());
-            //System.out.println(url.getPath());
-            //
- //System.out.println(file.getAbsolutePath());
- */
