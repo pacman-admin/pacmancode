@@ -16,14 +16,14 @@ public class pac_man extends PApplet {
     final static String TITLE = "Pac-Man ";
     // By Langdon S.
     //current version:
-    final float version = 10.31f;
+    final float version = 10.4f;
     //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 //            G A M E  S E T T I N G S            |
     final boolean startsWMouth = false; //        |
     final boolean eyesMove = true; //             |
     final boolean showGhostWhenStopped = true;//  |
-    //final boolean useOpenGL = false;//            |
+    final boolean useOpenGL = true;//            |
     final boolean other = false; //               |
     final float ghostSpeed = 2; //                |
     final float pacmanSpeed = 3; //               |
@@ -53,15 +53,13 @@ public class pac_man extends PApplet {
     boolean playStartSound = true; //             |
     boolean playPauseBeat = true; //              |
     //booleans
-    boolean /*askToUpdate, */error, finishedDelay, first, first1 = true, /*keyToggle,*/
-            lostLife, paused, pelletFirst = true, runSetup = true, start = true;//, startVal = true;
+    boolean /*askToUpdate, */error, finishedDelay, first, first1 = true, lostLife, paused, pelletFirst = true, runSetup = true, start = true;
     //ints
-    int startMillis, chomp = 30, cellCount, duration/*, flashCount*/, durationStart = millis()/*, frameCount1*/, fruitWorth = 100, highScore, level, livesClaimed, pelletErrors, pelletsEaten, score, time, startFrames = 1;
+    int startMillis, chomp = 30, cellCount, duration, durationStart = millis(), fruitWorth = 100, highScore, level, livesClaimed, pelletErrors, pelletsEaten, score, time, startFrames = 1;
     int coordsX, coordsY, coords3X, coords3Y, coords4X, coords4Y, coords5X, coords5Y;
     int prevHighScore;
     String[] messages = {};
     String errorInfo;
-    //float newVersion = 10.0f;
     float tempFPSVal;//, newVersion, updateVersion;
     PImage cherry, strawberry, apple, orange, melon, galaxian, bell, keyI, restartB, noPauseBeatB;
     Sound dieS, startSound, dotSound1, dotSound2, fruit, extra_life, pause, pause_beat;
@@ -81,12 +79,12 @@ public class pac_man extends PApplet {
     }
 
     public void settings() {
-        /*if (useOpenGL) {
-            size(canvasWidth, canvasHeight, FX2D);
+        if (useOpenGL) {
+            size(canvasWidth, canvasHeight, JAVA2D);
             smooth(8);
-        } else {*/
-        size(canvasWidth, canvasHeight);
-        // }
+        } else {
+            size(canvasWidth, canvasHeight);
+        }
     }
 
     public void setup() {
@@ -225,7 +223,6 @@ public class pac_man extends PApplet {
                         ghost1.halt();
                         ghost2.halt();
                         ghost3.halt();
-                        //startVal = true;
                         start = true;
                     } else if (!finishedDelay) {
                         start = true;
@@ -311,7 +308,6 @@ public class pac_man extends PApplet {
                     if (pelletsEaten >= pellet.length - 1 && !lostLife) {
                         if (!first) {
                             first = true;
-                            //frameCount1 = 0;
                             level++;
                             determineFruitType();
                             durationStart = millis();
@@ -370,9 +366,6 @@ public class pac_man extends PApplet {
 
     public void display() {
         /*if(frameCount%100 == 0){
-
-            File file = new File("pause.wav");
-           //System.out.println(file.exists());
         //System.out.println("Ghost1: "+ghost1.dir+"Ghost2: "+ghost2.dir+"Ghost3: "+ghost3.dir);
         }*/
         drawButtons();
@@ -402,7 +395,6 @@ public class pac_man extends PApplet {
                 restart();
             }
         }
-        //image(test, 200, 200);
     }
 
     public void changeAppIcon() {
@@ -553,6 +545,7 @@ public class pac_man extends PApplet {
                 if (cellMap[row - 1][col]) {
                     //noinspection StatementWithEmptyBody
                     if (col == 1 && row == 1) {
+                        //if (col != 1 && row != 1) {
                     } else {
                         pellet = (Pellet[]) append(pellet, new Pellet(parseInt(col * cellWidth + cellWidth / 2), parseInt(row * cellWidth + cellWidth / 2)));
                         coords2 = (Coordinate[]) append(coords2, new Coordinate());
@@ -619,8 +612,6 @@ public class pac_man extends PApplet {
         pacman.y = cellWidth * 1.5f;
         score = 0;
         determineFruitType();
-        //startVal = true;
-        //startSuccess = false;
         for (Pellet value : pellet) {
             value.update();
         }
@@ -796,16 +787,12 @@ public class pac_man extends PApplet {
 
     //// OBJECTS \\\\
     public class Ghost {
-        //static int size;
-        //static boolean stopped;
         float x, y;
         String dir;
 
         Ghost() {
             x = createPosition(true);
             y = createPosition(false);
-            //size = parseInt(cellWidth);
-            //stopped = true;
             dir = "up";
         }
 
@@ -1309,9 +1296,6 @@ public class pac_man extends PApplet {
 
 
         public void draw(int gColour) {
-            /*if (size == 999) {
-                size = 1;
-            }*/
             if (colourCode == 1) {
                 colour = gColour;
             }

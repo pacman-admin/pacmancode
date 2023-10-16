@@ -8,7 +8,7 @@ import java.net.MalformedURLException;
  * Handles playing, stopping, and looping of sounds for the game.
  *
  * @author Langdon Staab
- * @author Tyler Thomas
+ * @author Tyler Tomas
  */
 public class Sound {
     Clip clip;
