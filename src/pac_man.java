@@ -23,7 +23,7 @@ public class pac_man extends PApplet {
     final boolean startsWMouth = false; //        |
     final boolean eyesMove = true; //             |
     final boolean showGhostWhenStopped = true;//  |
-    final boolean useOpenGL = true;//            |
+    //final boolean useOpenGL = true;//            |
     final boolean other = false; //               |
     final float ghostSpeed = 2; //                |
     final float pacmanSpeed = 3; //               |
@@ -31,7 +31,6 @@ public class pac_man extends PApplet {
     final float cellWidth = 32;
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
     final int pelletWorth = 10, canvasWidth = parseInt(cellWidth * 13f), canvasHeight = parseInt(cellWidth * 13f), gSize = 2;
-    //final int[] livesOrder = {1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000};
     final String[] fruitPoints = {"cherry", "strawberry", "orange", "orange", "apple", "apple", "melon", "melon", "galaxian", "galaxian", "bell", "bell", "key", "key"};
     final Ghost ghost1 = new Ghost();
     final Ghost ghost2 = new Ghost();
@@ -79,12 +78,12 @@ public class pac_man extends PApplet {
     }
 
     public void settings() {
-        if (useOpenGL) {
-            size(canvasWidth, canvasHeight, JAVA2D);
-            smooth(8);
-        } else {
+        /*if (useOpenGL) {
             size(canvasWidth, canvasHeight);
-        }
+            smooth(8);
+        } else {*/
+        size(canvasWidth, canvasHeight);
+        //}
     }
 
     public void setup() {
