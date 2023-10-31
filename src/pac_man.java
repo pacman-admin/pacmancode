@@ -96,18 +96,15 @@ public class pac_man extends PApplet {
         fill(255);
         text("Loading...\nBy Langdon Staab\n\nSound manager by Tyler Tomas", round(width / 2f), round(height / 2f));
         frameRate(120);
-        //
         //check setup2() for setup
     }
 
     public void setup2() {
-
         noStroke();
         surface.setResizable(true);
         imageMode(CENTER);
         changeAppIcon();
         path = System.getProperty("user.home") + "/";
-
 
         String temp = loadString(path + "highscore.txt");
         if (temp.equals("error")) {
@@ -117,7 +114,6 @@ public class pac_man extends PApplet {
         } else {
             prevHighScore = parseInt(temp);
         }
-
 
         pause_beat = new Sound("pause_beat.wav");
         dieS = new Sound("death.wav");
@@ -129,16 +125,13 @@ public class pac_man extends PApplet {
         pause = new Sound("pause.wav");
         System.out.println("Sound load success!");
 
-        noPauseBeatB = loadImage("pause_beat off.png");
         cherry = loadImage("cherry.png");
+        noPauseBeatB = loadImage("pause_beat off.png");
+        restartB = loadImage("restart.png");
         strawberry = loadImage("strawberry.png");
         orange = loadImage("orange.png");
         apple = loadImage("apple.png");
         melon = loadImage("melon.png");
-        galaxian = loadImage("galaxian.png");
-        bell = loadImage("bell.png");
-        keyI = loadImage("key.png");
-        restartB = loadImage("restart.png");
         System.out.println("Image load success!");
 
         createMaze();
@@ -147,11 +140,9 @@ public class pac_man extends PApplet {
         pxInit();
         startMillis = millis();
         pellet[5].isFruit = true;
-        //}
         surface.setTitle(TITLE + version);
 
         System.out.println("Setup success!");
-
     }
 
     public void logError(Exception e) {
@@ -183,6 +174,16 @@ public class pac_man extends PApplet {
         }
     }
 
+    public void lazyLoad() {
+        messages = splice(messages, "Loading more fruit sprites...", 0);
+
+
+        galaxian = loadImage("galaxian.png");
+        bell = loadImage("bell.png");
+        keyI = loadImage("key.png");
+        messages = splice(messages, "All fruit sprites loaded successfully.", 0);
+    }
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN PROGRAM ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     public void draw() {
         try {
@@ -193,10 +194,14 @@ public class pac_man extends PApplet {
                 durationStart = millis();
                 duration = 4500 + millis();
                 startMillis = millis();
+                println(millis());
 
-                //}
                 //} else if (updating) {
                 //askUpdate();\
+            } else if (millis() < 2000) {
+                //display loading screen for a minimum of 2 seconds.
+                //wait until 2 seconds have passed
+                
             } else if (lives <= 0) {
                 background(0);
                 fill(255, 64, 64);
@@ -245,7 +250,6 @@ public class pac_man extends PApplet {
                             chomp++;
                         }
                         if (first1) {
-                            //frameCount1 = 1;
                             first1 = false;
                             delay(100);
                             if (chomp < 60) {
@@ -320,7 +324,7 @@ public class pac_man extends PApplet {
                             showMaze(color(222, 222, 255), true);
                         }
                         if (millis() - durationStart >= 2000) {
-                            determineFruitType();
+                            //determineFruitType();
                             pacman.update();
                             ghost1.up();
                             ghost2.up();
@@ -544,7 +548,6 @@ public class pac_man extends PApplet {
                 if (cellMap[row - 1][col]) {
                     //noinspection StatementWithEmptyBody
                     if (col == 1 && row == 1) {
-                        //if (col != 1 && row != 1) {
                     } else {
                         pellet = (Pellet[]) append(pellet, new Pellet(parseInt(col * cellWidth + cellWidth / 2), parseInt(row * cellWidth + cellWidth / 2)));
                         coords2 = (Coordinate[]) append(coords2, new Coordinate());
@@ -663,6 +666,10 @@ public class pac_man extends PApplet {
     }
 
     public void determineFruitType() {
+        if (level == 8) {
+            println(fruitPoints[level]);
+            lazyLoad();
+        }
         if (level < fruitPoints.length) {
             pellet[5].fruitType = fruitPoints[level];
         } else {
