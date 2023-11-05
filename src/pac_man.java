@@ -153,6 +153,7 @@ public class pac_man extends PApplet {
             e.printStackTrace(pWriter);
         } catch (Exception ie) {
             System.out.println("Could not write Exception to file");
+            //noinspection CallToPrintStackTrace
             ie.printStackTrace();
             errorInfo += "\n\n\n";
             StringWriter sw = new StringWriter();
@@ -198,159 +199,160 @@ public class pac_man extends PApplet {
 
                 //} else if (updating) {
                 //askUpdate();\
-            } else if (millis() < 2000) {
-                //display loading screen for a minimum of 2 seconds.
-                //wait until 2 seconds have passed
-                
-            } else if (lives <= 0) {
-                background(0);
-                fill(255, 64, 64);
-                textAlign(CENTER);
-                text("GAME OVER", canvasWidth / 2f, canvasHeight / 2f);
-                text("Click the screen to play again", canvasWidth / 2f, canvasHeight / 2f + 40);
-                if (mousePressed) {
-                    restart();
-                }
+            } else //noinspection StatementWithEmptyBody
+                if (millis() < 3000) {
+                    //display loading screen for a minimum of 2 seconds.
+                    //wait until 2 seconds have passed
 
-            } else if (error) {
-                background(0);
-                textAlign(LEFT, CENTER);
-                text(errorInfo, 4, height / 2f);
-
-
-            } else {
-                if (frameCount % 2 == 0 && !paused) {
-                    if (millis() < duration) {
-                        pacman.stop();
-                        pacman.stopped = true;
-                        finishedDelay = false;
-                        ghost1.halt();
-                        ghost2.halt();
-                        ghost3.halt();
-                        start = true;
-                    } else if (!finishedDelay) {
-                        start = true;
-                        ghost1.up();
-                        ghost2.up();
-                        ghost3.up();
-                        finishedDelay = true;
-                    }
-
-                    destroyUselessMessages();
-
-                    ghostPx[1][1].colourInit();
-                    coords3X = getGhostCoords(ghost1).x;
-                    coords3Y = getGhostCoords(ghost1).y;
-                    coords4X = getGhostCoords(ghost2).x;
-                    coords4Y = getGhostCoords(ghost2).y;
-                    coords5X = getGhostCoords(ghost3).x;
-                    coords5Y = getGhostCoords(ghost3).y;
-                    if (lostLife) {
-                        if (chomp < 60) {
-                            chomp++;
-                        }
-                        if (first1) {
-                            first1 = false;
-                            delay(100);
-                            if (chomp < 60) {
-                                chomp = 60;
-                            }
-                            dieS.play();
-                        }
-                        pacman.stop();
-                        ghost1.halt();
-                        ghost2.halt();
-                        ghost3.halt();
-                        if (dieS.isPlaying()) {
-                            chomp += 2;
-                        } else {
-                            ghost1.newGame();
-                            ghost2.newGame();
-                            ghost3.newGame();
-                            pacman.x = cellWidth * 1.5f;
-                            pacman.y = cellWidth * 1.5f;
-                            first1 = true;
-                            lostLife = false;
-                            chomp = 16;
-                            duration = 2000 + millis();
-                            ghost1.up();
-                            ghost2.up();
-                            ghost3.up();
-                            pacman.stop();
-                            pacman.stopped = true;
-                            lives--;
-                        }
-                    }
-                    if (!pacman.dir.equals("stopped")) {
-                        if (chomp > 60) {
-                            chompSpeed = -chompSpeed;
-                        }
-                        if (chomp < 10) {
-                            chompSpeed = -chompSpeed;
-                        }
-                        chomp += chompSpeed;
-                    }
-                    if (pelletsEaten < pellet.length - 1 && !lostLife) {
-                        pacman.update();
-                    }
-                    ghost1.update(coords3X, coords3Y);
-                    ghost2.update(coords4X, coords4Y);
-                    ghost3.update(coords5X, coords5Y);
-                    ghost1.goodPosition(coords3X, coords3Y);
-                    ghost2.goodPosition(coords4X, coords4Y);
-                    ghost3.goodPosition(coords5X, coords5Y);
-                    controlGhostMovement(coords3X, coords3Y, coords4X, coords4Y, coords5X, coords5Y);
-                    for (int b = 0; b < coords2.length; b++) {
-                        pellet[b].goodPosition(coords2[b].x, coords2[b].y);
-                        pellet[b].isBEaten();
-                    }
-
+                } else if (lives <= 0) {
                     background(0);
-                    showMaze(color(33, 33, 255), true);
+                    fill(255, 64, 64);
+                    textAlign(CENTER);
+                    text("GAME OVER", canvasWidth / 2f, canvasHeight / 2f);
+                    text("Click the screen to play again", canvasWidth / 2f, canvasHeight / 2f + 40);
+                    if (mousePressed) {
+                        restart();
+                    }
 
-                    if (pelletsEaten >= pellet.length - 1 && !lostLife) {
-                        if (!first) {
-                            first = true;
-                            level++;
-                            determineFruitType();
-                            durationStart = millis();
-                            duration = 2000 + millis();
-                        }
-                        ghost1.halt();
-                        ghost2.halt();
-                        ghost3.halt();
-                        pacman.stop();
-                        if ((millis() - durationStart < 250) || (millis() - durationStart < 750 && millis() - durationStart > 500) || (millis() - durationStart < 1250 && millis() - durationStart > 1000) || (millis() - durationStart < 1750 && millis() - durationStart > 1500)) {
-                            showMaze(color(222, 222, 255), true);
-                        }
-                        if (millis() - durationStart >= 2000) {
-                            //determineFruitType();
-                            pacman.update();
+                } else if (error) {
+                    background(0);
+                    textAlign(LEFT, CENTER);
+                    text(errorInfo, 4, height / 2f);
+
+
+                } else {
+                    if (frameCount % 2 == 0 && !paused) {
+                        if (millis() < duration) {
+                            pacman.stop();
+                            pacman.stopped = true;
+                            finishedDelay = false;
+                            ghost1.halt();
+                            ghost2.halt();
+                            ghost3.halt();
+                            start = true;
+                        } else if (!finishedDelay) {
+                            start = true;
                             ghost1.up();
                             ghost2.up();
                             ghost3.up();
-                            pacman.stopped = true;
+                            finishedDelay = true;
+                        }
+
+                        destroyUselessMessages();
+
+                        ghostPx[1][1].colourInit();
+                        coords3X = getGhostCoords(ghost1).x;
+                        coords3Y = getGhostCoords(ghost1).y;
+                        coords4X = getGhostCoords(ghost2).x;
+                        coords4Y = getGhostCoords(ghost2).y;
+                        coords5X = getGhostCoords(ghost3).x;
+                        coords5Y = getGhostCoords(ghost3).y;
+                        if (lostLife) {
+                            if (chomp < 60) {
+                                chomp++;
+                            }
+                            if (first1) {
+                                first1 = false;
+                                delay(100);
+                                if (chomp < 60) {
+                                    chomp = 60;
+                                }
+                                dieS.play();
+                            }
                             pacman.stop();
-                            makePelletCoords();
-                            pelletErrors = 0;
-                            playStartSound = false;
+                            ghost1.halt();
+                            ghost2.halt();
+                            ghost3.halt();
+                            if (dieS.isPlaying()) {
+                                chomp += 2;
+                            } else {
+                                ghost1.newGame();
+                                ghost2.newGame();
+                                ghost3.newGame();
+                                pacman.x = cellWidth * 1.5f;
+                                pacman.y = cellWidth * 1.5f;
+                                first1 = true;
+                                lostLife = false;
+                                chomp = 16;
+                                duration = 2000 + millis();
+                                ghost1.up();
+                                ghost2.up();
+                                ghost3.up();
+                                pacman.stop();
+                                pacman.stopped = true;
+                                lives--;
+                            }
+                        }
+                        if (!pacman.dir.equals("stopped")) {
+                            if (chomp > 60) {
+                                chompSpeed = -chompSpeed;
+                            }
+                            if (chomp < 10) {
+                                chompSpeed = -chompSpeed;
+                            }
+                            chomp += chompSpeed;
+                        }
+                        if (pelletsEaten < pellet.length - 1 && !lostLife) {
+                            pacman.update();
+                        }
+                        ghost1.update(coords3X, coords3Y);
+                        ghost2.update(coords4X, coords4Y);
+                        ghost3.update(coords5X, coords5Y);
+                        ghost1.goodPosition(coords3X, coords3Y);
+                        ghost2.goodPosition(coords4X, coords4Y);
+                        ghost3.goodPosition(coords5X, coords5Y);
+                        controlGhostMovement(coords3X, coords3Y, coords4X, coords4Y, coords5X, coords5Y);
+                        for (int b = 0; b < coords2.length; b++) {
+                            pellet[b].goodPosition(coords2[b].x, coords2[b].y);
+                            pellet[b].isBEaten();
+                        }
+
+                        background(0);
+                        showMaze(color(33, 33, 255), true);
+
+                        if (pelletsEaten >= pellet.length - 1 && !lostLife) {
+                            if (!first) {
+                                first = true;
+                                level++;
+                                determineFruitType();
+                                durationStart = millis();
+                                duration = 2000 + millis();
+                            }
+                            ghost1.halt();
+                            ghost2.halt();
+                            ghost3.halt();
+                            pacman.stop();
+                            if ((millis() - durationStart < 250) || (millis() - durationStart < 750 && millis() - durationStart > 500) || (millis() - durationStart < 1250 && millis() - durationStart > 1000) || (millis() - durationStart < 1750 && millis() - durationStart > 1500)) {
+                                showMaze(color(222, 222, 255), true);
+                            }
+                            if (millis() - durationStart >= 2000) {
+                                //determineFruitType();
+                                pacman.update();
+                                ghost1.up();
+                                ghost2.up();
+                                ghost3.up();
+                                pacman.stopped = true;
+                                pacman.stop();
+                                makePelletCoords();
+                                pelletErrors = 0;
+                                playStartSound = false;
+                            }
+                        }
+                        display();
+                        if (start) {
+                            start = false;
+                        }
+                        //int useless = 5/0;
+                    }
+                    if (keyPressed) {
+                        switch (keyCode) {
+                            case UP, 87 -> pacman.up();
+                            case DOWN, 83 -> pacman.down();
+                            case RIGHT, 68 -> pacman.right();
+                            case LEFT, 65 -> pacman.left();
                         }
                     }
-                    display();
-                    if (start) {
-                        start = false;
-                    }
-                    //int useless = 5/0;
                 }
-                if (keyPressed) {
-                    switch (keyCode) {
-                        case UP, 87 -> pacman.up();
-                        case DOWN, 83 -> pacman.down();
-                        case RIGHT, 68 -> pacman.right();
-                        case LEFT, 65 -> pacman.left();
-                    }
-                }
-            }
         } catch (Exception e) {
             paused = true;
             StringWriter sw = new StringWriter();

@@ -1,3 +1,3 @@
 public class Coordinate {
-        int x,y;
+    int x, y;
 }

@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 public class Sound {
     Clip clip;
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public Sound(String filename) {
         try (InputStream in = getClass().getResourceAsStream(filename)) {
             assert in != null;
