@@ -3,10 +3,7 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 
 /**
  * @author Langdon S.
@@ -52,9 +49,9 @@ public class pac_man extends PApplet {
     boolean playStartSound = true; //             |
     boolean playPauseBeat = true; //              |
     //booleans
-    boolean /*askToUpdate, */error, finishedDelay, first, first1 = true, lostLife, paused, pelletFirst = true, runSetup = true, start = true;
+    boolean /*askToUpdate, */error, finishedDelay, first, first1 = true, lostLife, paused, pelletFirst, runSetup = true, start;
     //ints
-    int startMillis, chomp = 30, cellCount, duration, durationStart = millis(), fruitWorth = 100, highScore, level, livesClaimed, pelletErrors, pelletsEaten, score, time, startFrames = 1;
+    int startMillis, chomp = 30, cellCount, duration, durationStart, fruitWorth, highScore, level, livesClaimed, pelletErrors, pelletsEaten, score, startFrames;
     int coordsX, coordsY, coords3X, coords3Y, coords4X, coords4Y, coords5X, coords5Y;
     int prevHighScore;
     String[] messages = {};
@@ -200,7 +197,7 @@ public class pac_man extends PApplet {
                 //} else if (updating) {
                 //askUpdate();\
             } else //noinspection StatementWithEmptyBody
-                if (millis() < 3000) {
+                if (millis() < 2000) {
                     //display loading screen for a minimum of 2 seconds.
                     //wait until 2 seconds have passed
 
@@ -378,8 +375,7 @@ public class pac_man extends PApplet {
         textAlign(CENTER);
         textSize(12);
         text("HIGH SCORE\n" + highScore, width / 2f, 12);
-        time = millis() - startMillis;
-        tempFPSVal = (time / 1000f) > 0 ? (time / 1000f) : 1;
+        tempFPSVal = ((millis() - startMillis) / 1000f) > 0 ? ((millis() - startMillis) / 1000f) : 1;
         text(str(round((frameCount - startFrames) / tempFPSVal)), 330, 10);
         showLives();
         noStroke();
@@ -569,11 +565,10 @@ public class pac_man extends PApplet {
     }
 
     public void destroyUselessMessages() {
-        time = millis() - startMillis;
         while (messages.length > 6) {
             messages = shorten(messages);
         }
-        if (time % 25 == 0 && time > 500 && messages.length > 0) {
+        if ((millis() - startMillis) % 25 == 0 && (millis() - startMillis) > 500 && messages.length > 0) {
             messages = shorten(messages);
         }
         if (messages.length > 4) {
@@ -592,7 +587,7 @@ public class pac_man extends PApplet {
         }
     }
 
-    public void increaseHighScore() {
+    public void increaseHighScore() throws FileNotFoundException {
         if (prevHighScore > highScore) {
             highScore = prevHighScore;
         }
@@ -600,8 +595,11 @@ public class pac_man extends PApplet {
             highScore = score;
         }
         if (highScore > prevHighScore) {
-            String[] newHighScore = {str(highScore)};
-            saveStrings(path + "highscore.txt", newHighScore);
+           //String[] newHighScore = {str(highScore)};
+            PrintWriter out = new PrintWriter(path + "highscore.txt");
+            out.println(str(highScore));
+            out.close();
+            //saveStrings(path + "highscore.txt", newHighScore);
         }
     }
 
@@ -905,6 +903,9 @@ public class pac_man extends PApplet {
         }
     }
 
+
+
+
     //// Pellet \\\\
     class Pellet {
         int x, y;
@@ -924,7 +925,7 @@ public class pac_man extends PApplet {
             }
         }
 
-        public void isBEaten() {
+        public void isBEaten() throws FileNotFoundException {
             if (!eaten && dist(x, y, pacman.x, pacman.y) < cellWidth / 8f + pacman.size / 8f) {
                 if (isFruit) {
                     switch (fruitType) {
