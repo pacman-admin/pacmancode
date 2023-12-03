@@ -5,6 +5,9 @@ import processing.core.PImage;
 
 import java.io.*;
 
+//import static java.lang.Integer.parseInt;
+//import static java.lang.Math.round;
+
 /**
  * @author Langdon S.
  */
@@ -13,7 +16,7 @@ public class pac_man extends PApplet {
     final static String TITLE = "Pac-Man ";
     // By Langdon S.
     //current version:
-    final float version = 10.4f;
+    final static float version = 10.4f;
     //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 //            G A M E  S E T T I N G S            |
@@ -595,7 +598,7 @@ public class pac_man extends PApplet {
             highScore = score;
         }
         if (highScore > prevHighScore) {
-           //String[] newHighScore = {str(highScore)};
+            //String[] newHighScore = {str(highScore)};
             PrintWriter out = new PrintWriter(path + "highscore.txt");
             out.println(str(highScore));
             out.close();
@@ -902,8 +905,6 @@ public class pac_man extends PApplet {
             }
         }
     }
-
-
 
 
     //// Pellet \\\\
