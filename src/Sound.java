@@ -24,16 +24,16 @@ public class Sound {
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Sound: Malformed URL: " + e);
+            throw new RuntimeException("Sound: Malformed URL: \n" + e);
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
-            throw new RuntimeException("Sound: Unsupported Audio File: " + e);
+            throw new RuntimeException("Sound: Unsupported Audio File: \n" + e);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Sound: Input/Output Error: " + e);
+            throw new RuntimeException("Sound: Input/Output Error: \n" + e);
         } catch (LineUnavailableException e) {
             e.printStackTrace();
-            throw new RuntimeException("Sound: Line Unavailable Exception Error: " + e);
+            throw new RuntimeException("Sound: Line Unavailable Exception Error: \n" + e);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,6 +56,6 @@ public class Sound {
 
     public boolean isPlaying() {
         //return false;
-        return clip.getMicrosecondLength() > clip.getMicrosecondPosition();
+        return clip.getFrameLength() > clip.getFramePosition();
     }
 }

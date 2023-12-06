@@ -10,25 +10,24 @@ import java.io.*;
  */
 
 public class pac_man extends PApplet {
-    final static String TITLE = "Pac-Man ";
     // By Langdon S.
     //current version:
-    final float version = 10.4f;
+    final static String TITLE = "Pac-Man 10.5";
     //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 //            G A M E  S E T T I N G S            |
-    final boolean startsWMouth = false; //        |
-    final boolean eyesMove = true; //             |
-    final boolean showGhostWhenStopped = true;//  |
-    //final boolean useOpenGL = true;//            |
-    final boolean other = false; //               |
-    final float ghostSpeed = 2; //                |
-    final float pacmanSpeed = 3; //               |
-    //final boolean turnAround = true; //           |
-    final float cellWidth = 32;
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-    final int pelletWorth = 10, canvasWidth = parseInt(cellWidth * 13f), canvasHeight = parseInt(cellWidth * 13f), gSize = 2;
-    final String[] fruitPoints = {"cherry", "strawberry", "orange", "orange", "apple", "apple", "melon", "melon", "galaxian", "galaxian", "bell", "bell", "key", "key"};
+    final static boolean startsWMouth = false; //        |
+    final static boolean eyesMove = true; //             |
+    final static boolean showGhostWhenStopped = true;//  |
+    //final static boolean useOpenGL = true;//           |
+    final static boolean other = false; //               |
+    final static float ghostSpeed = 2; //                |
+    final static float pacmanSpeed = 3; //               |
+    //final static boolean turnAround = true; //         |
+    final static float cellWidth = 32;
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+    final static int pelletWorth = 10, canvasWidth = Math.round(cellWidth * 13f), canvasHeight = Math.round(cellWidth * 13f), gSize = 2;
+    final static String[] fruitPoints = {"cherry", "strawberry", "orange", "orange", "apple", "apple", "melon", "melon", "galaxian", "galaxian", "bell", "bell", "key", "key"};
     final Ghost ghost1 = new Ghost();
     final Ghost ghost2 = new Ghost();
     final Ghost ghost3 = new Ghost();
@@ -36,9 +35,9 @@ public class pac_man extends PApplet {
     final Cell[][] cells = {new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13]};
     final Pixel[][] ghostPx = {new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16]};
     final Pixel[][] ghostBottom2Px = {new Pixel[16], new Pixel[16]};
-    final byte[][] gDesign = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0}, {0, 0, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 0, 0}, {0, 0, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 0, 0}, {0, 1, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 1, 0}, {0, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0}, {0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-    final int[][] altGhostBottom = {{0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0}, {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0}};
-    final boolean[][] cellMap = {{false, true, false, true, true, true, true, true, true, true, true, true}, {false, true, true, true, false, false, false, false, false, false, false, true}, {false, true, false, true, true, true, true, true, true, true, false, true}, {false, true, false, true, false, false, false, false, false, true, false, true}, {false, true, true, true, true, true, true, true, true, true, true, true}, {false, true, false, true, false, true, false, false, true, false, true, true}, {false, true, false, true, false, true, false, true, true, false, true, true}, {false, true, false, true, true, true, true, false, true, false, false, true}, {false, true, false, false, false, true, false, false, true, false, true, true}, {false, true, true, true, true, true, true, false, true, false, true, true}, {false, true, true, false, false, false, true, true, true, false, true, true}};
+    final static byte[][] gDesign = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0}, {0, 0, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 0, 0}, {0, 0, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 0, 0}, {0, 1, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 1, 0}, {0, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0}, {0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+    final static int[][] altGhostBottom = {{0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0}, {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0}};
+    final static boolean[][] cellMap = {{false, true, false, true, true, true, true, true, true, true, true, true}, {false, true, true, true, false, false, false, false, false, false, false, true}, {false, true, false, true, true, true, true, true, true, true, false, true}, {false, true, false, true, false, false, false, false, false, true, false, true}, {false, true, true, true, true, true, true, true, true, true, true, true}, {false, true, false, true, false, true, false, false, true, false, true, true}, {false, true, false, true, false, true, false, true, true, false, true, true}, {false, true, false, true, true, true, true, false, true, false, false, true}, {false, true, false, false, false, true, false, false, true, false, true, true}, {false, true, true, true, true, true, true, false, true, false, true, true}, {false, true, true, false, false, false, true, true, true, false, true, true}};
     //final boolean updating = false;
     //Strings
     String path;
@@ -87,16 +86,20 @@ public class pac_man extends PApplet {
         surface.setTitle("Loading...");
         System.out.println("Please wait...");
         background(0);
+        println("Centre: " + CENTER);
+        println("Left: " + LEFT);
+        println("Right: " + RIGHT);
+        println("Top: " + TOP);
         noStroke();
         textSize(20);
         textAlign(CENTER);
         fill(255);
-        text("Loading...\nBy Langdon Staab\n\nSound manager by Tyler Tomas", round(width / 2f), round(height / 2f));
+        text("Loading...\nBy Langdon Staab\n\nSound manager by Tyler Tomas", Math.round(width / 2f), Math.round(height / 2f));
         frameRate(120);
         //check setup2() for setup
     }
 
-    public void setup2() {
+    public void setup2() throws FileNotFoundException {
         noStroke();
         surface.setResizable(true);
         imageMode(CENTER);
@@ -105,21 +108,22 @@ public class pac_man extends PApplet {
 
         String temp = loadString(path + "highscore.txt");
         if (temp.equals("error")) {
-            String[] t = {"0"};
-            saveStrings(path + "highscore.txt", t);
+            PrintWriter out = new PrintWriter(path + "highscore.txt");
+            out.println(0);
+            out.close();
             prevHighScore = 0;
         } else {
-            prevHighScore = parseInt(temp);
+            prevHighScore = java.lang.Integer.parseInt(temp);
         }
 
-        pause_beat = new Sound("pause_beat.wav");
-        dieS = new Sound("death.wav");
         startSound = new Sound("game_start.wav");
         dotSound1 = new Sound("dot_1.wav");
         dotSound2 = new Sound("dot_2.wav");
+        pause = new Sound("pause.wav");
+        pause_beat = new Sound("pause_beat.wav");
+        dieS = new Sound("death.wav");
         fruit = new Sound("fruit.wav");
         extra_life = new Sound("extra_life.wav");
-        pause = new Sound("pause.wav");
         System.out.println("Sound load success!");
 
         cherry = loadImage("cherry.png");
@@ -137,7 +141,7 @@ public class pac_man extends PApplet {
         pxInit();
         startMillis = millis();
         pellet[5].isFruit = true;
-        surface.setTitle(TITLE + version);
+        surface.setTitle(TITLE);
 
         System.out.println("Setup success!");
     }
@@ -185,7 +189,13 @@ public class pac_man extends PApplet {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN PROGRAM ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     public void draw() {
         try {
-            if (runSetup) {
+            if (error) {
+                background(0);
+                textAlign(LEFT, CENTER);
+                text(errorInfo, 4, height / 2f);
+                //} else if (updating) {
+                //askUpdate();\
+            } else if (runSetup) {
                 setup2();
                 runSetup = false;
                 startFrames = frameCount;
@@ -193,163 +203,153 @@ public class pac_man extends PApplet {
                 duration = 4500 + millis();
                 startMillis = millis();
                 println(millis());
+            } else if (millis() < 2000) {
+                //display loading screen for a minimum of 2 seconds.
+                //wait until 2 seconds have passed
 
-                //} else if (updating) {
-                //askUpdate();\
-            } else //noinspection StatementWithEmptyBody
-                if (millis() < 2000) {
-                    //display loading screen for a minimum of 2 seconds.
-                    //wait until 2 seconds have passed
-
-                } else if (lives <= 0) {
-                    background(0);
-                    fill(255, 64, 64);
-                    textAlign(CENTER);
-                    text("GAME OVER", canvasWidth / 2f, canvasHeight / 2f);
-                    text("Click the screen to play again", canvasWidth / 2f, canvasHeight / 2f + 40);
-                    if (mousePressed) {
-                        restart();
+            } else if (lives <= 0) {
+                background(0);
+                fill(255, 64, 64);
+                textAlign(CENTER);
+                text("GAME OVER", canvasWidth / 2f, canvasHeight / 2f);
+                text("Click the screen to play again", canvasWidth / 2f, canvasHeight / 2f + 40);
+                if (mousePressed) {
+                    restart();
+                }
+            } else {
+                if (frameCount % 2 == 0 && !paused) {
+                    if (millis() < duration) {
+                        pacman.stop();
+                        pacman.stopped = true;
+                        finishedDelay = false;
+                        ghost1.halt();
+                        ghost2.halt();
+                        ghost3.halt();
+                        start = true;
+                    } else if (!finishedDelay) {
+                        start = true;
+                        ghost1.up();
+                        ghost2.up();
+                        ghost3.up();
+                        finishedDelay = true;
                     }
 
-                } else if (error) {
-                    background(0);
-                    textAlign(LEFT, CENTER);
-                    text(errorInfo, 4, height / 2f);
+                    destroyUselessMessages();
 
-
-                } else {
-                    if (frameCount % 2 == 0 && !paused) {
-                        if (millis() < duration) {
-                            pacman.stop();
-                            pacman.stopped = true;
-                            finishedDelay = false;
-                            ghost1.halt();
-                            ghost2.halt();
-                            ghost3.halt();
-                            start = true;
-                        } else if (!finishedDelay) {
-                            start = true;
+                    ghostPx[1][1].colourInit();
+                    coords3X = getGhostCoords(ghost1).x;
+                    coords3Y = getGhostCoords(ghost1).y;
+                    coords4X = getGhostCoords(ghost2).x;
+                    coords4Y = getGhostCoords(ghost2).y;
+                    coords5X = getGhostCoords(ghost3).x;
+                    coords5Y = getGhostCoords(ghost3).y;
+                    if (lostLife) {
+                        if (chomp < 60) {
+                            chomp++;
+                        }
+                        if (first1) {
+                            first1 = false;
+                            delay(100);
+                            if (chomp < 60) {
+                                chomp = 60;
+                            }
+                            dieS.play();
+                        }
+                        pacman.stop();
+                        ghost1.halt();
+                        ghost2.halt();
+                        ghost3.halt();
+                        if (dieS.isPlaying()) {
+                            chomp += 3;
+                        } else {
+                            ghost1.newGame();
+                            ghost2.newGame();
+                            ghost3.newGame();
+                            pacman.x = cellWidth * 1.5f;
+                            pacman.y = cellWidth * 1.5f;
+                            first1 = true;
+                            lostLife = false;
+                            chomp = 16;
+                            duration = 2000 + millis();
                             ghost1.up();
                             ghost2.up();
                             ghost3.up();
-                            finishedDelay = true;
-                        }
-
-                        destroyUselessMessages();
-
-                        ghostPx[1][1].colourInit();
-                        coords3X = getGhostCoords(ghost1).x;
-                        coords3Y = getGhostCoords(ghost1).y;
-                        coords4X = getGhostCoords(ghost2).x;
-                        coords4Y = getGhostCoords(ghost2).y;
-                        coords5X = getGhostCoords(ghost3).x;
-                        coords5Y = getGhostCoords(ghost3).y;
-                        if (lostLife) {
-                            if (chomp < 60) {
-                                chomp++;
-                            }
-                            if (first1) {
-                                first1 = false;
-                                delay(100);
-                                if (chomp < 60) {
-                                    chomp = 60;
-                                }
-                                dieS.play();
-                            }
                             pacman.stop();
-                            ghost1.halt();
-                            ghost2.halt();
-                            ghost3.halt();
-                            if (dieS.isPlaying()) {
-                                chomp += 2;
-                            } else {
-                                ghost1.newGame();
-                                ghost2.newGame();
-                                ghost3.newGame();
-                                pacman.x = cellWidth * 1.5f;
-                                pacman.y = cellWidth * 1.5f;
-                                first1 = true;
-                                lostLife = false;
-                                chomp = 16;
-                                duration = 2000 + millis();
-                                ghost1.up();
-                                ghost2.up();
-                                ghost3.up();
-                                pacman.stop();
-                                pacman.stopped = true;
-                                lives--;
-                            }
+                            pacman.stopped = true;
+                            lives--;
                         }
-                        if (!pacman.dir.equals("stopped")) {
-                            if (chomp > 60) {
-                                chompSpeed = -chompSpeed;
-                            }
-                            if (chomp < 10) {
-                                chompSpeed = -chompSpeed;
-                            }
-                            chomp += chompSpeed;
+                    }
+                    if (!pacman.dir.equals("stopped")) {
+                        if (chomp > 70) {
+                            chompSpeed = -chompSpeed;
                         }
-                        if (pelletsEaten < pellet.length - 1 && !lostLife) {
+                        if (chomp < 4) {
+                            chompSpeed = -chompSpeed;
+                        }
+                        chomp += chompSpeed;
+                    }
+                    if (pelletsEaten < pellet.length - 1 && !lostLife) {
+                        pacman.update();
+                    }
+                    ghost1.update(coords3X, coords3Y);
+                    ghost2.update(coords4X, coords4Y);
+                    ghost3.update(coords5X, coords5Y);
+                    ghost1.goodPosition(coords3X, coords3Y);
+                    ghost2.goodPosition(coords4X, coords4Y);
+                    ghost3.goodPosition(coords5X, coords5Y);
+                    controlGhostMovement(coords3X, coords3Y, coords4X, coords4Y, coords5X, coords5Y);
+                    for (int b = 0; b < coords2.length; b++) {
+                        pellet[b].goodPosition(coords2[b].x, coords2[b].y);
+                        pellet[b].isBEaten();
+                    }
+
+                    background(0);
+                    showMaze(color(33, 33, 255), true);
+
+                    if (pelletsEaten >= pellet.length - 1 && !lostLife) {
+                        if (!first) {
+                            first = true;
+                            level++;
+                            determineFruitType();
+                            durationStart = millis();
+                            duration = 2000 + millis();
+                        }
+                        ghost1.halt();
+                        ghost2.halt();
+                        ghost3.halt();
+                        pacman.stop();
+                        if ((millis() - durationStart < 250) || (millis() - durationStart < 750 && millis() - durationStart > 500) || (millis() - durationStart < 1250 && millis() - durationStart > 1000) || (millis() - durationStart < 1750 && millis() - durationStart > 1500)) {
+                            showMaze(color(222, 222, 255), true);
+                        }
+                        if (millis() - durationStart >= 2000) {
+                            //determineFruitType();
                             pacman.update();
-                        }
-                        ghost1.update(coords3X, coords3Y);
-                        ghost2.update(coords4X, coords4Y);
-                        ghost3.update(coords5X, coords5Y);
-                        ghost1.goodPosition(coords3X, coords3Y);
-                        ghost2.goodPosition(coords4X, coords4Y);
-                        ghost3.goodPosition(coords5X, coords5Y);
-                        controlGhostMovement(coords3X, coords3Y, coords4X, coords4Y, coords5X, coords5Y);
-                        for (int b = 0; b < coords2.length; b++) {
-                            pellet[b].goodPosition(coords2[b].x, coords2[b].y);
-                            pellet[b].isBEaten();
-                        }
-
-                        background(0);
-                        showMaze(color(33, 33, 255), true);
-
-                        if (pelletsEaten >= pellet.length - 1 && !lostLife) {
-                            if (!first) {
-                                first = true;
-                                level++;
-                                determineFruitType();
-                                durationStart = millis();
-                                duration = 2000 + millis();
-                            }
-                            ghost1.halt();
-                            ghost2.halt();
-                            ghost3.halt();
+                            ghost1.up();
+                            ghost2.up();
+                            ghost3.up();
+                            pacman.stopped = true;
                             pacman.stop();
-                            if ((millis() - durationStart < 250) || (millis() - durationStart < 750 && millis() - durationStart > 500) || (millis() - durationStart < 1250 && millis() - durationStart > 1000) || (millis() - durationStart < 1750 && millis() - durationStart > 1500)) {
-                                showMaze(color(222, 222, 255), true);
-                            }
-                            if (millis() - durationStart >= 2000) {
-                                //determineFruitType();
-                                pacman.update();
-                                ghost1.up();
-                                ghost2.up();
-                                ghost3.up();
-                                pacman.stopped = true;
-                                pacman.stop();
-                                makePelletCoords();
-                                pelletErrors = 0;
-                                playStartSound = false;
-                            }
-                        }
-                        display();
-                        if (start) {
-                            start = false;
-                        }
-                        //int useless = 5/0;
-                    }
-                    if (keyPressed) {
-                        switch (keyCode) {
-                            case UP, 87 -> pacman.up();
-                            case DOWN, 83 -> pacman.down();
-                            case RIGHT, 68 -> pacman.right();
-                            case LEFT, 65 -> pacman.left();
+                            makePelletCoords();
+                            pelletErrors = 0;
+                            playStartSound = false;
                         }
                     }
+                    display();
+                    if (start) {
+                        start = false;
+                    }
+                    //int useless = 5/0;
                 }
+                if (keyPressed) {
+                    switch (keyCode) {
+                        case UP, 87 -> pacman.up();
+                        case DOWN, 83 -> pacman.down();
+                        case RIGHT, 68 -> pacman.right();
+                        case LEFT, 65 -> pacman.left();
+                    }
+
+                }
+            }
         } catch (Exception e) {
             paused = true;
             StringWriter sw = new StringWriter();
@@ -363,6 +363,7 @@ public class pac_man extends PApplet {
             windowResize(1000, canvasHeight);
             frameRate(30);
             logError(e);
+
         }
     }
 
@@ -376,7 +377,7 @@ public class pac_man extends PApplet {
         textSize(12);
         text("HIGH SCORE\n" + highScore, width / 2f, 12);
         tempFPSVal = ((millis() - startMillis) / 1000f) > 0 ? ((millis() - startMillis) / 1000f) : 1;
-        text(str(round((frameCount - startFrames) / tempFPSVal)), 330, 10);
+        text(str(Math.round((frameCount - startFrames) / tempFPSVal)), 330, 10);
         showLives();
         noStroke();
         for (int b = 0; b < coords2.length; b++) {
@@ -442,9 +443,9 @@ public class pac_man extends PApplet {
     }
 
     public int createPosition(boolean dirIsX) {
-        int newPos = parseInt(round(random(cellWidth, canvasHeight - cellWidth * 2) / cellWidth) * cellWidth + cellWidth / 2);
-        while (dirIsX && newPos <= cellWidth * 2.5) {
-            newPos = parseInt(round(random(cellWidth, canvasHeight - cellWidth * 2) / cellWidth) * cellWidth + cellWidth / 2);
+        int newPos = (int) (Math.round(random(cellWidth, canvasHeight - cellWidth * 2f) / cellWidth) * cellWidth + cellWidth / 2f);
+        while (dirIsX && newPos <= cellWidth * 2.5f) {
+            newPos = (int) (Math.round(random(cellWidth, canvasHeight - cellWidth * 2f) / cellWidth) * cellWidth + cellWidth / 2f);
         }
         return newPos;
     }
@@ -455,8 +456,8 @@ public class pac_man extends PApplet {
 
     public void makePelletCoords() {
         for (int i = 0; i < pellet.length; i++) {
-            coords2[i].x = round((pellet[i].x) / cellWidth + 0.5f) - 1;
-            coords2[i].y = round((pellet[i].y) / cellWidth + 0.5f) - 1;
+            coords2[i].x = Math.round((pellet[i].x) / cellWidth + 0.5f) - 1;
+            coords2[i].y = Math.round((pellet[i].y) / cellWidth + 0.5f) - 1;
         }
     }
 
@@ -526,7 +527,7 @@ public class pac_man extends PApplet {
     public void createMaze() {
         for (int i = 0; i < cellMap[1].length + 1; i++) {
             for (int j = 0; j < cellMap[1].length + 1; j++) {
-                cells[i][j] = new Cell(parseInt(i * cellWidth), parseInt(j * cellWidth));
+                cells[i][j] = new Cell(Math.round(i * cellWidth), Math.round(j * cellWidth));
             }
         }
     }
@@ -547,7 +548,7 @@ public class pac_man extends PApplet {
                     //noinspection StatementWithEmptyBody
                     if (col == 1 && row == 1) {
                     } else {
-                        pellet = (Pellet[]) append(pellet, new Pellet(parseInt(col * cellWidth + cellWidth / 2), parseInt(row * cellWidth + cellWidth / 2)));
+                        pellet = (Pellet[]) append(pellet, new Pellet(Math.round(col * cellWidth + cellWidth / 2), Math.round(row * cellWidth + cellWidth / 2)));
                         coords2 = (Coordinate[]) append(coords2, new Coordinate());
                         cellCount++;
                     }
@@ -595,7 +596,7 @@ public class pac_man extends PApplet {
             highScore = score;
         }
         if (highScore > prevHighScore) {
-           //String[] newHighScore = {str(highScore)};
+            //String[] newHighScore = {str(highScore)};
             PrintWriter out = new PrintWriter(path + "highscore.txt");
             out.println(str(highScore));
             out.close();
@@ -622,14 +623,14 @@ public class pac_man extends PApplet {
     }
 
     public void restartButton() {
-        int x = parseInt(cellWidth * 4), y = parseInt(cellWidth * 12);
+        int x = Math.round(cellWidth * 4), y = Math.round(cellWidth * 12);
         if (hitBoxCollision(x, y, mouseX, mouseY)) {
             restart();
         }
     }
 
     public void pauseButton(boolean drawButton) {
-        int x = parseInt(cellWidth * 5), y = parseInt(cellWidth * 12);
+        int x = Math.round(cellWidth * 5), y = Math.round(cellWidth * 12);
         if (drawButton) {
             rect(x, y, cellWidth, cellWidth);
         }
@@ -650,7 +651,7 @@ public class pac_man extends PApplet {
     }
 
     public void pauseBeatOffButton() {
-        int x = parseInt(cellWidth * 3), y = parseInt(cellWidth * 12);
+        int x = Math.round(cellWidth * 3), y = Math.round(cellWidth * 12);
         if (hitBoxCollision(x, y, mouseX, mouseY)) {
             playPauseBeat = !playPauseBeat;
             messages = splice(messages, "You have turned pause_beat " + (playPauseBeat ? "on" : "off"), 0);
@@ -695,8 +696,8 @@ public class pac_man extends PApplet {
             case "right" -> offsetX -= cellWidth / a + b;
             case "left" -> offsetX += cellWidth / a + b;
         }
-        curGhostCoords.x = PApplet.parseInt(round((curGhost.x + offsetX) / cellWidth + 0.5f) - 1);
-        curGhostCoords.y = PApplet.parseInt(round((curGhost.y + offsetY) / cellWidth + 0.5f) - 1);
+        curGhostCoords.x = Math.round((curGhost.x + offsetX) / cellWidth + 0.5f) - 1;
+        curGhostCoords.y = Math.round((curGhost.y + offsetY) / cellWidth + 0.5f) - 1;
         return curGhostCoords;
     }
 
@@ -770,7 +771,7 @@ public class pac_man extends PApplet {
     }
 
     public String createRDir(int posX, int posY) {
-        int tempVar = round(random(3));
+        int tempVar = Math.round(random(3));
         String possDir = makeDir(tempVar);
         while (checkGoodDir(possDir, posX, posY)) {
             tempVar = makeDirNum();
@@ -904,8 +905,6 @@ public class pac_man extends PApplet {
     }
 
 
-
-
     //// Pellet \\\\
     class Pellet {
         int x, y;
@@ -1003,14 +1002,14 @@ public class pac_man extends PApplet {
                 makePelletCoords();
             }
             if (isFruit) {
-                y = PApplet.parseInt(round(cellWidth * 1.5f));
+                y = Math.round(cellWidth * 1.5f);
             }
         }
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Pacman~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     class Pacman {
-        final int size = parseInt(cellWidth - 1);
+        final int size = Math.round(cellWidth - 1);
         final float speed = pacmanSpeed * ((cellWidth + 32) / 2) / 32f;
         boolean stopped = true;
         float x = cellWidth / 2f + cellWidth;
@@ -1051,8 +1050,8 @@ public class pac_man extends PApplet {
                 case "right" -> offsetX -= cellWidth / a + b;
                 case "left" -> offsetX += cellWidth / a + b;
             }
-            coordsX = round((x + offsetX) / cellWidth + 0.5f) - 1;
-            coordsY = round((y + offsetY) / cellWidth + 0.5f) - 1;
+            coordsX = Math.round((x + offsetX) / cellWidth + 0.5f) - 1;
+            coordsY = Math.round((y + offsetY) / cellWidth + 0.5f) - 1;
             if (pelletsEaten >= pellet.length - 1) {
                 for (Pellet value : pellet) {
                     value.update();
@@ -1068,7 +1067,7 @@ public class pac_man extends PApplet {
             }
             switch (nextDir) {
                 case "up" -> {
-                    if (cells[parseInt(coordsX)][parseInt(coordsY) - 1].open) {
+                    if (cells[coordsX][coordsY - 1].open) {
                         dir = nextDir;
                         x = coordsX * cellWidth + (cellWidth / 2f);
                     } else {
@@ -1078,7 +1077,7 @@ public class pac_man extends PApplet {
                     }
                 }
                 case "down" -> {
-                    if (cells[parseInt(coordsX)][parseInt(coordsY) + 1].open) {
+                    if (cells[coordsX][coordsY + 1].open) {
                         dir = nextDir;
                         x = coordsX * cellWidth + (cellWidth / 2f);
                     } else {
@@ -1088,7 +1087,7 @@ public class pac_man extends PApplet {
                     }
                 }
                 case "right" -> {
-                    if (cells[parseInt(coordsX) + 1][parseInt(coordsY)].open) {
+                    if (cells[coordsX + 1][coordsY].open) {
                         dir = nextDir;
                         y = coordsY * cellWidth + (cellWidth / 2f);
                     } else {
@@ -1098,7 +1097,7 @@ public class pac_man extends PApplet {
                     }
                 }
                 case "left" -> {
-                    if (cells[parseInt(coordsX) - 1][parseInt(coordsY)].open) {
+                    if (cells[coordsX - 1][coordsY].open) {
                         dir = nextDir;
                         y = coordsY * cellWidth + (cellWidth / 2f);
                     } else {
@@ -1111,7 +1110,7 @@ public class pac_man extends PApplet {
 
             switch (dir) {
                 case "up" -> {
-                    if (cells[parseInt(coordsX)][parseInt(coordsY) - 1].open) {
+                    if (cells[coordsX][coordsY - 1].open) {
                         y -= speed;
                         stopped = false;
                         if (x < coordsX * cellWidth + (cellWidth / 2f)) {
@@ -1127,7 +1126,7 @@ public class pac_man extends PApplet {
                     }
                 }
                 case "down" -> {
-                    if (cells[parseInt(coordsX)][parseInt(coordsY) + 1].open) {
+                    if (cells[coordsX][coordsY + 1].open) {
                         y += speed;
                         stopped = false;
                         if (x < coordsX * cellWidth + (cellWidth / 2f)) {
@@ -1143,7 +1142,7 @@ public class pac_man extends PApplet {
                     }
                 }
                 case "right" -> {
-                    if (cells[parseInt(coordsX) + 1][parseInt(coordsY)].open) {
+                    if (cells[coordsX + 1][coordsY].open) {
                         x += speed;
                         stopped = false;
                         if (y < coordsY * cellWidth + (cellWidth / 2f)) {
@@ -1159,7 +1158,7 @@ public class pac_man extends PApplet {
                     }
                 }
                 case "left" -> {
-                    if (cells[parseInt(coordsX) - 1][parseInt(coordsY)].open) {
+                    if (cells[coordsX - 1][coordsY].open) {
                         x -= speed;
                         stopped = false;
                         if (y < coordsY * cellWidth + (cellWidth / 2f)) {
@@ -1194,14 +1193,14 @@ public class pac_man extends PApplet {
                 x = 0;
                 y = cellWidth + size / 2f;
             }
-            coordsX = round((x + offsetX) / cellWidth + 0.5f) - 1;
-            coordsY = round((y + offsetY) / cellWidth + 0.5f) - 1;
+            coordsX = Math.round((x + offsetX) / cellWidth + 0.5f) - 1;
+            coordsY = Math.round((y + offsetY) / cellWidth + 0.5f) - 1;
         }
 
         public void up() {
-            coordsX = round((x) / cellWidth + 0.5f) - 1;
-            coordsY = round((y) / cellWidth + 0.5f) - 1;
-            if (cells[parseInt(coordsX)][parseInt(coordsY) - 1].open) {
+            coordsX = Math.round((x) / cellWidth + 0.5f) - 1;
+            coordsY = Math.round((y) / cellWidth + 0.5f) - 1;
+            if (cells[coordsX][coordsY - 1].open) {
                 dir = "up";
                 nextDir = "up";
                 if (x < coordsX * cellWidth + (cellWidth / 2f)) {
@@ -1218,9 +1217,9 @@ public class pac_man extends PApplet {
         }
 
         public void down() {
-            coordsX = round((x) / cellWidth + 0.5f) - 1;
-            coordsY = round((y) / cellWidth + 0.5f) - 1;
-            if (cells[parseInt(coordsX)][parseInt(coordsY) + 1].open) {
+            coordsX = Math.round((x) / cellWidth + 0.5f) - 1;
+            coordsY = Math.round((y) / cellWidth + 0.5f) - 1;
+            if (cells[coordsX][coordsY + 1].open) {
                 dir = "down";
                 nextDir = "down";
                 if (x < coordsX * cellWidth + (cellWidth / 2f)) {
@@ -1237,9 +1236,9 @@ public class pac_man extends PApplet {
         }
 
         public void right() {
-            coordsX = round((x) / cellWidth + 0.5f) - 1;
-            coordsY = round((y) / cellWidth + 0.5f) - 1;
-            if (cells[parseInt(coordsX) + 1][parseInt(coordsY)].open) {
+            coordsX = Math.round((x) / cellWidth + 0.5f) - 1;
+            coordsY = Math.round((y) / cellWidth + 0.5f) - 1;
+            if (cells[coordsX + 1][coordsY].open) {
                 dir = "right";
                 nextDir = "right";
                 if (y < coordsY * cellWidth + (cellWidth / 2f)) {
@@ -1256,9 +1255,9 @@ public class pac_man extends PApplet {
         }
 
         public void left() {
-            coordsX = round((x) / cellWidth + 0.5f) - 1;
-            coordsY = round((y) / cellWidth + 0.5f) - 1;
-            if (cells[parseInt(coordsX) - 1][parseInt(coordsY)].open) {
+            coordsX = Math.round((x) / cellWidth + 0.5f) - 1;
+            coordsY = Math.round((y) / cellWidth + 0.5f) - 1;
+            if (cells[coordsX - 1][coordsY].open) {
                 dir = "left";
                 nextDir = "left";
                 if (y < coordsY * cellWidth + (cellWidth / 2f)) {
