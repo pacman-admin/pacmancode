@@ -10,6 +10,7 @@ import java.io.*;
  */
 
 
+@SuppressWarnings("StatementWithEmptyBody")
 public class pac_man extends PApplet {
     // By Langdon S.
     //current version:
@@ -214,7 +215,7 @@ public class pac_man extends PApplet {
                 duration = 4500 + millis();
                 startMillis = millis();
                 println(millis());
-            } else if (millis() < 2000) {
+            } else  if (millis() < 2000) {
                 //display loading screen for a minimum of 2 seconds.
                 //wait until 2 seconds have passed
 
