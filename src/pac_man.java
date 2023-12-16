@@ -22,13 +22,13 @@ public class pac_man extends PApplet {
     final static boolean eyesMove = true; //             |
     final static boolean showGhostWhenStopped = true;//  |
     //final static boolean useOpenGL = true;//           |
-    final static boolean other = false; //               |
+    // final static boolean other = false; //               |
     final static float ghostSpeed = 2; //                |
     final static float pacmanSpeed = 3; //               |
     //final static boolean turnAround = true; //         |
     final static float cellWidth = 32;
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-    final static int pelletWorth = 10, canvasWidth = Math.round(cellWidth * 13f), canvasHeight = Math.round(cellWidth * 13f), gSize = 2;
+    final static int pelletWorth = 10, canvasWidth = (int) (cellWidth * 13), canvasHeight = (int) (cellWidth * 13f), gSize = 2;
     final static String[] fruitPoints = {"cherry", "strawberry", "orange", "orange", "apple", "apple", "melon", "melon", "galaxian", "galaxian", "bell", "bell", "key", "key"};
     final static byte[][] gDesign = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0}, {0, 0, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 0, 0}, {0, 0, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 0, 0}, {0, 1, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 1, 0}, {0, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0}, {0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
     final static int[][] altGhostBottom = {{0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0}, {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0}};
@@ -107,14 +107,14 @@ public class pac_man extends PApplet {
         //System.out.println(": "+);
         //System.out.println("DisplayDensity: "+displayDensity());
         //System.out.println("pixelHeight: "+pixelHeight);
-        path = System.getProperty("user.home") + "/";
+        path = System.getProperty("user.home");
 
-        String temp = loadString(path + "highscore.txt");
+        String temp = loadString(path + "/highscore.txt");
         if (temp.equals("error")) {
             try {
-                PrintWriter out = new PrintWriter(path + "highscore.txt");
-                out.println(0);
-                out.close();
+                PrintWriter file = new PrintWriter(path + "/highscore.txt");
+                file.println(0);
+                file.close();
                 prevHighScore = 0;
             } catch (FileNotFoundException e) {
                 messages = splice(messages, "An error occurred while creating high score file", 0);
@@ -162,7 +162,7 @@ public class pac_man extends PApplet {
 
     public void logError(Exception e) {
         try {
-            FileWriter fstream = new FileWriter(path + "Desktop/pacmanerror.txt", true);
+            FileWriter fstream = new FileWriter(path + "/Desktop/pacmanerror.txt", true);
             BufferedWriter out = new BufferedWriter(fstream);
             PrintWriter pWriter = new PrintWriter(out, true);
             e.printStackTrace(pWriter);
@@ -215,7 +215,7 @@ public class pac_man extends PApplet {
                 duration = 4500 + millis();
                 startMillis = millis();
                 println(millis());
-            } else  if (millis() < 2000) {
+            } else if (millis() < 2000) {
                 //display loading screen for a minimum of 2 seconds.
                 //wait until 2 seconds have passed
 
@@ -610,10 +610,12 @@ public class pac_man extends PApplet {
         }
         if (highScore > prevHighScore) {
             //String[] newHighScore = {str(highScore)};
-            PrintWriter out = new PrintWriter(path + "highscore.txt");
+            //DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path + "/settings.dat")));
+            PrintWriter out = new PrintWriter(path + "/highscore.txt");
+            //dos.writeInt(i);
             out.println(str(highScore));
             out.close();
-            //saveStrings(path + "highscore.txt", newHighScore);
+            //saveStrings(path + "/highscore.txt", newHighScore);
         }
     }
 
@@ -1044,7 +1046,6 @@ public class pac_man extends PApplet {
                 }
             }
             fill(255, 255, 0);
-            this.update();
             translate(x, y);
             switch (lastDir) {
                 case "up" -> rotate(PI + HALF_PI);
@@ -1080,41 +1081,41 @@ public class pac_man extends PApplet {
                     if (cells[coordsX][coordsY - 1].open) {
                         dir = nextDir;
                         x = coordsX * cellWidth + (cellWidth / 2f);
-                    } else {
+                    }/* else {
                         if (other && !nextDir.equals(dir)) {
                             messages = splice(messages, "I want to move up", 0);
                         }
-                    }
+                    }*/
                 }
                 case "down" -> {
                     if (cells[coordsX][coordsY + 1].open) {
                         dir = nextDir;
                         x = coordsX * cellWidth + (cellWidth / 2f);
-                    } else {
+                    }/* else {
                         if (other && !nextDir.equals(dir)) {
                             messages = splice(messages, "I want to move down", 0);
                         }
-                    }
+                    }*/
                 }
                 case "right" -> {
                     if (cells[coordsX + 1][coordsY].open) {
                         dir = nextDir;
                         y = coordsY * cellWidth + (cellWidth / 2f);
-                    } else {
+                    }/* else {
                         if (other && !nextDir.equals(dir)) {
                             messages = splice(messages, "I want to move right", 0);
                         }
-                    }
+                    }*/
                 }
                 case "left" -> {
                     if (cells[coordsX - 1][coordsY].open) {
                         dir = nextDir;
                         y = coordsY * cellWidth + (cellWidth / 2f);
-                    } else {
+                    }/* else {
                         if (other && !nextDir.equals(dir)) {
                             messages = splice(messages, "I want to move left", 0);
                         }
-                    }
+                    }*/
                 }
             }
 
