@@ -10,7 +10,7 @@ import java.io.*;
  */
 
 
-@SuppressWarnings("StatementWithEmptyBody")
+@SuppressWarnings({"StatementWithEmptyBody", "CallToPrintStackTrace"})
 public class pac_man extends PApplet {
     // By Langdon S.
     //current version:
@@ -72,9 +72,6 @@ public class pac_man extends PApplet {
         }
     }
 
-    public void downloadNewJAr(){
-
-    }
 
     public static void loadSettings() {
         try {
