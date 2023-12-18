@@ -41,6 +41,8 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
+@SuppressWarnings("all")
+
 public class updateWindow extends JPanel implements ItemListener, ActionListener {
     //private final JCheckBox playPauseBeatBox/*, selectOpenGL*/, startsWMouthBox, chooseDebug;
     //Show Ghosts When Stopped
