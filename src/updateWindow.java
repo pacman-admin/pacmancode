@@ -33,20 +33,13 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import processing.core.PApplet.*;
-
-import static processing.core.PApplet.loadBytes;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 
 public class updateWindow extends JPanel implements ItemListener, ActionListener {
     //private final JCheckBox playPauseBeatBox/*, selectOpenGL*/, startsWMouthBox, chooseDebug;
@@ -163,23 +156,51 @@ public class updateWindow extends JPanel implements ItemListener, ActionListener
     }
 
     public void downloadNewVersion() {
+        URL website = null;
+        try {
+            website = new URL("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar");
+            ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+            FileOutputStream fos = new FileOutputStream(path+"/download.jar");
+            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-        byte[] newJar = loadBytes("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar");
-        /*URI url;
+
+        /*
+        //byte[] newJar = loadBytes("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar");
+        URI url;
         Path path2;
+
+        try (InputStream source = new URL("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar").openStream()) {
+            Files.copy(source, Path.of(path + "/download1.jar"));
+            System.out.println("Operation 1 Success!");
+        } catch (MalformedURLException e) {
+            System.err.println("MalformedURLException1");
+
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.err.println("IOException1!");
+            e.printStackTrace();
+        }
 
 
         try {
             url = new URI("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar");
-            path2 = Paths.get(path + "download.jar");
+            path2 = Paths.get(path + "/download2.jar");
             HttpClient.newHttpClient().send(HttpRequest.newBuilder(url).build(), HttpResponse.BodyHandlers.ofFile(path2));
+            System.out.println("Operation 2 Success!");
         } catch (MalformedURLException e) {
 
-            System.err.println("MalformedURLException");
+            System.err.println("MalformedURLException2");
             e.printStackTrace();
 
         } catch (IOException e) {
-            System.err.println("IOException!");
+            System.err.println("IOException2!");
             e.printStackTrace();
         } catch (URISyntaxException e) {
             System.err.println("URISyntaxException!");
