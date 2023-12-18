@@ -15,14 +15,7 @@ public class pac_man extends PApplet {
     // By Langdon S.
     //current version:
     final static String TITLE = "Pac-Man 10.5";
-    //
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-//            G A M E  S E T T I N G S            |
-    final static boolean startsWMouth = false; //        |
     final static boolean eyesMove = true; //             |
-    final static boolean showGhostWhenStopped = true;//  |
-    //final static boolean useOpenGL = true;//           |
-    // final static boolean other = false; //               |
     final static float ghostSpeed = 2; //                |
     final static float pacmanSpeed = 3; //               |
     //final static boolean turnAround = true; //         |
@@ -33,6 +26,17 @@ public class pac_man extends PApplet {
     final static byte[][] gDesign = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0}, {0, 0, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 0, 0}, {0, 0, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 0, 0}, {0, 1, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 1, 0}, {0, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0}, {0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
     final static int[][] altGhostBottom = {{0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0}, {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0}};
     final static boolean[][] cellMap = {{false, true, false, true, true, true, true, true, true, true, true, true}, {false, true, true, true, false, false, false, false, false, false, false, true}, {false, true, false, true, true, true, true, true, true, true, false, true}, {false, true, false, true, false, false, false, false, false, true, false, true}, {false, true, true, true, true, true, true, true, true, true, true, true}, {false, true, false, true, false, true, false, false, true, false, true, true}, {false, true, false, true, false, true, false, true, true, false, true, true}, {false, true, false, true, true, true, true, false, true, false, false, true}, {false, true, false, false, false, true, false, false, true, false, true, true}, {false, true, true, true, true, true, true, false, true, false, true, true}, {false, true, true, false, false, false, true, true, true, false, true, true}};
+    //
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+//            G A M E  S E T T I N G S            |
+    static boolean startsAsCircle = false; //        |
+    static boolean showGhostWhenStopped = true;//  |
+    static boolean debug = false; //               |
+    //final boolean updating = false;
+    //Strings
+    static String path;
+    static boolean playPauseBeat = true; //              |
+    static String errorInfo;
     final Ghost ghost1 = new Ghost();
     final Ghost ghost2 = new Ghost();
     final Ghost ghost3 = new Ghost();
@@ -40,15 +44,9 @@ public class pac_man extends PApplet {
     final Cell[][] cells = {new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13]};
     final Pixel[][] ghostPx = {new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16]};
     final Pixel[][] ghostBottom2Px = {new Pixel[16], new Pixel[16]};
-    //final boolean updating = false;
-    //Strings
-    String path;
-    //String OS = "unknown";
-    //float updateVersion = version;
     int lives = 3; //                             |
     int chompSpeed = 8; //                        |
     boolean playStartSound = true; //             |
-    boolean playPauseBeat = true; //              |
     //booleans
     boolean /*askToUpdate, */error, finishedDelay, first, first1 = true, lostLife, paused, pelletFirst, runSetup = true, start;
     //ints
@@ -56,9 +54,8 @@ public class pac_man extends PApplet {
     int coordsX, coordsY, coords3X, coords3Y, coords4X, coords4Y, coords5X, coords5Y;
     int prevHighScore;
     String[] messages = {};
-    String errorInfo;
     float tempFPSVal;//, newVersion, updateVersion;
-    PImage cherry, strawberry, apple, orange, melon, galaxian, bell, keyI, restartB, noPauseBeatB;
+    PImage cherry, strawberry, apple, orange, melon, galaxian, bell, keyI, restartB, settingsB;
     Sound dieS, startSound, dotSound1, dotSound2, fruit, extra_life, pause, pause_beat;
     Pellet[] pellet = {};
     Coordinate[] coords2 = {};
@@ -72,6 +69,63 @@ public class pac_man extends PApplet {
             PApplet.main(concat(appletArgs, passedArgs));
         } else {
             PApplet.main(appletArgs);
+        }
+    }
+
+    public void downloadNewJAr(){
+
+    }
+
+    public static void loadSettings() {
+        try {
+            DataInputStream din = new DataInputStream(new BufferedInputStream(new FileInputStream(path + "/settings.dat")));
+            debug = din.readBoolean();
+            playPauseBeat = din.readBoolean();
+            showGhostWhenStopped = din.readBoolean();
+            startsAsCircle = din.readBoolean();
+            // useOpenGL = din.readBoolean();
+            //messages = splice(messages, "An error occurred while creating high score file", 0);
+            //System.out.println(debug + ", " + playPauseBeat + ", " + showGhostWhenStopped + ", " + startsAsCircle/* + ", " + useOpenGL/*+", "+*/);
+
+        } catch (FileNotFoundException e) {
+            logError(e);
+            try {
+                DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path + "/settings.dat")));
+                dos.writeBoolean(debug);
+                dos.writeBoolean(playPauseBeat);
+                dos.writeBoolean(showGhostWhenStopped);
+                dos.writeBoolean(startsAsCircle);
+                //dos.writeBoolean(useOpenGL);
+
+                dos.close();
+                pac_man.loadSettings();
+            } catch (IOException ee) {
+                System.err.println("An Error occurred while saving settings.");
+            }
+        } catch (IOException e) {
+            System.err.println("An Error occurred while loading settings.");
+            e.printStackTrace();
+            //throw new RuntimeException(e);
+        }
+
+
+    }
+
+    public static void logError(Exception e) {
+        try {
+            FileWriter fstream = new FileWriter(path + "/Desktop/pacmanerror.txt", true);
+            BufferedWriter out = new BufferedWriter(fstream);
+            PrintWriter pWriter = new PrintWriter(out, true);
+            e.printStackTrace(pWriter);
+        } catch (Exception ie) {
+            System.err.println("Could not append Exception to logfile");
+
+            errorInfo += "\n\n\n";
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            ie.printStackTrace(pw);
+            System.err.println(sw);
+            errorInfo += sw.toString();
         }
     }
 
@@ -102,11 +156,6 @@ public class pac_man extends PApplet {
         surface.setResizable(true);
         imageMode(CENTER);
         changeAppIcon();
-        //displayDensity(2);
-
-        //System.out.println(": "+);
-        //System.out.println("DisplayDensity: "+displayDensity());
-        //System.out.println("pixelHeight: "+pixelHeight);
         path = System.getProperty("user.home");
 
         String temp = loadString(path + "/highscore.txt");
@@ -129,6 +178,8 @@ public class pac_man extends PApplet {
         } else {
             prevHighScore = java.lang.Integer.parseInt(temp);
         }
+        loadSettings();
+
 
         startSound = new Sound("game_start.wav");
         dotSound1 = new Sound("dot_1.wav");
@@ -141,7 +192,7 @@ public class pac_man extends PApplet {
         System.out.println("Sound load success!");
 
         cherry = loadImage("cherry.png");
-        noPauseBeatB = loadImage("pause_beat off.png");
+        settingsB = loadImage("settings.png");
         restartB = loadImage("restart.png");
         strawberry = loadImage("strawberry.png");
         orange = loadImage("orange.png");
@@ -158,24 +209,6 @@ public class pac_man extends PApplet {
         surface.setTitle(TITLE);
 
         System.out.println("Setup success!");
-    }
-
-    public void logError(Exception e) {
-        try {
-            FileWriter fstream = new FileWriter(path + "/Desktop/pacmanerror.txt", true);
-            BufferedWriter out = new BufferedWriter(fstream);
-            PrintWriter pWriter = new PrintWriter(out, true);
-            e.printStackTrace(pWriter);
-        } catch (Exception ie) {
-            System.err.println("Could not append Exception to logfile");
-
-            errorInfo += "\n\n\n";
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            ie.printStackTrace(pw);
-            System.err.println(sw);
-            errorInfo += sw.toString();
-        }
     }
 
     public String loadString(String filename) {
@@ -381,9 +414,6 @@ public class pac_man extends PApplet {
     }
 
     public void display() {
-        /*if(frameCount%100 == 0){
-        //System.out.println("Ghost1: "+ghost1.dir+"Ghost2: "+ghost2.dir+"Ghost3: "+ghost3.dir);
-        }*/
         drawButtons();
         fill(255);
         textAlign(CENTER);
@@ -609,13 +639,9 @@ public class pac_man extends PApplet {
             highScore = score;
         }
         if (highScore > prevHighScore) {
-            //String[] newHighScore = {str(highScore)};
-            //DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path + "/settings.dat")));
             PrintWriter out = new PrintWriter(path + "/highscore.txt");
-            //dos.writeInt(i);
             out.println(str(highScore));
             out.close();
-            //saveStrings(path + "/highscore.txt", newHighScore);
         }
     }
 
@@ -668,14 +694,14 @@ public class pac_man extends PApplet {
     public void pauseBeatOffButton() {
         int x = Math.round(cellWidth * 3), y = Math.round(cellWidth * 12);
         if (hitBoxCollision(x, y, mouseX, mouseY)) {
-            playPauseBeat = !playPauseBeat;
-            messages = splice(messages, "You have turned pause_beat " + (playPauseBeat ? "on" : "off"), 0);
+            SettingsWindow.create();
         }
     }
 
     public void drawButtons() {
-        image(restartB, cellWidth * 4 + cellWidth / 2f, cellWidth * 12 + cellWidth / 2f, cellWidth, cellWidth);
-        image(noPauseBeatB, cellWidth * 3 + cellWidth / 2f, cellWidth * 12 + cellWidth / 2f, cellWidth, cellWidth);
+        image(restartB, cellWidth * 4 + cellWidth / 2f, cellWidth * 12 + cellWidth / 2f, cellWidth - 4, cellWidth - 4);
+
+        image(settingsB, cellWidth * 3 + cellWidth / 2f, cellWidth * 12 + cellWidth / 2f, cellWidth - 4, cellWidth - 4);
         fill(0);
         rect(cellWidth * 5.2f, cellWidth * 12.1f, cellWidth / 4f, cellWidth * 0.8f, 10);
         rect(cellWidth * 5.55f, cellWidth * 12.1f, cellWidth / 4f, cellWidth * 0.8f, 10);
@@ -1035,10 +1061,7 @@ public class pac_man extends PApplet {
 
         public void show(float mouthSize) {
             float mouthOpenTop, mouthOpenBottom;
-            /*if (Float.isNaN(mouthSize)) {
-                mouthSize = 16;
-            }*/
-            if (stopped && !startsWMouth) {
+            if (stopped && startsAsCircle) {
                 mouthSize = 0;
                 if (playStartSound) {
                     startSound.play();

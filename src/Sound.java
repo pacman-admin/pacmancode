@@ -33,9 +33,10 @@ public class Sound {
             throw new RuntimeException("Sound: Input/Output Error: \n" + e);
         } catch (LineUnavailableException e) {
             e.printStackTrace();
-            throw new RuntimeException("Sound: Line Unavailable Exception Error: \n" + e);
+            throw new RuntimeException("Sound: Line Unavailable Exception: \n" + e);
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("Sound: Unspecified Error: \n" + e);
         }
 
         // play, stop, loop the sound clip
