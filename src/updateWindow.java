@@ -32,18 +32,21 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.FileNotFoundException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
-@SuppressWarnings("all")
 
-public class updateWindow extends JPanel implements ItemListener, ActionListener {
+public class updateWindow extends JPanel implements ActionListener {
     //private final JCheckBox playPauseBeatBox/*, selectOpenGL*/, startsWMouthBox, chooseDebug;
     //Show Ghosts When Stopped
     //private final JCheckBox selectSGWS;
@@ -128,14 +131,6 @@ public class updateWindow extends JPanel implements ItemListener, ActionListener
         frame.setVisible(true);
     }
 
-   /* public static JCheckBox createCheckbox(String title, int key, boolean selectedByDefault, updateWindow updateWindow) {
-        JCheckBox checkBox = new JCheckBox(title);
-        checkBox.setMnemonic(key);
-        checkBox.setSelected(selectedByDefault);
-        checkBox.addItemListener(updateWindow);
-        return checkBox;
-    }*/
-
     public static JButton createButton(String title, int key, boolean enabled, updateWindow updateWindow, String command) {
         JButton button = new JButton(title);
         button.setMnemonic(key);
@@ -158,84 +153,26 @@ public class updateWindow extends JPanel implements ItemListener, ActionListener
     }
 
     public void downloadNewVersion() {
-        URL website = null;
+        URL website;
         try {
             website = new URL("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar");
             ReadableByteChannel rbc = Channels.newChannel(website.openStream());
             FileOutputStream fos = new FileOutputStream(path + "/download.jar");
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
-        /*
-        //byte[] newJar = loadBytes("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar");
-        URI url;
-        Path path2;
 
         try (InputStream source = new URL("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar").openStream()) {
             Files.copy(source, Path.of(path + "/download1.jar"));
             System.out.println("Operation 1 Success!");
         } catch (MalformedURLException e) {
             System.err.println("MalformedURLException1");
-
             e.printStackTrace();
         } catch (IOException e) {
             System.err.println("IOException1!");
             e.printStackTrace();
         }
-
-
-        try {
-            url = new URI("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar");
-            path2 = Paths.get(path + "/download2.jar");
-            HttpClient.newHttpClient().send(HttpRequest.newBuilder(url).build(), HttpResponse.BodyHandlers.ofFile(path2));
-            System.out.println("Operation 2 Success!");
-        } catch (MalformedURLException e) {
-
-            System.err.println("MalformedURLException2");
-            e.printStackTrace();
-
-        } catch (IOException e) {
-            System.err.println("IOException2!");
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            System.err.println("URISyntaxException!");
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            System.err.println("InterruptedException");
-            e.printStackTrace();
-        }*/
-    }
-
-    /**
-     * Listens to the checkboxes.
-     */
-    public void itemStateChanged(ItemEvent e) {
-        /*boolean newVal = false;
-        Object source = e.getItemSelectable();
-        System.out.println(e.getStateChange());
-        if (e.getStateChange() == ItemEvent.SELECTED) {
-            newVal = true;
-        }
-        /*
-        if (source == playPauseBeatBox) {
-            playPauseBeat = newVal;
-        /*} else if (source == selectOpenGL) {
-            useOpenGL = newVal;*/
-       /* } else if (source == startsWMouthBox) {
-            startsAsCircle = newVal;
-        } else if (source == selectSGWS) {
-            showGhostWhenStopped = newVal;
-        } else if (source == chooseDebug) {
-            debug = newVal;
-        }*/
-
     }
 
     public void actionPerformed(ActionEvent e) {
