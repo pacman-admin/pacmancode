@@ -157,14 +157,14 @@ public class updateWindow extends JPanel implements ActionListener {
         try {
             website = new URL("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar");
             ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-            FileOutputStream fos = new FileOutputStream(path + "/download.jar");
+            FileOutputStream fos = new FileOutputStream("download.jar");
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         try (InputStream source = new URL("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar").openStream()) {
-            Files.copy(source, Path.of(path + "/download1.jar"));
+            Files.copy(source, Path.of("download2.jar"));
             System.out.println("Operation 1 Success!");
         } catch (MalformedURLException e) {
             System.err.println("MalformedURLException1");
