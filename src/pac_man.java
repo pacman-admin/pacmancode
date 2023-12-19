@@ -15,28 +15,29 @@ public class pac_man extends PApplet {
     // By Langdon S.
     //current version:
     final static String TITLE = "Pac-Man 10.5";
-    final static boolean eyesMove = true; //             |
-    final static float ghostSpeed = 2; //                |
-    final static float pacmanSpeed = 3; //               |
-    //final static boolean turnAround = true; //         |
     final static float cellWidth = 32;
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+
     final static int pelletWorth = 10, canvasWidth = (int) (cellWidth * 13), canvasHeight = (int) (cellWidth * 13f), gSize = 2;
     final static String[] fruitPoints = {"cherry", "strawberry", "orange", "orange", "apple", "apple", "melon", "melon", "galaxian", "galaxian", "bell", "bell", "key", "key"};
     final static byte[][] gDesign = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0}, {0, 0, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 0, 0}, {0, 0, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 0, 0}, {0, 1, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 1, 0}, {0, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0}, {0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
     final static int[][] altGhostBottom = {{0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0}, {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0}};
     final static boolean[][] cellMap = {{false, true, false, true, true, true, true, true, true, true, true, true}, {false, true, true, true, false, false, false, false, false, false, false, true}, {false, true, false, true, true, true, true, true, true, true, false, true}, {false, true, false, true, false, false, false, false, false, true, false, true}, {false, true, true, true, true, true, true, true, true, true, true, true}, {false, true, false, true, false, true, false, false, true, false, true, true}, {false, true, false, true, false, true, false, true, true, false, true, true}, {false, true, false, true, true, true, true, false, true, false, false, true}, {false, true, false, false, false, true, false, false, true, false, true, true}, {false, true, true, true, true, true, true, false, true, false, true, true}, {false, true, true, false, false, false, true, true, true, false, true, true}};
+    final static float ghostSpeed = 2; //                |
+    final static float pacmanSpeed = 3; //               |
     //
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-//            G A M E  S E T T I N G S            |
-    static boolean startsAsCircle = false; //        |
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+//            G A M E  S E T T I N G S             |
+    static boolean startsAsCircle = false; //      |
     static boolean showGhostWhenStopped = true;//  |
     static boolean debug = false; //               |
-    //final boolean updating = false;
+
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
     //Strings
     static String path;
     static boolean playPauseBeat = true; //              |
     static String errorInfo;
+    static boolean useClassicHitbox = false; //              |
     final Ghost ghost1 = new Ghost();
     final Ghost ghost2 = new Ghost();
     final Ghost ghost3 = new Ghost();
@@ -48,13 +49,14 @@ public class pac_man extends PApplet {
     int chompSpeed = 8; //                        |
     boolean playStartSound = true; //             |
     //booleans
-    boolean /*askToUpdate, */error, finishedDelay, first, first1 = true, lostLife, paused, pelletFirst, runSetup = true, start;
+    boolean error, finishedDelay, first, first1 = true, lostLife, paused, pelletFirst, runSetup = true, start;
     //ints
     int startMillis, chomp = 30, cellCount, duration, durationStart, fruitWorth, highScore, level, livesClaimed, pelletErrors, pelletsEaten, score, startFrames;
     int coordsX, coordsY, coords3X, coords3Y, coords4X, coords4Y, coords5X, coords5Y;
     int prevHighScore;
     String[] messages = {};
-    float tempFPSVal;//, newVersion, updateVersion;
+    float tempFPSVal;
+    float offsetX, offsetY, a, b;
     PImage cherry, strawberry, apple, orange, melon, galaxian, bell, keyI, restartB, settingsB;
     Sound dieS, startSound, dotSound1, dotSound2, fruit, extra_life, pause, pause_beat;
     Pellet[] pellet = {};
@@ -80,9 +82,9 @@ public class pac_man extends PApplet {
             playPauseBeat = din.readBoolean();
             showGhostWhenStopped = din.readBoolean();
             startsAsCircle = din.readBoolean();
-            // useOpenGL = din.readBoolean();
+            useClassicHitbox = din.readBoolean();
             //messages = splice(messages, "An error occurred while creating high score file", 0);
-            //System.out.println(debug + ", " + playPauseBeat + ", " + showGhostWhenStopped + ", " + startsAsCircle/* + ", " + useOpenGL/*+", "+*/);
+            //System.out.println(debug + ", " + playPauseBeat + ", " + showGhostWhenStopped + ", " + startsAsCircle/* + ", " + useClassicHitbox/*+", "+*/);
 
         } catch (FileNotFoundException e) {
             logError(e);
@@ -92,7 +94,7 @@ public class pac_man extends PApplet {
                 dos.writeBoolean(playPauseBeat);
                 dos.writeBoolean(showGhostWhenStopped);
                 dos.writeBoolean(startsAsCircle);
-                //dos.writeBoolean(useOpenGL);
+                dos.writeBoolean(useClassicHitbox);
 
                 dos.close();
                 pac_man.loadSettings();
@@ -127,12 +129,7 @@ public class pac_man extends PApplet {
     }
 
     public void settings() {
-        /*if (useOpenGL) {
-            size(canvasWidth, canvasHeight);
-            smooth(8);
-        } else {*/
         size(canvasWidth, canvasHeight);
-        //}
     }
 
     public void setup() {
@@ -313,9 +310,6 @@ public class pac_man extends PApplet {
                             lostLife = false;
                             chomp = 16;
                             duration = 2000 + millis();
-                            ghost1.up();
-                            ghost2.up();
-                            ghost3.up();
                             pacman.stop();
                             pacman.stopped = true;
                             lives--;
@@ -745,13 +739,11 @@ public class pac_man extends PApplet {
         rectMode(CORNER);
         rectMode(CORNER);
         fill(63, 0, 252);
-        if (eyesMove) {
-            switch (cGhost.dir) {
-                case "up" -> y -= 2;
-                case "down" -> y += 2;
-                case "right" -> x += 2;
-                case "left" -> x -= 2;
-            }
+        switch (cGhost.dir) {
+            case "up" -> y -= 2;
+            case "down" -> y += 2;
+            case "right" -> x += 2;
+            case "left" -> x -= 2;
         }
         rect(x, y, 4, 4);
         rect(x + 12, y, 4, 4);
@@ -1079,11 +1071,23 @@ public class pac_man extends PApplet {
         }
 
         public void update() {
-            //StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
-            //maybe this number needs to be corrected
-            //println((frameCount/2)%6+": "+stacktrace[frameCount%6].getMethodName());
-            coordsX = Math.round(x / cellWidth + 0.5f) - 1;
-            coordsY = Math.round(y / cellWidth + 0.5f) - 1;
+            if (useClassicHitbox) {
+                offsetX = 0.2f;
+                offsetY = 0.1f;
+                a = 3;
+                b = 1;
+                switch (dir) {
+                    case "up" -> offsetY += cellWidth / a + b;
+                    case "down" -> offsetY -= cellWidth / a + b;
+                    case "right" -> offsetX -= cellWidth / a + b;
+                    case "left" -> offsetX += cellWidth / a + b;
+                }
+                coordsX = round((x + offsetX) / cellWidth + 0.5f) - 1;
+                coordsY = round((y + offsetY) / cellWidth + 0.5f) - 1;
+            } else {
+                coordsX = Math.round(x / cellWidth + 0.5f) - 1;
+                coordsY = Math.round(y / cellWidth + 0.5f) - 1;
+            }
             if (pelletsEaten >= pellet.length - 1) {
                 for (Pellet value : pellet) {
                     value.update();
@@ -1096,151 +1100,216 @@ public class pac_man extends PApplet {
                 dir = "stopped";
                 nextDir = "stopped";
             }
+
             switch (nextDir) {
                 case "up" -> {
                     if (cells[coordsX][coordsY - 1].open) {
                         dir = nextDir;
                         x = coordsX * cellWidth + (cellWidth / 2f);
-                    }/* else {
-                        if (other && !nextDir.equals(dir)) {
-                            messages = splice(messages, "I want to move up", 0);
-                        }
-                    }*/
+                    }
                 }
                 case "down" -> {
                     if (cells[coordsX][coordsY + 1].open) {
                         dir = nextDir;
                         x = coordsX * cellWidth + (cellWidth / 2f);
-                    }/* else {
-                        if (other && !nextDir.equals(dir)) {
-                            messages = splice(messages, "I want to move down", 0);
-                        }
-                    }*/
+                    }
                 }
                 case "right" -> {
                     if (cells[coordsX + 1][coordsY].open) {
                         dir = nextDir;
                         y = coordsY * cellWidth + (cellWidth / 2f);
-                    }/* else {
-                        if (other && !nextDir.equals(dir)) {
-                            messages = splice(messages, "I want to move right", 0);
-                        }
-                    }*/
+                    }
                 }
                 case "left" -> {
                     if (cells[coordsX - 1][coordsY].open) {
                         dir = nextDir;
                         y = coordsY * cellWidth + (cellWidth / 2f);
-                    }/* else {
-                        if (other && !nextDir.equals(dir)) {
-                            messages = splice(messages, "I want to move left", 0);
-                        }
-                    }*/
+                    }
                 }
             }
+            if (useClassicHitbox) {
+                switch (dir) {
+                    case "up" -> {
+                        if (cells[parseInt(coordsX)][parseInt(coordsY) - 1].open) {
+                            y -= speed;
+                            stopped = false;
+                            if (x < coordsX * cellWidth + (cellWidth / 2f)) {
+                                x++;
+                            }
+                            if (x > coordsX * cellWidth + (cellWidth / 2f)) {
+                                x--;
+                            }
+                            lastDir = "up";
+                        } else {
+                            dir = nextDir;
+                            nextDir = "stopped";
+                        }
+                    }
+                    case "down" -> {
+                        if (cells[parseInt(coordsX)][parseInt(coordsY) + 1].open) {
+                            y += speed;
+                            stopped = false;
+                            if (x < coordsX * cellWidth + (cellWidth / 2f)) {
+                                x++;
+                            }
+                            if (x > coordsX * cellWidth + (cellWidth / 2f)) {
+                                x--;
+                            }
+                            lastDir = "down";
+                        } else {
+                            dir = nextDir;
+                            nextDir = "stopped";
+                        }
+                    }
+                    case "right" -> {
+                        if (cells[parseInt(coordsX) + 1][parseInt(coordsY)].open) {
+                            x += speed;
+                            stopped = false;
+                            if (y < coordsY * cellWidth + (cellWidth / 2f)) {
+                                y++;
+                            }
+                            if (y > coordsY * cellWidth + (cellWidth / 2f)) {
+                                y--;
+                            }
+                            lastDir = "right";
+                        } else {
+                            dir = nextDir;
+                            nextDir = "stopped";
+                        }
+                    }
+                    case "left" -> {
+                        if (cells[parseInt(coordsX) - 1][parseInt(coordsY)].open) {
+                            x -= speed;
+                            stopped = false;
+                            if (y < coordsY * cellWidth + (cellWidth / 2f)) {
+                                y++;
+                            }
+                            if (y > coordsY * cellWidth + (cellWidth / 2f)) {
+                                y--;
+                            }
+                            lastDir = "left";
+                        } else {
+                            dir = nextDir;
+                            nextDir = "stopped";
+                        }
+                    }
+                    case "stopped" -> {
+                        if (x < coordsX * cellWidth + (cellWidth / 2f)) {
+                            x++;
+                        }
+                        if (x > coordsX * cellWidth + (cellWidth / 2f)) {
+                            x--;
+                        }
+                        if (y < coordsY * cellWidth + (cellWidth / 2f)) {
+                            y++;
+                        }
+                        if (y > coordsY * cellWidth + (cellWidth / 2f)) {
+                            y--;
+                        }
+                    }
+                }
+
+            } else {
 
 
-            switch (dir) {
-                case "up" -> {
-                    if (cells[coordsX][coordsY - 1].open) {
-                        y -= speed;
-                        stopped = false;
+                switch (dir) {
+                    case "up" -> {
+                        if (cells[coordsX][coordsY - 1].open) {
+                            y -= speed;
+                            stopped = false;
+                            if (x < coordsX * cellWidth + (cellWidth / 2f)) {
+                                x += speed;
+                            }
+                            if (x > coordsX * cellWidth + (cellWidth / 2f)) {
+                                x -= speed;
+                            }
+                            lastDir = "up";
+                        } else {
+                            if (y <= (coordsY * cellWidth + (cellWidth / 2f)) + stopBuffer) {
+                                dir = nextDir;
+                                nextDir = "stopped";
+                            } else {
+                                y -= speed;
+                            }
+                        }
+                    }
+                    case "down" -> {
+                        if (cells[coordsX][coordsY + 1].open) {
+                            y += speed;
+                            stopped = false;
+                            if (x < coordsX * cellWidth + (cellWidth / 2f)) {
+                                x += speed;
+                            }
+                            if (x > coordsX * cellWidth + (cellWidth / 2f)) {
+                                x -= speed;
+                            }
+                            lastDir = "down";
+                        } else {
+                            if (y >= (coordsY * cellWidth + (cellWidth / 2f)) - stopBuffer) {
+                                dir = nextDir;
+                                nextDir = "stopped";
+                            } else {
+                                y += speed;
+                            }
+                        }
+                    }
+                    case "right" -> {
+                        if (cells[coordsX + 1][coordsY].open) {
+                            x += speed;
+                            stopped = false;
+                            if (y < coordsY * cellWidth + (cellWidth / 2f)) {
+                                y += speed;
+                            }
+                            if (y > coordsY * cellWidth + (cellWidth / 2f)) {
+                                y -= speed;
+                            }
+                            lastDir = "right";
+                        } else {
+                            if (x >= (coordsX * cellWidth + (cellWidth / 2f)) - stopBuffer) {
+                                dir = nextDir;
+                                nextDir = "stopped";
+                            } else {
+                                x += speed;
+                            }
+                        }
+                    }
+                    case "left" -> {
+                        if (cells[coordsX - 1][coordsY].open) {
+                            x -= speed;
+                            stopped = false;
+                            if (y < coordsY * cellWidth + (cellWidth / 2f)) {
+                                y += speed;
+                            }
+                            if (y > coordsY * cellWidth + (cellWidth / 2f)) {
+                                y -= speed;
+                            }
+                            lastDir = "left";
+                        } else {
+                            if (x <= (coordsX * cellWidth + (cellWidth / 2f)) + stopBuffer) {
+                                dir = nextDir;
+                                nextDir = "stopped";
+                            } else {
+                                x -= speed;
+                            }
+                        }
+                    }
+                    case "stopped" -> {
                         if (x < coordsX * cellWidth + (cellWidth / 2f)) {
                             x += speed;
                         }
                         if (x > coordsX * cellWidth + (cellWidth / 2f)) {
                             x -= speed;
                         }
-                        lastDir = "up";
-                    } else {
-                        if (y <= (coordsY * cellWidth + (cellWidth / 2f)) + stopBuffer) {
-                            dir = nextDir;
-                            nextDir = "stopped";
-                        } else {
-                            y -= speed;
-                        }
-                    }
-
-                }
-                case "down" -> {
-                    if (cells[coordsX][coordsY + 1].open) {
-                        y += speed;
-                        stopped = false;
-                        if (x < coordsX * cellWidth + (cellWidth / 2f)) {
-                            x += speed;
-                        }
-                        if (x > coordsX * cellWidth + (cellWidth / 2f)) {
-                            x -= speed;
-                        }
-                        lastDir = "down";
-                    } else {
-                        if (y >= (coordsY * cellWidth + (cellWidth / 2f)) - stopBuffer) {
-                            dir = nextDir;
-                            nextDir = "stopped";
-                        } else {
-                            y += speed;
-                        }
-                    }
-
-                }
-                case "right" -> {
-
-                    if (cells[coordsX + 1][coordsY].open) {
-                        x += speed;
-                        stopped = false;
                         if (y < coordsY * cellWidth + (cellWidth / 2f)) {
                             y += speed;
                         }
                         if (y > coordsY * cellWidth + (cellWidth / 2f)) {
                             y -= speed;
                         }
-                        lastDir = "right";
-                    } else {
-                        if (x >= (coordsX * cellWidth + (cellWidth / 2f)) - stopBuffer) {
-                            dir = nextDir;
-                            nextDir = "stopped";
-                        } else {
-                            x += speed;
-                        }
-                    }
-                }
-                case "left" -> {
-
-                    if (cells[coordsX - 1][coordsY].open) {
-                        x -= speed;
-
-                        stopped = false;
-                        if (y < coordsY * cellWidth + (cellWidth / 2f)) {
-                            y += speed;
-                        }
-                        if (y > coordsY * cellWidth + (cellWidth / 2f)) {
-                            y -= speed;
-                        }
-                        lastDir = "left";
-                    } else {
-                        if (x <= (coordsX * cellWidth + (cellWidth / 2f)) + stopBuffer) {
-                            dir = nextDir;
-                            nextDir = "stopped";
-                        } else {
-                            x -= speed;
-                        }
-                    }
-                }
-                case "stopped" -> {
-                    if (x < coordsX * cellWidth + (cellWidth / 2f)) {
-                        x += speed;
-                    }
-                    if (x > coordsX * cellWidth + (cellWidth / 2f)) {
-                        x -= speed;
-                    }
-                    if (y < coordsY * cellWidth + (cellWidth / 2f)) {
-                        y += speed;
-                    }
-                    if (y > coordsY * cellWidth + (cellWidth / 2f)) {
-                        y -= speed;
                     }
                 }
             }
+
             if (x > 400) {
                 x = cellWidth + size / 2f;
             }

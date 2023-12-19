@@ -37,19 +37,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 
+@SuppressWarnings("CallToPrintStackTrace")
 public class updateWindow extends JPanel implements ActionListener {
-    //private final JCheckBox playPauseBeatBox/*, selectOpenGL*/, startsWMouthBox, chooseDebug;
-    //Show Ghosts When Stopped
-    //private final JCheckBox selectSGWS;
     //private final String path = System.getProperty("user.home");
     //JLabel ;
     JLabel web;
@@ -118,9 +112,9 @@ public class updateWindow extends JPanel implements ActionListener {
         frame.setVisible(true);
     }
 
-    /*private static void createAndShowPopout() {
+    private static void createAndShowPopout() {
         //Create and set up the window.
-        JFrame frame = new JFrame("Pac-Man Settings");
+        JFrame frame = new JFrame("Update");
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Create and set up the content pane.
         JComponent newContentPane = new updateWindow();
@@ -129,7 +123,7 @@ public class updateWindow extends JPanel implements ActionListener {
         //Display the window.
         frame.pack();
         frame.setVisible(true);
-    }*/
+    }
 
     public static JButton createButton(String title, int key, boolean enabled, updateWindow updateWindow, String command) {
         JButton button = new JButton(title);
@@ -146,32 +140,22 @@ public class updateWindow extends JPanel implements ActionListener {
         SwingUtilities.invokeLater(updateWindow::createAndShowGUI);
     }
 
-    /*public static void create() {
+    public static void create() {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
         SwingUtilities.invokeLater(updateWindow::createAndShowPopout);
-    }*/
+    }
 
     public void downloadNewVersion() {
         URL website;
         try {
             website = new URL("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar");
             ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-            try (FileOutputStream fos = new FileOutputStream("download.jar")) {
+            try (FileOutputStream fos = new FileOutputStream("new.jar")) {
                 fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        try (InputStream source = new URL("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar").openStream()) {
-            Files.copy(source, Path.of("download2.jar"));
-            System.out.println("Operation 1 Success!");
-        } catch (MalformedURLException e) {
-            System.err.println("MalformedURLException1");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.err.println("IOException1!");
+            System.err.println("IOException!");
             e.printStackTrace();
         }
     }

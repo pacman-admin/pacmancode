@@ -36,7 +36,7 @@ import java.awt.event.*;
 import java.io.*;
 
 public class SettingsWindow extends JPanel implements ItemListener, ActionListener {
-    private final JCheckBox playPauseBeatBox/*, selectOpenGL*/, startsWMouthBox, chooseDebug;
+    private final JCheckBox playPauseBeatBox, selectClassicHitbox, startsWMouthBox, chooseDebug;
     //Show Ghosts When Stopped
     private final JCheckBox selectSGWS;
     private final String path = System.getProperty("user.home");
@@ -52,7 +52,7 @@ public class SettingsWindow extends JPanel implements ItemListener, ActionListen
     private boolean playPauseBeat = true;
     private boolean showGhostWhenStopped = true;
     private boolean startsAsCircle = true;
-    //private boolean useOpenGL = false;
+    private boolean useClassicHitbox = false;
     private boolean debug = false;
 
     public SettingsWindow() {
@@ -64,7 +64,7 @@ public class SettingsWindow extends JPanel implements ItemListener, ActionListen
         //Create the Buttons
         // = createButton("", KeyEvent.VK_, , this, "");
         JButton launchAbout = createButton("About Pac-Man", KeyEvent.VK_A, true, this, "launchAbout");
-        JButton checkUpdate = createButton("Check for Updates", KeyEvent.VK_U, false, this, "update");
+        JButton checkUpdate = createButton("Check for Updates", KeyEvent.VK_U, true, this, "update");
 
         //Set up the picture label
         //pictureLabel = new JLabel();
@@ -79,15 +79,15 @@ public class SettingsWindow extends JPanel implements ItemListener, ActionListen
             playPauseBeat = din.readBoolean();
             showGhostWhenStopped = din.readBoolean();
             startsAsCircle = din.readBoolean();
-            //useOpenGL = din.readBoolean();
-            System.out.println(debug + ", " + playPauseBeat + ", " + showGhostWhenStopped + ", " + startsAsCircle/* + ", " + useOpenGL/*+", "+*/);
+            useClassicHitbox = din.readBoolean();
+            System.out.println(debug + ", " + playPauseBeat + ", " + showGhostWhenStopped + ", " + startsAsCircle/* + ", " + useClassicHitbox/*+", "+*/);
 
         } catch (IOException e) {
             System.err.println("An Error occurred while loading settings.");
             //throw new RuntimeException(e);
         }
         playPauseBeatBox = createCheckbox("Play Pause Beat", KeyEvent.VK_P, playPauseBeat, this);
-        //selectOpenGL = createCheckbox("Use Hardware Acceleration\n(Experimental)", KeyEvent.VK_H, useOpenGL, this);
+        selectClassicHitbox = createCheckbox("Use Old Hitbox\n(Glitchy)", KeyEvent.VK_H, useClassicHitbox, this);
         startsWMouthBox = createCheckbox("Pac-Man starts as circle", KeyEvent.VK_M, startsAsCircle, this);
         selectSGWS = createCheckbox("Show Ghosts When Stopped", KeyEvent.VK_G, showGhostWhenStopped, this);
         chooseDebug = createCheckbox("Debug Mode", KeyEvent.VK_D, debug, this);
@@ -101,7 +101,7 @@ public class SettingsWindow extends JPanel implements ItemListener, ActionListen
         checkPanel.add(playPauseBeatBox);
         checkPanel.add(selectSGWS);
         checkPanel.add(startsWMouthBox);
-        //checkPanel.add(selectOpenGL);
+        checkPanel.add(selectClassicHitbox);
         checkPanel.add(chooseDebug);
 
         checkPanel.add(launchAbout);
@@ -199,8 +199,8 @@ public class SettingsWindow extends JPanel implements ItemListener, ActionListen
         }
         if (source == playPauseBeatBox) {
             playPauseBeat = newVal;
-        /*} else if (source == selectOpenGL) {
-            useOpenGL = newVal;*/
+        } else if (source == selectClassicHitbox) {
+            useClassicHitbox = newVal;
         } else if (source == startsWMouthBox) {
             startsAsCircle = newVal;
         } else if (source == selectSGWS) {
@@ -212,27 +212,27 @@ public class SettingsWindow extends JPanel implements ItemListener, ActionListen
     }
 
     protected void updateSettings() {
-        //System.out.println(debug + ", " + showGhostWhenStopped + ", " + startsAsCircle + ", " + useOpenGL + ", " + playPauseBeat/*+", "+*/);
+        //System.out.println(debug + ", " + showGhostWhenStopped + ", " + startsAsCircle + ", " + useClassicHitbox + ", " + playPauseBeat/*+", "+*/);
         try {
             DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path + "/settings.dat")));
             dos.writeBoolean(debug);
             dos.writeBoolean(playPauseBeat);
             dos.writeBoolean(showGhostWhenStopped);
             dos.writeBoolean(startsAsCircle);
-            //dos.writeBoolean(useOpenGL);
+            dos.writeBoolean(useClassicHitbox);
 
             dos.close();
             pac_man.loadSettings();
         } catch (IOException e) {
             System.err.println("An Error occurred while saving settings.");
         }
-        //System.out.println(debug + ", " + showGhostWhenStopped + ", " + startsAsCircle + ", " + useOpenGL + ", " + playPauseBeat/*+", "+*/);
+        //System.out.println(debug + ", " + showGhostWhenStopped + ", " + startsAsCircle + ", " + useClassicHitbox + ", " + playPauseBeat/*+", "+*/);
     }
 
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "update":
-                //update();
+                updateWindow.create();
                 break;
             case "launchAbout":
                 aboutWindow.open();
