@@ -44,7 +44,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 
-@SuppressWarnings("CallToPrintStackTrace")
+@SuppressWarnings("all")
 public final class updateWindow extends window implements ActionListener {
     //JLabel label3;
     //JLabel pictureLabel;
