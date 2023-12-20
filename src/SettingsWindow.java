@@ -35,7 +35,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 
-public class SettingsWindow extends JPanel implements ItemListener, ActionListener {
+public class SettingsWindow extends window implements ItemListener, ActionListener {
     private final JCheckBox playPauseBeatBox, selectClassicHitbox, startsWMouthBox, chooseDebug;
     //Show Ghosts When Stopped
     private final JCheckBox selectSGWS;
@@ -45,8 +45,7 @@ public class SettingsWindow extends JPanel implements ItemListener, ActionListen
     public float pacmanSpeed = 3;
     */
     //JLabel ;
-    JLabel web;
-    JLabel name;
+
     //JLabel label3;
     //JLabel pictureLabel;
     private boolean playPauseBeat = true;
@@ -56,7 +55,7 @@ public class SettingsWindow extends JPanel implements ItemListener, ActionListen
     private boolean debug = false;
 
     public SettingsWindow() {
-        super(new BorderLayout());
+        //super(new BorderLayout());
 
 
         //  = createCheckbox("", KeyEvent.VK_, , this);
@@ -69,8 +68,8 @@ public class SettingsWindow extends JPanel implements ItemListener, ActionListen
         //Set up the picture label
         //pictureLabel = new JLabel();
         //pictureLabel.setFont(pictureLabel.getFont().deriveFont(Font.ITALIC));
-        name = new JLabel("By Langdon Staab 2023");
-        web = new JLabel("www.getpacman.gq");
+        JLabel name = new JLabel("By Langdon Staab 2023");
+        JLabel web = new JLabel("www.getpacman.gq");
 
         //Create the checkboxes.
         try {

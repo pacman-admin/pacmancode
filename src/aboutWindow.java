@@ -32,29 +32,21 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class aboutWindow extends JPanel {
-    //JLabel ;
-    JLabel web;
-    JLabel name;
-    JLabel credit1;
-    JLabel credit2;
-    JLabel credit3;
-    JLabel credit4;
-    JLabel credit5;
-    JLabel donateMsg;
+public class aboutWindow extends window {
+
 
     public aboutWindow() {
-        super(new BorderLayout());
-        name = new JLabel("By Langdon Staab 2023");
-        web = new JLabel("www.getpacman.gq");
+        //super(new BorderLayout());
+        JLabel name = new JLabel("By Langdon Staab 2023");
+        JLabel web = new JLabel("www.getpacman.gq");
         // = new JLabel("");
         //credit = new JLabel("");
-        credit1 = new JLabel("Sound API Made from Code by McDowell and Tyler Tomas");
-        credit2 = new JLabel("Made with Processing (Processing.org)");
-        credit3 = new JLabel("Sprites and Game Sounds taken from freepacman.org");
-        credit4 = new JLabel("");
-        credit5 = new JLabel("");
-        donateMsg = new JLabel("");
+        JLabel credit1 = new JLabel("Sound API Made from Code by McDowell and Tyler Tomas");
+        JLabel credit2 = new JLabel("Made with Processing (Processing.org)");
+        JLabel credit3 = new JLabel("Sprites and Game Sounds taken from freepacman.org");
+        JLabel credit4 = new JLabel("");
+        JLabel credit5 = new JLabel("");
+        JLabel donateMsg = new JLabel("");
         //Put the checkboxes in a column in a panel
         JPanel infoPanel = new JPanel(new GridLayout(0, 1));
         infoPanel.add(name);

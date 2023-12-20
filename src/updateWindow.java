@@ -35,24 +35,23 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 
 @SuppressWarnings("CallToPrintStackTrace")
-public class updateWindow extends JPanel implements ActionListener {
-    //private final String path = System.getProperty("user.home");
-    //JLabel ;
-    JLabel web;
-    JLabel name;
+public final class updateWindow extends window implements ActionListener {
     //JLabel label3;
     //JLabel pictureLabel;
+    private final float latestVersion = 10.1f;
 
-    public updateWindow() {
-        super(new BorderLayout());
+    private updateWindow() {
+
         //Create the Buttons
         // = createButton("", KeyEvent.VK_, , this, "");
         JButton launchAbout = createButton("Download new version", KeyEvent.VK_A, true, this, "download");
@@ -61,8 +60,11 @@ public class updateWindow extends JPanel implements ActionListener {
         //Set up the picture label
         //pictureLabel = new JLabel();
         //pictureLabel.setFont(pictureLabel.getFont().deriveFont(Font.ITALIC));
-        name = new JLabel("By Langdon Staab 2023");
-        web = new JLabel("www.getpacman.gq");
+
+        JLabel name = new JLabel("By Langdon Staab 2023");
+        //private final String path = System.getProperty("user.home");
+        //JLabel ;
+        JLabel web = new JLabel("www.getpacman.gq");
 
 
         //Put the checkboxes in a column in a panel
@@ -144,6 +146,18 @@ public class updateWindow extends JPanel implements ActionListener {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
         SwingUtilities.invokeLater(updateWindow::createAndShowPopout);
+    }
+
+    private void checkVersion() {
+        try {
+            URL oracle = new URL("www2.getpacman.gq/version.txt");
+            BufferedReader in = new BufferedReader(new InputStreamReader(oracle.openStream()));
+
+
+            in.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void downloadNewVersion() {
