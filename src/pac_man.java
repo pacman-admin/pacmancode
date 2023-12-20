@@ -8,7 +8,7 @@ import java.io.*;
  * @author Langdon S.
  */
 
-
+@SuppressWarnings("StatementWithEmptyBody")
 public final class pac_man extends PApplet {
     // By Langdon S.
     //current version:
