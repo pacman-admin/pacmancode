@@ -98,6 +98,7 @@ final class SettingsWindow extends window implements ItemListener {
         checkPanel.add(chooseDebug);
         checkPanel.add(launchAbout);
         checkPanel.add(checkUpdate);
+        checkPanel.add(donate);
         //checkPanel.add();
 
         add(checkPanel, BorderLayout.LINE_START);

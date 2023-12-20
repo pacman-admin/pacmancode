@@ -52,6 +52,7 @@ final class updateWindow extends window {
         // = createButton("", KeyEvent.VK_, , this, "");
         JButton launchAbout = createButton("Download new version", KeyEvent.VK_A, true, this, "download");
         JButton checkUpdate = createButton("Check for Updates", KeyEvent.VK_U, false, this, "update");
+        JButton donate = createButton("Donate", KeyEvent.VK_U, true, this, "donate");
         JLabel name = new JLabel("By Langdon Staab 2023");
         JLabel web = new JLabel("www.getpacman.gq");
 
@@ -65,6 +66,7 @@ final class updateWindow extends window {
         checkPanel.add(web);
         checkPanel.add(launchAbout);
         checkPanel.add(checkUpdate);
+        checkPanel.add(donate);
         //checkPanel.add();
 
         add(checkPanel, BorderLayout.LINE_START);

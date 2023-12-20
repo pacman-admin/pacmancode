@@ -31,9 +31,11 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 final class aboutWindow extends window {
     private aboutWindow() {
+        JButton donate = createButton("Donate", KeyEvent.VK_U, true, this, "donate");
         JLabel name = new JLabel("By Langdon Staab 2023");
         JLabel web = new JLabel("www.getpacman.gq");
         // = new JLabel("");
@@ -55,6 +57,7 @@ final class aboutWindow extends window {
         infoPanel.add(credit4);
         infoPanel.add(credit5);
         infoPanel.add(donateMsg);
+        infoPanel.add(donate);
 
         add(infoPanel, BorderLayout.LINE_START);
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
