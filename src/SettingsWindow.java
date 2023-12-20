@@ -32,14 +32,15 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
 import java.io.*;
 
-final class SettingsWindow extends window implements ItemListener, ActionListener {
+final class SettingsWindow extends window implements ItemListener {
     private final JCheckBox playPauseBeatBox, selectClassicHitbox, startsWMouthBox, chooseDebug;
     //Show Ghosts When Stopped
     private final JCheckBox selectSGWS;
-    private final String path = System.getProperty("user.home");
     /*
     public float ghostSpeed = 2;
     public float pacmanSpeed = 3;
@@ -52,12 +53,14 @@ final class SettingsWindow extends window implements ItemListener, ActionListene
     private boolean startsAsCircle = true;
     private boolean useClassicHitbox = false;
     private boolean debug = false;
+
     private SettingsWindow() {
         //  = createCheckbox("", KeyEvent.VK_, , this);
         //Create the Buttons
         // = createButton("", KeyEvent.VK_, , this, "");
         JButton launchAbout = createButton("About Pac-Man", KeyEvent.VK_A, true, this, "launchAbout");
         JButton checkUpdate = createButton("Check for Updates", KeyEvent.VK_U, true, this, "update");
+        JButton donate = createButton("Donate", KeyEvent.VK_U, true, this, "donate");
         //Set up the picture label
         //pictureLabel = new JLabel();
         //pictureLabel.setFont(pictureLabel.getFont().deriveFont(Font.ITALIC));
@@ -104,24 +107,7 @@ final class SettingsWindow extends window implements ItemListener, ActionListene
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
     }
 
-    /**
-     * Returns an ImageIcon, or null if the path was invalid.
-     */
-    /*protected static ImageIcon createImageIcon(String path) {
-        java.net.URL imgURL = CheckBoxDemo.class.getResource(path);
-        if (imgURL != null) {
-            return new ImageIcon(imgURL);
-        } else {
-            System.err.println("Couldn't find file: " + path);
-            return null;
-        }
-    }
 
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
-     */
     private static void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("Settings");
@@ -156,14 +142,6 @@ final class SettingsWindow extends window implements ItemListener, ActionListene
         return checkBox;
     }
 
-    private static JButton createButton(String title, int key, boolean enabled, SettingsWindow settingsWindow, String command) {
-        JButton button = new JButton(title);
-        button.setMnemonic(key);
-        button.setEnabled(enabled);
-        button.setActionCommand(command);
-        button.addActionListener(settingsWindow);
-        return button;
-    }
 
     public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
@@ -218,18 +196,5 @@ final class SettingsWindow extends window implements ItemListener, ActionListene
             System.err.println("An Error occurred while saving settings.");
         }
         //System.out.println(debug + ", " + showGhostWhenStopped + ", " + startsAsCircle + ", " + useClassicHitbox + ", " + playPauseBeat/*+", "+*/);
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-            case "update":
-                updateWindow.create();
-                break;
-            case "launchAbout":
-                aboutWindow.open();
-                break;
-            case "help":
-                break;
-        }
     }
 }

@@ -32,8 +32,6 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
@@ -45,9 +43,10 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 
-public final class updateWindow extends window implements ActionListener {
+final class updateWindow extends window {
     //JLabel label3;
     //JLabel pictureLabel;
+
     private final float latestVersion = 10.1f;
 
     private updateWindow() {
@@ -127,14 +126,6 @@ public final class updateWindow extends window implements ActionListener {
         frame.setVisible(true);
     }
 
-    public static JButton createButton(String title, int key, boolean enabled, updateWindow updateWindow, String command) {
-        JButton button = new JButton(title);
-        button.setMnemonic(key);
-        button.setEnabled(enabled);
-        button.setActionCommand(command);
-        button.addActionListener(updateWindow);
-        return button;
-    }
 
     public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
@@ -176,16 +167,4 @@ public final class updateWindow extends window implements ActionListener {
         }
     }
 
-    public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-            case "download":
-                downloadNewVersion();
-                break;
-            case "launchAbout":
-                aboutWindow.open();
-                break;
-            case "help":
-                break;
-        }
-    }
 }
