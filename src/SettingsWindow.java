@@ -91,13 +91,11 @@ final class SettingsWindow extends window implements ItemListener {
 
         checkPanel.add(name);
         checkPanel.add(web);
-
         checkPanel.add(playPauseBeatBox);
         checkPanel.add(selectSGWS);
         checkPanel.add(startsWMouthBox);
         checkPanel.add(selectClassicHitbox);
         checkPanel.add(chooseDebug);
-
         checkPanel.add(launchAbout);
         checkPanel.add(checkUpdate);
         //checkPanel.add();
@@ -106,7 +104,6 @@ final class SettingsWindow extends window implements ItemListener {
         //add(pictureLabel, BorderLayout.CENTER);
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
     }
-
 
     private static void createAndShowGUI() {
         //Create and set up the window.
@@ -142,13 +139,11 @@ final class SettingsWindow extends window implements ItemListener {
         return checkBox;
     }
 
-
     public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(SettingsWindow::createAndShowGUI);
     }
-
 
     public static void create() {
         //Schedule a job for the event-dispatching thread:
@@ -156,9 +151,6 @@ final class SettingsWindow extends window implements ItemListener {
         javax.swing.SwingUtilities.invokeLater(SettingsWindow::createAndShowPopout);
     }
 
-    /**
-     * Listens to the checkboxes.
-     */
     public void itemStateChanged(ItemEvent e) {
         boolean newVal = false;
         Object source = e.getItemSelectable();
@@ -181,7 +173,6 @@ final class SettingsWindow extends window implements ItemListener {
     }
 
     private void updateSettings() {
-        //System.out.println(debug + ", " + showGhostWhenStopped + ", " + startsAsCircle + ", " + useClassicHitbox + ", " + playPauseBeat/*+", "+*/);
         try {
             DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path + "/settings.dat")));
             dos.writeBoolean(debug);
@@ -189,12 +180,10 @@ final class SettingsWindow extends window implements ItemListener {
             dos.writeBoolean(showGhostWhenStopped);
             dos.writeBoolean(startsAsCircle);
             dos.writeBoolean(useClassicHitbox);
-
             dos.close();
             pac_man.loadSettings();
         } catch (IOException e) {
             System.err.println("An Error occurred while saving settings.");
         }
-        //System.out.println(debug + ", " + showGhostWhenStopped + ", " + startsAsCircle + ", " + useClassicHitbox + ", " + playPauseBeat/*+", "+*/);
     }
 }

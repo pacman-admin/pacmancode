@@ -32,47 +32,37 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 
 
 final class updateWindow extends window {
     //JLabel label3;
     //JLabel pictureLabel;
 
-    private final float latestVersion = 10.1f;
+    //private final float latestVersion = 10.1f;
 
     private updateWindow() {
-
         //Create the Buttons
         // = createButton("", KeyEvent.VK_, , this, "");
         JButton launchAbout = createButton("Download new version", KeyEvent.VK_A, true, this, "download");
         JButton checkUpdate = createButton("Check for Updates", KeyEvent.VK_U, false, this, "update");
+        JLabel name = new JLabel("By Langdon Staab 2023");
+        JLabel web = new JLabel("www.getpacman.gq");
 
         //Set up the picture label
         //pictureLabel = new JLabel();
         //pictureLabel.setFont(pictureLabel.getFont().deriveFont(Font.ITALIC));
-
-        JLabel name = new JLabel("By Langdon Staab 2023");
-        //private final String path = System.getProperty("user.home");
-        //JLabel ;
-        JLabel web = new JLabel("www.getpacman.gq");
-
-
         //Put the checkboxes in a column in a panel
         JPanel checkPanel = new JPanel(new GridLayout(0, 1));
 
         checkPanel.add(name);
         checkPanel.add(web);
-
-
         checkPanel.add(launchAbout);
         checkPanel.add(checkUpdate);
         //checkPanel.add();
@@ -82,24 +72,6 @@ final class updateWindow extends window {
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
     }
 
-    /**
-     * Returns an ImageIcon, or null if the path was invalid.
-     */
-    /*protected static ImageIcon createImageIcon(String path) {
-        java.net.URI imgURI = CheckBoxDemo.class.getResource(path);
-        if (imgURI != null) {
-            return new ImageIcon(imgURI);
-        } else {
-            System.err.println("Couldn't find file: " + path);
-            return null;
-        }
-    }
-
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
-     */
     private static void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("Update");
@@ -126,7 +98,6 @@ final class updateWindow extends window {
         frame.setVisible(true);
     }
 
-
     public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
@@ -150,20 +121,27 @@ final class updateWindow extends window {
             System.err.println("URISyntaxException1!");
         }
     }
-
-    public void downloadNewVersion() {
-        URI website;
-        try {
-            website = new URI("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar");
-            ReadableByteChannel rbc = Channels.newChannel(website.toURL().openStream());
-            try (FileOutputStream fos = new FileOutputStream("new.jar")) {
-                fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-            }
-        } catch (IOException e) {
-            System.err.println("IOException2!");
-            e.printStackTrace(System.err);
-        } catch (URISyntaxException e) {
-            System.err.println("URISyntaxException2!");
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        switch (e.getActionCommand()) {
+            case "update":
+                updateWindow.create();
+                break;
+            case "launchAbout":
+                aboutWindow.open();
+                break;
+            case "":
+                break;
+            case "download":
+                downloadNewVersion();
+                break;
+            case "donate":
+                try {
+                    Desktop.getDesktop().browse(new URI("https://buymeacoff.ee/langdonstaab"));
+                } catch (IOException | URISyntaxException ex) {
+                    throw new RuntimeException(ex);
+                }
+                break;
         }
     }
 
