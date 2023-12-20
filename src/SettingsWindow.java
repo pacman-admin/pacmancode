@@ -35,7 +35,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 
-public class SettingsWindow extends window implements ItemListener, ActionListener {
+final class SettingsWindow extends window implements ItemListener, ActionListener {
     private final JCheckBox playPauseBeatBox, selectClassicHitbox, startsWMouthBox, chooseDebug;
     //Show Ghosts When Stopped
     private final JCheckBox selectSGWS;
@@ -54,7 +54,7 @@ public class SettingsWindow extends window implements ItemListener, ActionListen
     private boolean useClassicHitbox = false;
     private boolean debug = false;
 
-    public SettingsWindow() {
+    private SettingsWindow() {
         //super(new BorderLayout());
 
 
@@ -156,7 +156,7 @@ public class SettingsWindow extends window implements ItemListener, ActionListen
         frame.setVisible(true);
     }
 
-    public static JCheckBox createCheckbox(String title, int key, boolean selectedByDefault, SettingsWindow settingsWindow) {
+    private static JCheckBox createCheckbox(String title, int key, boolean selectedByDefault, SettingsWindow settingsWindow) {
         JCheckBox checkBox = new JCheckBox(title);
         checkBox.setMnemonic(key);
         checkBox.setSelected(selectedByDefault);
@@ -164,7 +164,7 @@ public class SettingsWindow extends window implements ItemListener, ActionListen
         return checkBox;
     }
 
-    public static JButton createButton(String title, int key, boolean enabled, SettingsWindow settingsWindow, String command) {
+    private static JButton createButton(String title, int key, boolean enabled, SettingsWindow settingsWindow, String command) {
         JButton button = new JButton(title);
         button.setMnemonic(key);
         button.setEnabled(enabled);
@@ -210,7 +210,7 @@ public class SettingsWindow extends window implements ItemListener, ActionListen
         updateSettings();
     }
 
-    protected void updateSettings() {
+    private void updateSettings() {
         //System.out.println(debug + ", " + showGhostWhenStopped + ", " + startsAsCircle + ", " + useClassicHitbox + ", " + playPauseBeat/*+", "+*/);
         try {
             DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path + "/settings.dat")));

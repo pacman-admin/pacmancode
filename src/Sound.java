@@ -10,8 +10,8 @@ import java.net.MalformedURLException;
  * @author Langdon Staab
  * @author Tyler Tomas
  */
-public class Sound {
-    Clip clip;
+final class Sound {
+    private Clip clip;
 
     @SuppressWarnings("CallToPrintStackTrace")
     public Sound(String filename) {
@@ -42,20 +42,20 @@ public class Sound {
         // play, stop, loop the sound clip
     }
 
-    public void play() {
+    public final void play() {
         clip.setFramePosition(0);  // Must always rewind!
         clip.start();
     }
 
-    public void loop() {
+    public final void loop() {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
-    public void stop() {
+    public final void stop() {
         clip.stop();
     }
 
-    public boolean isPlaying() {
+    public final boolean isPlaying() {
         //return false;
         return clip.getFrameLength() > clip.getFramePosition();
     }

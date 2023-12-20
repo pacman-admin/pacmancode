@@ -1,3 +1,3 @@
-public class Coordinate {
+final class Coordinate {
     int x, y;
 }

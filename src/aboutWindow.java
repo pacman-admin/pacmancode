@@ -32,10 +32,10 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class aboutWindow extends window {
+final class aboutWindow extends window {
 
 
-    public aboutWindow() {
+    private aboutWindow() {
         //super(new BorderLayout());
         JLabel name = new JLabel("By Langdon Staab 2023");
         JLabel web = new JLabel("www.getpacman.gq");

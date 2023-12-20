@@ -10,62 +10,111 @@ import java.io.*;
  */
 
 
-@SuppressWarnings({"StatementWithEmptyBody", "CallToPrintStackTrace"})
-public class pac_man extends PApplet {
+@SuppressWarnings({"StatementWithEmptyBody", "CallTo printStackTrace"})
+final class pac_man extends PApplet {
     // By Langdon S.
     //current version:
-    final static String TITLE = "Pac-Man 10.5";
-    final static float cellWidth = 32;
+    private final static String TITLE = "Pac-Man 10.5";
+    private final static float cellWidth = 32;
 
-    final static int pelletWorth = 10, canvasWidth = (int) (cellWidth * 13), canvasHeight = (int) (cellWidth * 13), gSize = 2;
-    final static String[] fruitPoints = {"cherry", "strawberry", "orange", "orange", "apple", "apple", "melon", "melon", "galaxian", "galaxian", "bell", "bell", "key", "key"};
-    final static byte[][] gDesign = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0}, {0, 0, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 0, 0}, {0, 0, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 0, 0}, {0, 1, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 1, 0}, {0, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0}, {0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-    final static int[][] altGhostBottom = {{0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0}, {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0}};
-    final static boolean[][] cellMap = {{false, true, false, true, true, true, true, true, true, true, true, true}, {false, true, true, true, false, false, false, false, false, false, false, true}, {false, true, false, true, true, true, true, true, true, true, false, true}, {false, true, false, true, false, false, false, false, false, true, false, true}, {false, true, true, true, true, true, true, true, true, true, true, true}, {false, true, false, true, false, true, false, false, true, false, true, true}, {false, true, false, true, false, true, false, true, true, false, true, true}, {false, true, false, true, true, true, true, false, true, false, false, true}, {false, true, false, false, false, true, false, false, true, false, true, true}, {false, true, true, true, true, true, true, false, true, false, true, true}, {false, true, true, false, false, false, true, true, true, false, true, true}};
-    final static float ghostSpeed = 2; //                |
-    final static float pacmanSpeed = 3; //               |
+    private final static int pelletWorth = 10;
+    private final static int canvasWidth = (int) (cellWidth * 13);
+    private final static int canvasHeight = (int) (cellWidth * 13);
+    private final static int gSize = 2;
+    private final static String[] fruitPoints = {"cherry", "strawberry", "orange", "orange", "apple", "apple", "melon", "melon", "galaxian", "galaxian", "bell", "bell", "key", "key"};
+    private final static byte[][] gDesign = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0}, {0, 0, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 0, 0}, {0, 0, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 0, 0}, {0, 1, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 1, 0}, {0, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0}, {0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+    private final static int[][] altGhostBottom = {{0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0}, {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0}};
+    private final static boolean[][] cellMap = {{false, true, false, true, true, true, true, true, true, true, true, true}, {false, true, true, true, false, false, false, false, false, false, false, true}, {false, true, false, true, true, true, true, true, true, true, false, true}, {false, true, false, true, false, false, false, false, false, true, false, true}, {false, true, true, true, true, true, true, true, true, true, true, true}, {false, true, false, true, false, true, false, false, true, false, true, true}, {false, true, false, true, false, true, false, true, true, false, true, true}, {false, true, false, true, true, true, true, false, true, false, false, true}, {false, true, false, false, false, true, false, false, true, false, true, true}, {false, true, true, true, true, true, true, false, true, false, true, true}, {false, true, true, false, false, false, true, true, true, false, true, true}};
+    private final static float ghostSpeed = 2; //                |
+    private final static float pacmanSpeed = 3; //               |
     //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 //            G A M E  S E T T I N G S             |
-    static boolean startsAsCircle = false; //      |
-    static boolean showGhostWhenStopped = true;//  |
-    static boolean debug = false; //               |
+    private static boolean startsAsCircle = false; //      |
+    private static boolean showGhostWhenStopped = true;//  |
+    private static boolean debug = false; //               |
 
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
     //Strings
-    static String path;
-    static boolean playPauseBeat = true; //              |
-    static String errorInfo;
-    static boolean useClassicHitbox = false; //              |
-    final Ghost ghost1 = new Ghost();
-    final Ghost ghost2 = new Ghost();
-    final Ghost ghost3 = new Ghost();
-    final Pacman pacman = new Pacman();
-    final Cell[][] cells = {new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13]};
-    final Pixel[][] ghostPx = {new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16]};
-    final Pixel[][] ghostBottom2Px = {new Pixel[16], new Pixel[16]};
-    int lives = 3; //                             |
-    int chompSpeed = 8; //                        |
-    boolean playStartSound = true; //             |
+    private static String path;
+    private static boolean playPauseBeat = true; //              |
+    private static String errorInfo;
+    private static boolean useClassicHitbox = false; //              |
+    private final Ghost ghost1 = new Ghost();
+    private final Ghost ghost2 = new Ghost();
+    private final Ghost ghost3 = new Ghost();
+    private final Pacman pacman = new Pacman();
+    private final Cell[][] cells = {new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13]};
+    private final Pixel[][] ghostPx = {new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16]};
+    private final Pixel[][] ghostBottom2Px = {new Pixel[16], new Pixel[16]};
+    private int lives = 3; //                             |
+    private int chompSpeed = 8; //                        |
+    private boolean playStartSound = true; //             |
     //booleans
-    boolean error, finishedDelay, first, first1 = true, lostLife, paused, pelletFirst, runSetup = true, start;
+    private boolean error;
+    private boolean finishedDelay;
+    private boolean first;
+    private boolean first1 = true;
+    private boolean lostLife;
+    private boolean paused;
+    private boolean pelletFirst;
+    private boolean runSetup = true;
+    private boolean start;
     //ints
-    int startMillis, chomp = 30, cellCount, duration, durationStart, fruitWorth, highScore, level, livesClaimed, pelletErrors, pelletsEaten, score, startFrames;
-    int coordsX, coordsY, coords3X, coords3Y, coords4X, coords4Y, coords5X, coords5Y;
-    int prevHighScore;
-    String[] messages = {};
-    float tempFPSVal;
-    float offsetX, offsetY, a, b;
-    PImage cherry, strawberry, apple, orange, melon, galaxian, bell, keyI, restartB, settingsB;
-    Sound dieS, startSound, dotSound1, dotSound2, fruit, extra_life, pause, pause_beat;
-    Pellet[] pellet = {};
-    Coordinate[] coords2 = {};
+    private int startMillis;
+    private int chomp = 30;
+    private int cellCount;
+    private int duration;
+    private int durationStart;
+    private int fruitWorth;
+    private int highScore;
+    private int level;
+    private int livesClaimed;
+    private int pelletErrors;
+    private int pelletsEaten;
+    private int score;
+    private int startFrames;
+    private int coordsX;
+    private int coordsY;
+    private int coords3X;
+    private int coords3Y;
+    private int coords4X;
+    private int coords4Y;
+    private int coords5X;
+    private int coords5Y;
+    private int prevHighScore;
+    private String[] messages = {};
+    private float tempFPSVal;
+    private float offsetX;
+    private float offsetY;
+    private float a;
+    private float b;
+    private PImage cherry;
+    private PImage strawberry;
+    private PImage apple;
+    private PImage orange;
+    private PImage melon;
+    private PImage galaxian;
+    private PImage bell;
+    private PImage keyI;
+    private PImage restartB;
+    private PImage settingsB;
+    private Sound dieS;
+    private Sound startSound;
+    private Sound dotSound1;
+    private Sound dotSound2;
+    private Sound fruit;
+    private Sound extra_life;
+    private Sound pause;
+    private Sound pause_beat;
+    private Pellet[] pellet = {};
+    private Coordinate[] coords2 = {};
 
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ A FEW RANDOM FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~///
 
-    static public void main(String[] passedArgs) {
+     public static void main(String[] passedArgs) {
         String[] appletArgs = new String[]{"pac_man"};
         if (passedArgs != null) {
             PApplet.main(concat(appletArgs, passedArgs));
@@ -84,7 +133,7 @@ public class pac_man extends PApplet {
             startsAsCircle = din.readBoolean();
             useClassicHitbox = din.readBoolean();
             //messages = splice(messages, "An error occurred while creating high score file", 0);
-            //System.out.println(debug + ", " + playPauseBeat + ", " + showGhostWhenStopped + ", " + startsAsCircle/* + ", " + useClassicHitbox/*+", "+*/);
+            //System.out. println(debug + ", " + playPauseBeat + ", " + showGhostWhenStopped + ", " + startsAsCircle/* + ", " + useClassicHitbox/*+", "+*/);
 
         } catch (FileNotFoundException e) {
             logError(e);
@@ -102,28 +151,28 @@ public class pac_man extends PApplet {
                 System.err.println("An Error occurred while saving settings.");
             }
         } catch (IOException e) {
-            System.err.println("An Error occurred while loading settings.");
-            e.printStackTrace();
+            System.err. println("An Error occurred while loading settings.");
+            e. printStackTrace();
             //throw new RuntimeException(e);
         }
 
 
     }
 
-    public static void logError(Exception e) {
+    private static void logError(Exception e) {
         try {
             FileWriter fstream = new FileWriter(path + "/Desktop/pacmanerror.txt", true);
             BufferedWriter out = new BufferedWriter(fstream);
-            PrintWriter pWriter = new PrintWriter(out, true);
-            e.printStackTrace(pWriter);
+              PrintWriter pWriter = new PrintWriter(out, true);
+            e. printStackTrace(pWriter);
         } catch (Exception ie) {
-            System.err.println("Could not append Exception to logfile");
+            System.err. println("Could not append Exception to logfile");
 
             errorInfo += "\n\n\n";
             StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            ie.printStackTrace(pw);
-            System.err.println(sw);
+             PrintWriter pw = new  PrintWriter(sw);
+            ie. printStackTrace(pw);
+            System.err. println(sw);
             errorInfo += sw.toString();
         }
     }
@@ -134,7 +183,7 @@ public class pac_man extends PApplet {
 
     public void setup() {
         surface.setTitle("Loading...");
-        System.out.println("Please wait...");
+        System.out. println("Please wait...");
         background(0);
         noStroke();
         textSize(20);
@@ -145,7 +194,7 @@ public class pac_man extends PApplet {
         //check setup2() for setup
     }
 
-    public void setup2() {
+    private void setup2() {
         noStroke();
         surface.setResizable(true);
         imageMode(CENTER);
@@ -155,18 +204,18 @@ public class pac_man extends PApplet {
         String temp = loadString(path + "/highscore.txt");
         if (temp.equals("error")) {
             try {
-                PrintWriter file = new PrintWriter(path + "/highscore.txt");
-                file.println(0);
+                 PrintWriter file = new  PrintWriter(path + "/highscore.txt");
+                file. println(0);
                 file.close();
                 prevHighScore = 0;
             } catch (FileNotFoundException e) {
                 messages = splice(messages, "An error occurred while creating high score file", 0);
-                System.err.println("An error occurred while creating the high score file.");
+                System.err. println("An error occurred while creating the high score file.");
                 logError(e);
                 prevHighScore = 0;
                 StringWriter sw = new StringWriter();
-                PrintWriter pw = new PrintWriter(sw);
-                e.printStackTrace(pw);
+                 PrintWriter pw = new  PrintWriter(sw);
+                e. printStackTrace(pw);
                 errorInfo += sw.toString();
             }
         } else {
@@ -183,7 +232,7 @@ public class pac_man extends PApplet {
         dieS = new Sound("death.wav");
         fruit = new Sound("fruit.wav");
         extra_life = new Sound("extra_life.wav");
-        System.out.println("Sound load success!");
+        System.out. println("Sound load success!");
 
         cherry = loadImage("cherry.png");
         settingsB = loadImage("settings.png");
@@ -192,7 +241,7 @@ public class pac_man extends PApplet {
         orange = loadImage("orange.png");
         apple = loadImage("apple.png");
         melon = loadImage("melon.png");
-        System.out.println("Image load success!");
+        System.out. println("Image load success!");
 
         createMaze();
         initializeMaze();
@@ -202,10 +251,10 @@ public class pac_man extends PApplet {
         pellet[5].isFruit = true;
         surface.setTitle(TITLE);
 
-        System.out.println("Setup success!");
+        System.out. println("Setup success!");
     }
 
-    public String loadString(String filename) {
+    private String loadString(String filename) {
         String[] ret;
         String data;
         try {
@@ -217,7 +266,7 @@ public class pac_man extends PApplet {
         }
     }
 
-    public void lazyLoad() {
+    private void lazyLoad() {
         messages = splice(messages, "Loading more fruit sprites...", 0);
         galaxian = loadImage("galaxian.png");
         bell = loadImage("bell.png");
@@ -241,7 +290,7 @@ public class pac_man extends PApplet {
                 durationStart = millis();
                 duration = 4500 + millis();
                 startMillis = millis();
-                println(millis());
+                 println(millis());
             } else if (millis() < 2000) {
                 //display loading screen for a minimum of 2 seconds.
                 //wait until 2 seconds have passed
@@ -390,10 +439,10 @@ public class pac_man extends PApplet {
         } catch (Exception e) {
             paused = true;
             StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
+             PrintWriter pw = new  PrintWriter(sw);
+            e. printStackTrace(pw);
             errorInfo += sw.toString();
-            System.err.println(errorInfo);
+            System.err. println(errorInfo);
             error = true;
             textSize(12);
             fill(255);
@@ -404,7 +453,7 @@ public class pac_man extends PApplet {
         }
     }
 
-    public void display() {
+    private void display() {
         drawButtons();
         fill(255);
         textAlign(CENTER);
@@ -433,11 +482,11 @@ public class pac_man extends PApplet {
         }
     }
 
-    public void changeAppIcon() {
+    private void changeAppIcon() {
         getSurface().setIcon(loadImage("icon.png"));
     }
 
-    public void displayMessages() {
+    private void displayMessages() {
         textSize(12);
         fill(0, 255, 50);
         for (int i = 0; i < messages.length; i++) {
@@ -445,14 +494,14 @@ public class pac_man extends PApplet {
         }
     }
 
-    public void addLife() {
+    private void addLife() {
         lives++;
         livesClaimed++;
         extra_life.play();
         messages = splice(messages, "Claimed extra life!", 0);
     }
 
-    public void giveLives() {
+    private void giveLives() {
         if (score >= 1000 && livesClaimed < 1) {
             addLife();
         } else if (score >= 2000 && livesClaimed < 2) {
@@ -476,26 +525,26 @@ public class pac_man extends PApplet {
         }
     }
 
-    public int createPosition(boolean dirIsX) {
-        int newPos = (int) (Math.round(random(cellWidth, canvasHeight - cellWidth * 2f) / cellWidth) * cellWidth + cellWidth / 2f);
+    private int createPosition(boolean dirIsX) {
+               int newPos = (int) (Math.round(random(cellWidth, canvasHeight - cellWidth * 2f) / cellWidth) * cellWidth + cellWidth / 2f);
         while (dirIsX && newPos <= cellWidth * 2.5f) {
             newPos = (int) (Math.round(random(cellWidth, canvasHeight - cellWidth * 2f) / cellWidth) * cellWidth + cellWidth / 2f);
         }
         return newPos;
     }
 
-    public boolean hitBoxCollision(int cellX, int cellY, float objectX, float objectY) {
+    private boolean hitBoxCollision(int cellX, int cellY, float objectX, float objectY) {
         return objectX > cellX && objectX < cellX + cellWidth && objectY > cellY && objectY < cellY + cellWidth;
     }
 
-    public void makePelletCoords() {
+    private void makePelletCoords() {
         for (int i = 0; i < pellet.length; i++) {
             coords2[i].x = Math.round((pellet[i].x) / cellWidth + 0.5f) - 1;
             coords2[i].y = Math.round((pellet[i].y) / cellWidth + 0.5f) - 1;
         }
     }
 
-    public void pxInit() {
+    private void pxInit() {
         for (int i = 0; i < ghostPx.length; i++) {
             for (int j = 0; j < ghostPx.length; j++) {
                 ghostPx[i][j] = new Pixel(gDesign[i][j], j * gSize, i * gSize);
@@ -511,7 +560,7 @@ public class pac_man extends PApplet {
 
 ////// Calling Things //////
 
-    public boolean checkGoodDir(String dir, int posX, int posY) {
+    private boolean checkGoodDir(String dir, int posX, int posY) {
         boolean goodDir = true;
         switch (dir) {
             case "up" -> {
@@ -541,7 +590,7 @@ public class pac_man extends PApplet {
 
 //////// FUNCTIONS ////////
 
-    public String makeDir(int Var) {
+    private String makeDir(int Var) {
         return switch (Var) {
             case 0 -> "up";
             case 1 -> "down";
@@ -551,14 +600,14 @@ public class pac_man extends PApplet {
         };
     }
 
-    public int makeDirNum() {
+    private int makeDirNum() {
         float tempDirNum = random(-0.1f, 4);
         int dirNum = floor(tempDirNum);
         dirNum = constrain(dirNum, 0, 3);
         return dirNum;
     }
 
-    public void createMaze() {
+    private void createMaze() {
         for (int i = 0; i < cellMap[1].length + 1; i++) {
             for (int j = 0; j < cellMap[1].length + 1; j++) {
                 cells[i][j] = new Cell(Math.round(i * cellWidth), Math.round(j * cellWidth));
@@ -566,7 +615,7 @@ public class pac_man extends PApplet {
         }
     }
 
-    public void initializeMaze() {
+    private void initializeMaze() {
         for (Cell[] cell : cells) {
             cell[0].open = false;
             cell[cells.length - 1].open = false;
@@ -591,7 +640,7 @@ public class pac_man extends PApplet {
         }
     }
 
-    public void showMaze(int mazeColor, boolean all) {
+    private void showMaze(int mazeColor, boolean all) {
         for (Cell[] cell : cells) {
             for (Cell value : cell) {
                 value.show(mazeColor, all);
@@ -599,7 +648,7 @@ public class pac_man extends PApplet {
         }
     }
 
-    public void destroyUselessMessages() {
+    private void destroyUselessMessages() {
         while (messages.length > 6) {
             messages = shorten(messages);
         }
@@ -611,7 +660,7 @@ public class pac_man extends PApplet {
         }
     }
 
-    public void showLives() {
+    private void showLives() {
         float size = 20;
         float sizeT, sizeB;
         sizeT = map(size, 0, 60, 0, 0.52f);
@@ -622,7 +671,7 @@ public class pac_man extends PApplet {
         }
     }
 
-    public void increaseHighScore() throws FileNotFoundException {
+    private void increaseHighScore() throws FileNotFoundException {
         if (prevHighScore > highScore) {
             highScore = prevHighScore;
         }
@@ -630,13 +679,13 @@ public class pac_man extends PApplet {
             highScore = score;
         }
         if (highScore > prevHighScore) {
-            PrintWriter out = new PrintWriter(path + "/highscore.txt");
-            out.println(str(highScore));
+             PrintWriter out = new  PrintWriter(path + "/highscore.txt");
+            out. println(str(highScore));
             out.close();
         }
     }
 
-    public void restart() {
+    private void restart() {
         lives = 3;
         lostLife = false;
         level = 0;
@@ -654,14 +703,14 @@ public class pac_man extends PApplet {
         duration = 4500 + millis();
     }
 
-    public void restartButton() {
+    private void restartButton() {
         int x = Math.round(cellWidth * 4), y = Math.round(cellWidth * 12);
         if (hitBoxCollision(x, y, mouseX, mouseY)) {
             restart();
         }
     }
 
-    public void pauseButton(boolean drawButton) {
+    private void pauseButton(boolean drawButton) {
         int x = Math.round(cellWidth * 5), y = Math.round(cellWidth * 12);
         if (drawButton) {
             rect(x, y, cellWidth, cellWidth);
@@ -682,14 +731,14 @@ public class pac_man extends PApplet {
         }
     }
 
-    public void pauseBeatOffButton() {
+    private void pauseBeatOffButton() {
         int x = Math.round(cellWidth * 3), y = Math.round(cellWidth * 12);
         if (hitBoxCollision(x, y, mouseX, mouseY)) {
             SettingsWindow.create();
         }
     }
 
-    public void drawButtons() {
+    private void drawButtons() {
         image(restartB, cellWidth * 4 + cellWidth / 2f, cellWidth * 12 + cellWidth / 2f, cellWidth - 4, cellWidth - 4);
 
         image(settingsB, cellWidth * 3 + cellWidth / 2f, cellWidth * 12 + cellWidth / 2f, cellWidth - 4, cellWidth - 4);
@@ -698,9 +747,9 @@ public class pac_man extends PApplet {
         rect(cellWidth * 5.55f, cellWidth * 12.1f, cellWidth / 4f, cellWidth * 0.8f, 10);
     }
 
-    public void determineFruitType() {
+    private void determineFruitType() {
         if (level == 8) {
-            println(fruitPoints[level]);
+             println(fruitPoints[level]);
             lazyLoad();
         }
         if (level < fruitPoints.length) {
@@ -718,7 +767,7 @@ public class pac_man extends PApplet {
         // }
     }
 
-    public Coordinate getGhostCoords(Ghost curGhost) {
+    private Coordinate getGhostCoords(Ghost curGhost) {
         float a = 3, b = 1;
         float offsetY = 0, offsetX = 0;
         Coordinate curGhostCoords = new Coordinate();
@@ -733,7 +782,7 @@ public class pac_man extends PApplet {
         return curGhostCoords;
     }
 
-    public void drawGhostEyes(Ghost cGhost) {
+    private void drawGhostEyes(Ghost cGhost) {
         int x = 7;
         int y = 11;
         rectMode(CORNER);
@@ -749,7 +798,7 @@ public class pac_man extends PApplet {
         rect(x + 12, y, 4, 4);
     }
 
-    public void drawGhosts() {
+    private void drawGhosts() {
         if (!ghost1.dir.equals("stopped") || showGhostWhenStopped) {
             translate(ghost1.x - 15, ghost1.y - 15);
             for (int i = 0; i < ghostPx.length; i++) {
@@ -800,7 +849,7 @@ public class pac_man extends PApplet {
         }
     }
 
-    public String createRDir(int posX, int posY) {
+    private String createRDir(int posX, int posY) {
         int tempVar = Math.round(random(3));
         String possDir = makeDir(tempVar);
         while (checkGoodDir(possDir, posX, posY)) {
@@ -810,7 +859,7 @@ public class pac_man extends PApplet {
         return possDir;
     }
 
-    public void controlGhostMovement(int pos1x, int pos1y, int pos2x, int pos2y, int pos3x, int pos3y) {
+    private void controlGhostMovement(int pos1x, int pos1y, int pos2x, int pos2y, int pos3x, int pos3y) {
         if (checkGoodDir(ghost1.dir, pos1x, pos1y)) {
             ghost1.dir = createRDir(pos1x, pos1y);
         }
@@ -823,17 +872,18 @@ public class pac_man extends PApplet {
     }
 
     //// OBJECTS \\\\
-    public class Ghost {
-        float x, y;
-        String dir;
+    private final class Ghost {
+        private float x;
+        private float y;
+        private String dir;
 
-        Ghost() {
+        private Ghost() {
             x = createPosition(true);
             y = createPosition(false);
             dir = "up";
         }
 
-        public void update(int coordsX, int coordsY) {
+        private void update(int coordsX, int coordsY) {
             switch (dir) {
                 case "up" -> {
                     if (coordsY - 1 >= 0) {
@@ -875,25 +925,25 @@ public class pac_man extends PApplet {
             }
         }
 
-        public void up() {
+        private void up() {
             dir = "up";
         }
 
-        public void right() {
+        private void right() {
             dir = "right";
         }
 
-        public void halt() {
+        private void halt() {
             //stopped = true;
             dir = "stopped";
         }
 
-        public void newGame() {
+        private void newGame() {
             x = createPosition(true);
             y = createPosition(false);
         }
 
-        public void goodPosition(int coordsX, int coordsY) {
+        private void goodPosition(int coordsX, int coordsY) {
             if (!cells[coordsX][coordsY].open) {
                 newGame();
                 messages = splice(messages, "Adjustment in Progress...", 0);
@@ -909,17 +959,17 @@ public class pac_man extends PApplet {
     }
 
     // Cell \\
-    class Cell {
-        final int x;
-        final int y;
+    final class Cell {
+        private final int x;
+        private final int y;
         boolean open;
 
-        Cell(int x1, int y1) {
+        private Cell(int x1, int y1) {
             x = x1;
             y = y1;
         }
 
-        public void show(int colour, boolean all) {
+        private void show(int colour, boolean all) {
             if (all) {
                 if (!open) {
                     fill(colour);
@@ -936,17 +986,19 @@ public class pac_man extends PApplet {
 
 
     //// Pellet \\\\
-    class Pellet {
-        int x, y;
-        boolean eaten = false, isFruit = false;
-        String fruitType = "cherry";
+    final class Pellet {
+        private int x;
+        private int y;
+        private boolean eaten = false;
+        private boolean isFruit = false;
+        private String fruitType = "cherry";
 
-        Pellet(int x1, int y1) {
+        private Pellet(int x1, int y1) {
             x = x1;
             y = y1;
         }
 
-        public void update() {
+        final void update() {
             pelletsEaten = 0;
             eaten = false;
             if (isFruit) {
@@ -954,7 +1006,7 @@ public class pac_man extends PApplet {
             }
         }
 
-        public void isBEaten() throws FileNotFoundException {
+        private void isBEaten() throws FileNotFoundException {
             if (!eaten && dist(x, y, pacman.x, pacman.y) < cellWidth / 8f + pacman.size / 8f) {
                 if (isFruit) {
                     switch (fruitType) {
@@ -987,7 +1039,7 @@ public class pac_man extends PApplet {
             }
         }
 
-        public void draw() {
+        private void draw() {
             if (!eaten) {
                 noStroke();
                 if (isFruit) {
@@ -1009,7 +1061,7 @@ public class pac_man extends PApplet {
             }
         }
 
-        public void goodPosition(int coordsX1, int coordsY1) {
+        private void goodPosition(int coordsX1, int coordsY1) {
             boolean a = false;
             if (coordsY1 == 1 && !isFruit) {
                 if (coordsX1 == 1 || coordsX1 == 8) {
@@ -1038,17 +1090,19 @@ public class pac_man extends PApplet {
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Pacman~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    class Pacman {
+    final class Pacman {
         final int size = Math.round(cellWidth - 1);
-        final float speed = pacmanSpeed * ((cellWidth + 32) / 2) / 32f;
-        final int stopBuffer = 2;
-        boolean stopped = true;
+        private final float speed = pacmanSpeed * ((cellWidth + 32) / 2) / 32f;
+        private final int stopBuffer = 2;
+        private boolean stopped = true;
         float x = cellWidth / 2f + cellWidth;
         float y = cellWidth / 2f + cellWidth;
 
-        String nextDir = "stopped", dir = "stopped", lastDir = "stopped";
+        private String nextDir = "stopped";
+        private String dir = "stopped";
+        private String lastDir = "stopped";
 
-        public void show(float mouthSize) {
+        private void show(float mouthSize) {
             float mouthOpenTop, mouthOpenBottom;
             if (stopped && startsAsCircle) {
                 mouthSize = 0;
@@ -1070,7 +1124,7 @@ public class pac_man extends PApplet {
             resetMatrix();
         }
 
-        public void update() {
+        private void update() {
             if (useClassicHitbox) {
                 offsetX = 0.2f;
                 offsetY = 0.1f;
@@ -1320,7 +1374,7 @@ public class pac_man extends PApplet {
             coordsY = Math.round(y / cellWidth + 0.5f) - 1;
         }
 
-        public void up() {
+        private void up() {
             coordsX = Math.round((x) / cellWidth + 0.5f) - 1;
             coordsY = Math.round((y) / cellWidth + 0.5f) - 1;
             if (cells[coordsX][coordsY - 1].open) {
@@ -1339,7 +1393,7 @@ public class pac_man extends PApplet {
             // }
         }
 
-        public void down() {
+        private void down() {
             coordsX = Math.round((x) / cellWidth + 0.5f) - 1;
             coordsY = Math.round((y) / cellWidth + 0.5f) - 1;
             if (cells[coordsX][coordsY + 1].open) {
@@ -1358,7 +1412,7 @@ public class pac_man extends PApplet {
 
         }
 
-        public void right() {
+        private void right() {
             coordsX = Math.round((x) / cellWidth + 0.5f) - 1;
             coordsY = Math.round((y) / cellWidth + 0.5f) - 1;
             if (cells[coordsX + 1][coordsY].open) {
@@ -1377,7 +1431,7 @@ public class pac_man extends PApplet {
 
         }
 
-        public void left() {
+        private void left() {
             coordsX = Math.round((x) / cellWidth + 0.5f) - 1;
             coordsY = Math.round((y) / cellWidth + 0.5f) - 1;
             if (cells[coordsX - 1][coordsY].open) {
@@ -1396,28 +1450,28 @@ public class pac_man extends PApplet {
         }
 
 
-        public void stop() {
+        private void stop() {
             dir = "stopped";
             stopped = false;
             nextDir = "stopped";
         }
     }
 
-    class Pixel {
-        static int size;
-        final int colourCode;
-        final float x;
-        final float y;
-        int colour;
+    private final class Pixel {
+        private static int size;
+        private final int colourCode;
+        private final float x;
+        private final float y;
+        private int colour;
 
-        Pixel(int colourCode1, float x1, float y1) {
+        private Pixel(int colourCode1, float x1, float y1) {
             colourCode = colourCode1;
             size = 2;
             x = x1;
             y = y1;
         }
 
-        public void colourInit() {
+        private void colourInit() {
             switch (colourCode) {
                 case 0 -> colour = color(255, 0);
                 case 2, 3 -> colour = color(255);
@@ -1426,7 +1480,7 @@ public class pac_man extends PApplet {
         }
 
 
-        public void draw(int gColour) {
+        private void draw(int gColour) {
             if (colourCode == 1) {
                 colour = gColour;
             }

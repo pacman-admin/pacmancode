@@ -1,8 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class window extends JPanel {
-    public window() {
+abstract class window extends JPanel {
+    window() {
         super(new BorderLayout());
     }
 }
