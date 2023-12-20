@@ -11,9 +11,8 @@ import java.net.MalformedURLException;
  * @author Tyler Tomas
  */
 final class Sound {
-    private Clip clip;
+    private final Clip clip;
 
-    @SuppressWarnings("CallToPrintStackTrace")
     public Sound(String filename) {
         try (InputStream in = getClass().getResourceAsStream(filename)) {
             assert in != null;
@@ -23,39 +22,39 @@ final class Sound {
                 clip.open(audioIn);
             }
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
             throw new RuntimeException("Sound: Malformed URL: \n" + e);
         } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
             throw new RuntimeException("Sound: Unsupported Audio File: \n" + e);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
             throw new RuntimeException("Sound: Input/Output Error: \n" + e);
         } catch (LineUnavailableException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
             throw new RuntimeException("Sound: Line Unavailable Exception: \n" + e);
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
             throw new RuntimeException("Sound: Unspecified Error: \n" + e);
         }
 
         // play, stop, loop the sound clip
     }
 
-    public final void play() {
+    public void play() {
         clip.setFramePosition(0);  // Must always rewind!
         clip.start();
     }
 
-    public final void loop() {
+    public void loop() {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
-    public final void stop() {
+    public void stop() {
         clip.stop();
     }
 
-    public final boolean isPlaying() {
+    public boolean isPlaying() {
         //return false;
         return clip.getFrameLength() > clip.getFramePosition();
     }

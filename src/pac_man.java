@@ -2,7 +2,6 @@
 
 import processing.core.PApplet;
 import processing.core.PImage;
-
 import java.io.*;
 
 /**
@@ -10,8 +9,7 @@ import java.io.*;
  */
 
 
-@SuppressWarnings({"StatementWithEmptyBody", "CallTo printStackTrace"})
-final class pac_man extends PApplet {
+public final class pac_man extends PApplet {
     // By Langdon S.
     //current version:
     private final static String TITLE = "Pac-Man 10.5";
@@ -64,7 +62,7 @@ final class pac_man extends PApplet {
     //ints
     private int startMillis;
     private int chomp = 30;
-    private int cellCount;
+    //private int cellCount;
     private int duration;
     private int durationStart;
     private int fruitWorth;
@@ -77,19 +75,8 @@ final class pac_man extends PApplet {
     private int startFrames;
     private int coordsX;
     private int coordsY;
-    private int coords3X;
-    private int coords3Y;
-    private int coords4X;
-    private int coords4Y;
-    private int coords5X;
-    private int coords5Y;
     private int prevHighScore;
     private String[] messages = {};
-    private float tempFPSVal;
-    private float offsetX;
-    private float offsetY;
-    private float a;
-    private float b;
     private PImage cherry;
     private PImage strawberry;
     private PImage apple;
@@ -114,7 +101,7 @@ final class pac_man extends PApplet {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ A FEW RANDOM FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~///
 
-     public static void main(String[] passedArgs) {
+    public static void main(String[] passedArgs) {
         String[] appletArgs = new String[]{"pac_man"};
         if (passedArgs != null) {
             PApplet.main(concat(appletArgs, passedArgs));
@@ -151,8 +138,8 @@ final class pac_man extends PApplet {
                 System.err.println("An Error occurred while saving settings.");
             }
         } catch (IOException e) {
-            System.err. println("An Error occurred while loading settings.");
-            e. printStackTrace();
+            System.err.println("An Error occurred while loading settings.");
+            e.printStackTrace(System.err);
             //throw new RuntimeException(e);
         }
 
@@ -161,18 +148,17 @@ final class pac_man extends PApplet {
 
     private static void logError(Exception e) {
         try {
-            FileWriter fstream = new FileWriter(path + "/Desktop/pacmanerror.txt", true);
-            BufferedWriter out = new BufferedWriter(fstream);
-              PrintWriter pWriter = new PrintWriter(out, true);
-            e. printStackTrace(pWriter);
+            BufferedWriter out = new BufferedWriter(new FileWriter(path + "/Desktop/pacmanerror.txt", true));
+            PrintWriter pWriter = new PrintWriter(out, true);
+            e.printStackTrace(pWriter);
         } catch (Exception ie) {
-            System.err. println("Could not append Exception to logfile");
+            System.err.println("Could not append Exception to logfile");
 
             errorInfo += "\n\n\n";
             StringWriter sw = new StringWriter();
-             PrintWriter pw = new  PrintWriter(sw);
-            ie. printStackTrace(pw);
-            System.err. println(sw);
+            PrintWriter pw = new PrintWriter(sw);
+            ie.printStackTrace(pw);
+            System.err.println(sw);
             errorInfo += sw.toString();
         }
     }
@@ -183,7 +169,7 @@ final class pac_man extends PApplet {
 
     public void setup() {
         surface.setTitle("Loading...");
-        System.out. println("Please wait...");
+        System.out.println("Please wait...");
         background(0);
         noStroke();
         textSize(20);
@@ -204,18 +190,18 @@ final class pac_man extends PApplet {
         String temp = loadString(path + "/highscore.txt");
         if (temp.equals("error")) {
             try {
-                 PrintWriter file = new  PrintWriter(path + "/highscore.txt");
-                file. println(0);
+                PrintWriter file = new PrintWriter(path + "/highscore.txt");
+                file.println(0);
                 file.close();
                 prevHighScore = 0;
             } catch (FileNotFoundException e) {
                 messages = splice(messages, "An error occurred while creating high score file", 0);
-                System.err. println("An error occurred while creating the high score file.");
+                System.err.println("An error occurred while creating the high score file.");
                 logError(e);
                 prevHighScore = 0;
                 StringWriter sw = new StringWriter();
-                 PrintWriter pw = new  PrintWriter(sw);
-                e. printStackTrace(pw);
+                PrintWriter pw = new PrintWriter(sw);
+                e.printStackTrace(pw);
                 errorInfo += sw.toString();
             }
         } else {
@@ -232,7 +218,7 @@ final class pac_man extends PApplet {
         dieS = new Sound("death.wav");
         fruit = new Sound("fruit.wav");
         extra_life = new Sound("extra_life.wav");
-        System.out. println("Sound load success!");
+        System.out.println("Sound load success!");
 
         cherry = loadImage("cherry.png");
         settingsB = loadImage("settings.png");
@@ -241,7 +227,7 @@ final class pac_man extends PApplet {
         orange = loadImage("orange.png");
         apple = loadImage("apple.png");
         melon = loadImage("melon.png");
-        System.out. println("Image load success!");
+        System.out.println("Image load success!");
 
         createMaze();
         initializeMaze();
@@ -251,7 +237,7 @@ final class pac_man extends PApplet {
         pellet[5].isFruit = true;
         surface.setTitle(TITLE);
 
-        System.out. println("Setup success!");
+        System.out.println("Setup success!");
     }
 
     private String loadString(String filename) {
@@ -290,7 +276,7 @@ final class pac_man extends PApplet {
                 durationStart = millis();
                 duration = 4500 + millis();
                 startMillis = millis();
-                 println(millis());
+                println(millis());
             } else if (millis() < 2000) {
                 //display loading screen for a minimum of 2 seconds.
                 //wait until 2 seconds have passed
@@ -325,12 +311,12 @@ final class pac_man extends PApplet {
                     destroyUselessMessages();
 
                     ghostPx[1][1].colourInit();
-                    coords3X = getGhostCoords(ghost1).x;
-                    coords3Y = getGhostCoords(ghost1).y;
-                    coords4X = getGhostCoords(ghost2).x;
-                    coords4Y = getGhostCoords(ghost2).y;
-                    coords5X = getGhostCoords(ghost3).x;
-                    coords5Y = getGhostCoords(ghost3).y;
+                    int coords3X = getGhostCoords(ghost1).x;
+                    int coords3Y = getGhostCoords(ghost1).y;
+                    int coords4X = getGhostCoords(ghost2).x;
+                    int coords4Y = getGhostCoords(ghost2).y;
+                    int coords5X = getGhostCoords(ghost3).x;
+                    int coords5Y = getGhostCoords(ghost3).y;
                     if (lostLife) {
                         if (chomp < 60) {
                             chomp++;
@@ -389,7 +375,7 @@ final class pac_man extends PApplet {
                     }
 
                     background(0);
-                    showMaze(color(33, 33, 255), true);
+                    showMaze(color(33, 33, 255));
 
                     if (pelletsEaten >= pellet.length - 1 && !lostLife) {
                         if (!first) {
@@ -404,7 +390,7 @@ final class pac_man extends PApplet {
                         ghost3.halt();
                         pacman.stop();
                         if ((millis() - durationStart < 250) || (millis() - durationStart < 750 && millis() - durationStart > 500) || (millis() - durationStart < 1250 && millis() - durationStart > 1000) || (millis() - durationStart < 1750 && millis() - durationStart > 1500)) {
-                            showMaze(color(222, 222, 255), true);
+                            showMaze(color(222, 222, 255));
                         }
                         if (millis() - durationStart >= 2000) {
                             //determineFruitType();
@@ -439,10 +425,10 @@ final class pac_man extends PApplet {
         } catch (Exception e) {
             paused = true;
             StringWriter sw = new StringWriter();
-             PrintWriter pw = new  PrintWriter(sw);
-            e. printStackTrace(pw);
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
             errorInfo += sw.toString();
-            System.err. println(errorInfo);
+            System.err.println(errorInfo);
             error = true;
             textSize(12);
             fill(255);
@@ -459,7 +445,7 @@ final class pac_man extends PApplet {
         textAlign(CENTER);
         textSize(12);
         text("HIGH SCORE\n" + highScore, width / 2f, 12);
-        tempFPSVal = ((millis() - startMillis) / 1000f) > 0 ? ((millis() - startMillis) / 1000f) : 1;
+        float tempFPSVal = ((millis() - startMillis) / 1000f) > 0 ? ((millis() - startMillis) / 1000f) : 1;
         text(str(Math.round((frameCount - startFrames) / tempFPSVal)), 330, 10);
         showLives();
         noStroke();
@@ -526,7 +512,7 @@ final class pac_man extends PApplet {
     }
 
     private int createPosition(boolean dirIsX) {
-               int newPos = (int) (Math.round(random(cellWidth, canvasHeight - cellWidth * 2f) / cellWidth) * cellWidth + cellWidth / 2f);
+        int newPos = (int) (Math.round(random(cellWidth, canvasHeight - cellWidth * 2f) / cellWidth) * cellWidth + cellWidth / 2f);
         while (dirIsX && newPos <= cellWidth * 2.5f) {
             newPos = (int) (Math.round(random(cellWidth, canvasHeight - cellWidth * 2f) / cellWidth) * cellWidth + cellWidth / 2f);
         }
@@ -633,17 +619,17 @@ final class pac_man extends PApplet {
                     } else {
                         pellet = (Pellet[]) append(pellet, new Pellet(Math.round(col * cellWidth + cellWidth / 2), Math.round(row * cellWidth + cellWidth / 2)));
                         coords2 = (Coordinate[]) append(coords2, new Coordinate());
-                        cellCount++;
+                        //cellCount++;
                     }
                 }
             }
         }
     }
 
-    private void showMaze(int mazeColor, boolean all) {
+    private void showMaze(int mazeColor) {
         for (Cell[] cell : cells) {
             for (Cell value : cell) {
-                value.show(mazeColor, all);
+                value.show(mazeColor);
             }
         }
     }
@@ -679,8 +665,8 @@ final class pac_man extends PApplet {
             highScore = score;
         }
         if (highScore > prevHighScore) {
-             PrintWriter out = new  PrintWriter(path + "/highscore.txt");
-            out. println(str(highScore));
+            PrintWriter out = new PrintWriter(path + "/highscore.txt");
+            out.println(str(highScore));
             out.close();
         }
     }
@@ -710,11 +696,8 @@ final class pac_man extends PApplet {
         }
     }
 
-    private void pauseButton(boolean drawButton) {
+    private void pauseButton() {
         int x = Math.round(cellWidth * 5), y = Math.round(cellWidth * 12);
-        if (drawButton) {
-            rect(x, y, cellWidth, cellWidth);
-        }
         if (hitBoxCollision(x, y, mouseX, mouseY)) {
             if (paused) {
                 if (pause_beat.isPlaying()) {
@@ -749,7 +732,7 @@ final class pac_man extends PApplet {
 
     private void determineFruitType() {
         if (level == 8) {
-             println(fruitPoints[level]);
+            println(fruitPoints[level]);
             lazyLoad();
         }
         if (level < fruitPoints.length) {
@@ -763,7 +746,7 @@ final class pac_man extends PApplet {
         //if (!updating) {
         pauseBeatOffButton();
         restartButton();
-        pauseButton(false);
+        pauseButton();
         // }
     }
 
@@ -969,18 +952,13 @@ final class pac_man extends PApplet {
             y = y1;
         }
 
-        private void show(int colour, boolean all) {
-            if (all) {
-                if (!open) {
-                    fill(colour);
-                    rect(x, y, cellWidth, cellWidth);
-                }
-            } else {
-                if (open) {
-                    fill(0);
-                    rect(x, y, cellWidth, cellWidth);
-                }
+        private void show(int colour) {
+
+            if (!open) {
+                fill(colour);
+                rect(x, y, cellWidth, cellWidth);
             }
+
         }
     }
 
@@ -998,7 +976,7 @@ final class pac_man extends PApplet {
             y = y1;
         }
 
-        final void update() {
+        void update() {
             pelletsEaten = 0;
             eaten = false;
             if (isFruit) {
@@ -1007,7 +985,7 @@ final class pac_man extends PApplet {
         }
 
         private void isBEaten() throws FileNotFoundException {
-            if (!eaten && dist(x, y, pacman.x, pacman.y) < cellWidth / 8f + pacman.size / 8f) {
+            if (!eaten && dist(x, y, pacman.x, pacman.y) < cellWidth / 8f + Pacman.size / 8f) {
                 if (isFruit) {
                     switch (fruitType) {
                         case "cherry" -> fruitWorth = 100;
@@ -1091,13 +1069,11 @@ final class pac_man extends PApplet {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Pacman~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     final class Pacman {
-        final int size = Math.round(cellWidth - 1);
-        private final float speed = pacmanSpeed * ((cellWidth + 32) / 2) / 32f;
-        private final int stopBuffer = 2;
-        private boolean stopped = true;
+        static final int size = Math.round(cellWidth - 1);
+        private static final float speed = pacmanSpeed * ((cellWidth + 32) / 2) / 32f;
         float x = cellWidth / 2f + cellWidth;
         float y = cellWidth / 2f + cellWidth;
-
+        private boolean stopped = true;
         private String nextDir = "stopped";
         private String dir = "stopped";
         private String lastDir = "stopped";
@@ -1126,10 +1102,10 @@ final class pac_man extends PApplet {
 
         private void update() {
             if (useClassicHitbox) {
-                offsetX = 0.2f;
-                offsetY = 0.1f;
-                a = 3;
-                b = 1;
+                float offsetX = 0.2f;
+                float offsetY = 0.1f;
+                float a = 3;
+                float b = 1;
                 switch (dir) {
                     case "up" -> offsetY += cellWidth / a + b;
                     case "down" -> offsetY -= cellWidth / a + b;
@@ -1266,6 +1242,7 @@ final class pac_man extends PApplet {
             } else {
 
 
+                int stopBuffer = 2;
                 switch (dir) {
                     case "up" -> {
                         if (cells[coordsX][coordsY - 1].open) {

@@ -45,7 +45,6 @@ final class SettingsWindow extends window implements ItemListener, ActionListene
     public float pacmanSpeed = 3;
     */
     //JLabel ;
-
     //JLabel label3;
     //JLabel pictureLabel;
     private boolean playPauseBeat = true;
@@ -53,24 +52,17 @@ final class SettingsWindow extends window implements ItemListener, ActionListene
     private boolean startsAsCircle = true;
     private boolean useClassicHitbox = false;
     private boolean debug = false;
-
     private SettingsWindow() {
-        //super(new BorderLayout());
-
-
         //  = createCheckbox("", KeyEvent.VK_, , this);
-
         //Create the Buttons
         // = createButton("", KeyEvent.VK_, , this, "");
         JButton launchAbout = createButton("About Pac-Man", KeyEvent.VK_A, true, this, "launchAbout");
         JButton checkUpdate = createButton("Check for Updates", KeyEvent.VK_U, true, this, "update");
-
         //Set up the picture label
         //pictureLabel = new JLabel();
         //pictureLabel.setFont(pictureLabel.getFont().deriveFont(Font.ITALIC));
         JLabel name = new JLabel("By Langdon Staab 2023");
         JLabel web = new JLabel("www.getpacman.gq");
-
         //Create the checkboxes.
         try {
             DataInputStream din = new DataInputStream(new BufferedInputStream(new FileInputStream(path + "/settings.dat")));

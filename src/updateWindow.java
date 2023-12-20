@@ -39,12 +39,12 @@ import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 
-@SuppressWarnings("all")
 public final class updateWindow extends window implements ActionListener {
     //JLabel label3;
     //JLabel pictureLabel;
@@ -87,9 +87,9 @@ public final class updateWindow extends window implements ActionListener {
      * Returns an ImageIcon, or null if the path was invalid.
      */
     /*protected static ImageIcon createImageIcon(String path) {
-        java.net.URL imgURL = CheckBoxDemo.class.getResource(path);
-        if (imgURL != null) {
-            return new ImageIcon(imgURL);
+        java.net.URI imgURI = CheckBoxDemo.class.getResource(path);
+        if (imgURI != null) {
+            return new ImageIcon(imgURI);
         } else {
             System.err.println("Couldn't find file: " + path);
             return null;
@@ -150,27 +150,29 @@ public final class updateWindow extends window implements ActionListener {
 
     private void checkVersion() {
         try {
-            URL oracle = new URL("www2.getpacman.gq/version.txt");
-            BufferedReader in = new BufferedReader(new InputStreamReader(oracle.openStream()));
-
-
+            URI oracle = new URI("www2.getpacman.gq/version.txt");
+            BufferedReader in = new BufferedReader(new InputStreamReader(oracle.toURL().openStream()));
             in.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("IOException1!");
+        } catch (URISyntaxException e) {
+            System.err.println("URISyntaxException1!");
         }
     }
 
     public void downloadNewVersion() {
-        URL website;
+        URI website;
         try {
-            website = new URL("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar");
-            ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+            website = new URI("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar");
+            ReadableByteChannel rbc = Channels.newChannel(website.toURL().openStream());
             try (FileOutputStream fos = new FileOutputStream("new.jar")) {
                 fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
             }
         } catch (IOException e) {
-            System.err.println("IOException!");
-            e.printStackTrace();
+            System.err.println("IOException2!");
+            e.printStackTrace(System.err);
+        } catch (URISyntaxException e) {
+            System.err.println("URISyntaxException2!");
         }
     }
 

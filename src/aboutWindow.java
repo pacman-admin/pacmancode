@@ -33,10 +33,7 @@ import javax.swing.*;
 import java.awt.*;
 
 final class aboutWindow extends window {
-
-
     private aboutWindow() {
-        //super(new BorderLayout());
         JLabel name = new JLabel("By Langdon Staab 2023");
         JLabel web = new JLabel("www.getpacman.gq");
         // = new JLabel("");
@@ -46,9 +43,10 @@ final class aboutWindow extends window {
         JLabel credit3 = new JLabel("Sprites and Game Sounds taken from freepacman.org");
         JLabel credit4 = new JLabel("");
         JLabel credit5 = new JLabel("");
-        JLabel donateMsg = new JLabel("");
-        //Put the checkboxes in a column in a panel
+        JLabel donateMsg = new JLabel("Please donate! https://buymeacoff.ee/langdonstaab");
         JPanel infoPanel = new JPanel(new GridLayout(0, 1));
+        //java.awt.Desktop.getDesktop().browse(theURI);
+
         infoPanel.add(name);
         infoPanel.add(web);
         infoPanel.add(credit1);
@@ -57,28 +55,11 @@ final class aboutWindow extends window {
         infoPanel.add(credit4);
         infoPanel.add(credit5);
         infoPanel.add(donateMsg);
+
         add(infoPanel, BorderLayout.LINE_START);
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
     }
 
-    /**
-     * Returns an ImageIcon, or null if the path was invalid.
-     */
-    /*protected static ImageIcon createImageIcon(String path) {
-        java.net.URL imgURL = CheckBoxDemo.class.getResource(path);
-        if (imgURL != null) {
-            return new ImageIcon(imgURL);
-        } else {
-            System.err.println("Couldn't find file: " + path);
-            return null;
-        }
-    }
-
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
-     */
     private static void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("About Pac-Man");
@@ -93,6 +74,7 @@ final class aboutWindow extends window {
     }
 
     public static void open() {
+
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(aboutWindow::createAndShowGUI);
