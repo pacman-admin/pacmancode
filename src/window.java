@@ -10,12 +10,14 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 abstract class window extends JPanel implements ActionListener {
-    static String path = System.getProperty("user.home");
 
     window() {
         super(new BorderLayout());
-        if (path.equals("null")) {
-            path = System.getProperty("user.home");
+        if (settings.path == null) {
+            settings.updatePath();
+        }
+        if (settings.path.equals("null")) {
+            settings.updatePath();
         }
 
     }

@@ -35,24 +35,14 @@ import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
-import java.io.*;
 
 final class SettingsWindow extends window implements ItemListener {
     private final JCheckBox playPauseBeatBox, selectClassicHitbox, startsWMouthBox, chooseDebug;
     //Show Ghosts When Stopped
     private final JCheckBox selectSGWS;
-    /*
-    public float ghostSpeed = 2;
-    public float pacmanSpeed = 3;
-    */
     //JLabel ;
     //JLabel label3;
     //JLabel pictureLabel;
-    private boolean playPauseBeat = true;
-    private boolean showGhostWhenStopped = true;
-    private boolean startsAsCircle = true;
-    private boolean useClassicHitbox = false;
-    private boolean debug = false;
 
     private SettingsWindow() {
         //  = createCheckbox("", KeyEvent.VK_, , this);
@@ -67,24 +57,12 @@ final class SettingsWindow extends window implements ItemListener {
         JLabel name = new JLabel("By Langdon Staab 2023");
         JLabel web = new JLabel("www.getpacman.gq");
         //Create the checkboxes.
-        try {
-            DataInputStream din = new DataInputStream(new BufferedInputStream(new FileInputStream(path + "/settings.dat")));
-            debug = din.readBoolean();
-            playPauseBeat = din.readBoolean();
-            showGhostWhenStopped = din.readBoolean();
-            startsAsCircle = din.readBoolean();
-            useClassicHitbox = din.readBoolean();
-            System.out.println(debug + ", " + playPauseBeat + ", " + showGhostWhenStopped + ", " + startsAsCircle/* + ", " + useClassicHitbox/*+", "+*/);
 
-        } catch (IOException e) {
-            System.err.println("An Error occurred while loading settings.");
-            //throw new RuntimeException(e);
-        }
-        playPauseBeatBox = createCheckbox("Play Pause Beat", KeyEvent.VK_P, playPauseBeat, this);
-        selectClassicHitbox = createCheckbox("Use Old Hitbox\n(Glitchy)", KeyEvent.VK_H, useClassicHitbox, this);
-        startsWMouthBox = createCheckbox("Pac-Man starts as circle", KeyEvent.VK_M, startsAsCircle, this);
-        selectSGWS = createCheckbox("Show Ghosts When Stopped", KeyEvent.VK_G, showGhostWhenStopped, this);
-        chooseDebug = createCheckbox("Debug Mode", KeyEvent.VK_D, debug, this);
+        playPauseBeatBox = createCheckbox("Play Pause Beat", KeyEvent.VK_P, settings.playPauseBeat, this);
+        selectClassicHitbox = createCheckbox("Use Old Hitbox\n(Glitchy)", KeyEvent.VK_H, settings.useClassicHitbox, this);
+        startsWMouthBox = createCheckbox("Pac-Man starts as circle", KeyEvent.VK_M, settings.startsAsCircle, this);
+        selectSGWS = createCheckbox("Show Ghosts When Stopped", KeyEvent.VK_G, settings.showGhostWhenStopped, this);
+        chooseDebug = createCheckbox("Debug Mode", KeyEvent.VK_D, settings.debug, this);
 
         //Put the checkboxes in a column in a panel
         JPanel checkPanel = new JPanel(new GridLayout(0, 1));
@@ -160,31 +138,16 @@ final class SettingsWindow extends window implements ItemListener {
             newVal = true;
         }
         if (source == playPauseBeatBox) {
-            playPauseBeat = newVal;
+            settings.playPauseBeat = newVal;
         } else if (source == selectClassicHitbox) {
-            useClassicHitbox = newVal;
+            settings.useClassicHitbox = newVal;
         } else if (source == startsWMouthBox) {
-            startsAsCircle = newVal;
+            settings.startsAsCircle = newVal;
         } else if (source == selectSGWS) {
-            showGhostWhenStopped = newVal;
+            settings.showGhostWhenStopped = newVal;
         } else if (source == chooseDebug) {
-            debug = newVal;
+            settings.debug = newVal;
         }
-        updateSettings();
-    }
-
-    private void updateSettings() {
-        try {
-            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path + "/settings.dat")));
-            dos.writeBoolean(debug);
-            dos.writeBoolean(playPauseBeat);
-            dos.writeBoolean(showGhostWhenStopped);
-            dos.writeBoolean(startsAsCircle);
-            dos.writeBoolean(useClassicHitbox);
-            dos.close();
-            pac_man.loadSettings();
-        } catch (IOException e) {
-            System.err.println("An Error occurred while saving settings.");
-        }
+        settings.save();
     }
 }

@@ -77,7 +77,6 @@ final class aboutWindow extends window {
     }
 
     public static void open() {
-
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(aboutWindow::createAndShowGUI);

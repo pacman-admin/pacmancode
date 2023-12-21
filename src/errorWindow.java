@@ -29,53 +29,42 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
-final class updateWindow extends window {
-    //JLabel label3;
-    //JLabel pictureLabel;
+final class errorWindow extends window {
+    private errorWindow() {
+        JTextArea textArea = new JTextArea();
 
-    //private final float latestVersion = 10.1f;
-    private updateWindow() {
-        //Create the Buttons
-        // = createButton("", KeyEvent.VK_, , this, "");
-        JButton launchAbout = createButton("Download new version", KeyEvent.VK_A, true, this, "download");
-        JButton checkUpdate = createButton("Check for Updates", KeyEvent.VK_U, false, this, "update");
+        JScrollPane scrollPane = new JScrollPane(textArea);
+
         JButton donate = createButton("Donate", KeyEvent.VK_U, true, this, "donate");
+        JButton launchAbout = createButton("About Pac-Man", KeyEvent.VK_A, true, this, "launchAbout");
         JLabel name = new JLabel("By Langdon Staab 2023");
         JLabel web = new JLabel("www.getpacman.gq");
+        textArea.setEditable(false);
+        textArea.setText("An error\n\n\n\n has occured\nPlease E-Mai\nl Lang\ndon Staab the \nfollowing Info\nbugs@getpacman.gq");
 
-        //Set up the picture label
-        //pictureLabel = new JLabel();
-        //pictureLabel.setFont(pictureLabel.getFont().deriveFont(Font.ITALIC));
-        //Put the checkboxes in a column in a panel
-        JPanel checkPanel = new JPanel(new GridLayout(0, 1));
 
-        checkPanel.add(name);
-        checkPanel.add(web);
-        checkPanel.add(launchAbout);
-        checkPanel.add(checkUpdate);
-        checkPanel.add(donate);
-        //checkPanel.add();
+        JPanel infoPanel = new JPanel(new GridLayout(0, 1));
+        infoPanel.add(name);
+        infoPanel.add(web);
+        infoPanel.add(donate);
+        infoPanel.add(launchAbout);
+        //infoPanel.add();
 
-        add(checkPanel, BorderLayout.LINE_START);
-        //add(pictureLabel, BorderLayout.CENTER);
+        add(infoPanel, BorderLayout.LINE_START);
+        add(scrollPane, BorderLayout.CENTER);
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
     }
 
     private static void createAndShowGUI() {
         //Create and set up the window.
-        JFrame frame = new JFrame("Update");
+        JFrame frame = new JFrame("Settings");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Create and set up the content pane.
-        JComponent newContentPane = new updateWindow();
+        JComponent newContentPane = new errorWindow();
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
         //Display the window.
@@ -83,65 +72,28 @@ final class updateWindow extends window {
         frame.setVisible(true);
     }
 
-    private static void createAndShowPopout() {
+    /*private static void createAndShowPopout() {
         //Create and set up the window.
-        JFrame frame = new JFrame("Update");
+        JFrame frame = new JFrame("Settings");
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Create and set up the content pane.
-        JComponent newContentPane = new updateWindow();
+        JComponent newContentPane = new errorWindow();
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
         //Display the window.
         frame.pack();
         frame.setVisible(true);
-    }
+    }*/
 
     public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
-        SwingUtilities.invokeLater(updateWindow::createAndShowGUI);
+        javax.swing.SwingUtilities.invokeLater(errorWindow::createAndShowGUI);
     }
 
-    public static void create() {
+    /*public static void create() {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
-        SwingUtilities.invokeLater(updateWindow::createAndShowPopout);
-    }
-
-    // --Commented out by Inspection START (2023-12-21, 11:11 a.m.):
-//    private void checkVersion() {
-//        try {
-//            URI oracle = new URI("www2.getpacman.gq/version.txt");
-//            BufferedReader in = new BufferedReader(new InputStreamReader(oracle.toURL().openStream()));
-//            in.close();
-//        } catch (IOException e) {
-//            System.err.println("IOException1!");
-//        } catch (URISyntaxException e) {
-//            System.err.println("URISyntaxException1!");
-//        }
-//    }
-// --Commented out by Inspection STOP (2023-12-21, 11:11 a.m.)
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-            case "update":
-                updateWindow.create();
-                break;
-            case "launchAbout":
-                aboutWindow.open();
-                break;
-            case "":
-                break;
-            case "download":
-                downloadNewVersion();
-                break;
-            case "donate":
-                try {
-                    Desktop.getDesktop().browse(new URI("https://buymeacoff.ee/langdonstaab"));
-                } catch (IOException | URISyntaxException ex) {
-                    throw new RuntimeException(ex);
-                }
-                break;
-        }
-    }
+        javax.swing.SwingUtilities.invokeLater(errorWindow::createAndShowPopout);
+    }*/
 }
