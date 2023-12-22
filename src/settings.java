@@ -1,7 +1,7 @@
 import java.io.*;
 
 //Stores game settings
-public class settings {
+class settings {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
     //            G A M E  S E T T I N G S        |
     final static float ghostSpeed = 2; //         |

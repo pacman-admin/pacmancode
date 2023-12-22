@@ -31,7 +31,7 @@ abstract class window extends JPanel implements ActionListener {
         return button;
     }
 
-    public static void downloadNewVersion() {
+    static void downloadNewVersion() {
         URI website;
         try {
             website = new URI("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar");

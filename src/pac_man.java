@@ -3,7 +3,9 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 /**
  * @author Langdon S.
@@ -40,7 +42,7 @@ public final class pac_man extends PApplet {
     private int chompSpeed = 8; //                        |
     private boolean playStartSound = true; //             |
     //booleans
-    private boolean error;
+    private boolean errorScreen;
     private boolean finishedDelay;
     private boolean first;
     private boolean first1 = true;
@@ -100,23 +102,6 @@ public final class pac_man extends PApplet {
         }
     }
 
-    private static void logError(Exception e) {
-        try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(settings.path + "/Desktop/pacmanerror.txt", true));
-            PrintWriter pWriter = new PrintWriter(out, true);
-            e.printStackTrace(pWriter);
-        } catch (Exception ie) {
-            System.err.println("Could not append Exception to logfile");
-
-            errorInfo += "\n\n\n";
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            ie.printStackTrace(pw);
-            System.err.println(sw);
-            errorInfo += sw.toString();
-        }
-    }
-
     public void settings() {
         size(canvasWidth, canvasHeight);
     }
@@ -152,7 +137,7 @@ public final class pac_man extends PApplet {
             } catch (FileNotFoundException e) {
                 messages = splice(messages, "An error occurred while creating high score file", 0);
                 System.err.println("An error occurred while creating the high score file.");
-                logError(e);
+                error.log(e);
                 prevHighScore = 0;
                 StringWriter sw = new StringWriter();
                 PrintWriter pw = new PrintWriter(sw);
@@ -218,7 +203,7 @@ public final class pac_man extends PApplet {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN PROGRAM ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     public void draw() {
         try {
-            if (error) {
+            if (errorScreen) {
                 background(0);
                 textAlign(LEFT, CENTER);
                 text(errorInfo, 4, height / 2f);
@@ -379,17 +364,14 @@ public final class pac_man extends PApplet {
             }
         } catch (Exception e) {
             paused = true;
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            errorInfo += sw.toString();
-            System.err.println(errorInfo);
-            error = true;
+            error.save(e);
+
+            errorScreen = true;
             textSize(12);
             fill(255);
             windowResize(1000, canvasHeight);
             frameRate(30);
-            logError(e);
+            error.log(e);
 
         }
     }
