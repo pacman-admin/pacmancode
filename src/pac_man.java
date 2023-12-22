@@ -346,7 +346,6 @@ public final class pac_man extends PApplet {
                         }
                     }
                     display();
-                    //pacman.update();
                     if (start) {
                         start = false;
                     }
