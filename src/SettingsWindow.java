@@ -49,7 +49,7 @@ final class SettingsWindow extends window implements ItemListener {
         //Create the Buttons
         // = createButton("", KeyEvent.VK_, , this, "");
         JButton launchAbout = createButton("About Pac-Man", KeyEvent.VK_A, true, this, "launchAbout");
-        JButton checkUpdate = createButton("Check for Updates", KeyEvent.VK_U, true, this, "update");
+        JButton checkUpdate = createButton("Check for Updates", KeyEvent.VK_U, false, this, "update");
         JButton donate = createButton("Donate", KeyEvent.VK_U, true, this, "donate");
         //Set up the picture label
         //pictureLabel = new JLabel();

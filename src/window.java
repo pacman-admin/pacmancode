@@ -59,7 +59,7 @@ abstract class window extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "update":
-                updateWindow.create();
+                //updateWindow.create();
                 break;
             case "launchAbout":
                 aboutWindow.open();
@@ -68,6 +68,8 @@ abstract class window extends JPanel implements ActionListener {
                 try {
                     Desktop.getDesktop().browse(new URI("https://buymeacoff.ee/langdonstaab"));
                 } catch (IOException | URISyntaxException ex) {
+                    error.save(ex);
+                    error.log(ex);
                     throw new RuntimeException(ex);
                 }
                 break;
