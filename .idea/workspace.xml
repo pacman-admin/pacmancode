@@ -11,6 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d0f76c9c-c62b-4bdd-8b11-4708cba682da" name="Changes" comment="Add files">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,22 +83,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1693604523434</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Add files">
-      <option name="closed" value="true" />
-      <created>1695842422490</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1695842422490</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Add files">
-      <option name="closed" value="true" />
-      <created>1695842578303</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1695842578303</updated>
     </task>
     <task id="LOCAL-00007" summary="Add files">
       <option name="closed" value="true" />
@@ -475,7 +460,23 @@
       <option name="project" value="LOCAL" />
       <updated>1703278949223</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="Add files">
+      <option name="closed" value="true" />
+      <created>1703294689913</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1703294689913</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Add files">
+      <option name="closed" value="true" />
+      <created>1703294721920</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1703294721920</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

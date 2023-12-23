@@ -31,7 +31,7 @@ abstract class window extends JPanel implements ActionListener {
         return button;
     }
 
-    static void downloadNewVersion() {
+    /*static void downloadNewVersion() {
         URI website;
         try {
             website = new URI("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar");
@@ -45,7 +45,7 @@ abstract class window extends JPanel implements ActionListener {
         } catch (URISyntaxException e) {
             System.err.println("URISyntaxException2!");
         }
-    }
+    }*/
 
     /*protected static ImageIcon createImageIcon(String path) {
         java.net.URL imgURL = window.class.getResource(path);
