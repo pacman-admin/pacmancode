@@ -37,7 +37,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 
 final class SettingsWindow extends window implements ItemListener {
-    private final JCheckBox playPauseBeatBox, selectClassicHitbox, startsWMouthBox, chooseDebug;
+    private final JCheckBox playPauseBeatBox, selectClassicHitbox, startsWMouthBox, chooseDebug, chooseCheckUpdate;
     //Show Ghosts When Stopped
     private final JCheckBox selectSGWS;
     //JLabel ;
@@ -49,8 +49,8 @@ final class SettingsWindow extends window implements ItemListener {
         //Create the Buttons
         // = createButton("", KeyEvent.VK_, , this, "");
         JButton launchAbout = createButton("About Pac-Man", KeyEvent.VK_A, true, this, "launchAbout");
-        JButton checkUpdate = createButton("Check for Updates", KeyEvent.VK_U, false, this, "update");
-        JButton donate = createButton("Donate", KeyEvent.VK_U, true, this, "donate");
+        JButton checkUpdate = createButton("Check for Updates", KeyEvent.VK_U, true, this, "update");
+        JButton donate = createButton("Donate", KeyEvent.VK_D, true, this, "donate");
         //Set up the picture label
         //pictureLabel = new JLabel();
         //pictureLabel.setFont(pictureLabel.getFont().deriveFont(Font.ITALIC));
@@ -62,7 +62,8 @@ final class SettingsWindow extends window implements ItemListener {
         selectClassicHitbox = createCheckbox("Use Old Hitbox\n(Glitchy)", KeyEvent.VK_H, settings.useClassicHitbox, this);
         startsWMouthBox = createCheckbox("Pac-Man starts as circle", KeyEvent.VK_M, settings.startsAsCircle, this);
         selectSGWS = createCheckbox("Show Ghosts When Stopped", KeyEvent.VK_G, settings.showGhostWhenStopped, this);
-        chooseDebug = createCheckbox("Debug Mode", KeyEvent.VK_D, settings.debug, this);
+        chooseDebug = createCheckbox("Debug Mode", KeyEvent.VK_B, settings.debug, this);
+        chooseCheckUpdate = createCheckbox("", KeyEvent.VK_C, settings.updateOnStart, this);
 
         //Put the checkboxes in a column in a panel
         JPanel checkPanel = new JPanel(new GridLayout(0, 1));
@@ -130,6 +131,7 @@ final class SettingsWindow extends window implements ItemListener {
         javax.swing.SwingUtilities.invokeLater(SettingsWindow::createAndShowPopout);
     }
 
+    @Override
     public void itemStateChanged(ItemEvent e) {
         boolean newVal = false;
         Object source = e.getItemSelectable();

@@ -5,8 +5,8 @@ import java.io.StringWriter;
 
 class error {
     static String errorLog;
-    //static boolean windowOpen = false;
 
+    //static boolean windowOpen = false;
     static void log(Exception e) {
         if (errorLog == null) {
             errorLog = "";

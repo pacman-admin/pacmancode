@@ -1,7 +1,8 @@
 
 How to play:
 Use arrow keys or WASD to move.
-Avoid the ghosts and eat pellets 
+Avoid the ghosts and eat pellets
+Click the settings button for game options and updates.
 If you encounter an error, bug, or issue, e-mail bugs@getpacman.gq
 
 Acknowledgements:

@@ -15,7 +15,8 @@ import java.io.StringWriter;
 public final class pac_man extends PApplet {
     // By Langdon S.
     //current version:
-    private final static String TITLE = "Pac-Man 10.5";
+    private boolean checkForUpdates = settings.updateOnStart;
+    private final static String TITLE = "Pac-Man Test Only ";
     private final static float cellWidth = 32;
 
     private final static int pelletWorth = 10;
@@ -550,9 +551,9 @@ public final class pac_man extends PApplet {
             for (int col = 0; col < cellMap[row - 1].length; col++) {
                 cells[col][row].open = cellMap[row - 1][col];
                 if (cellMap[row - 1][col]) {
-                    //noinspection StatementWithEmptyBody
-                    if (col == 1 && row == 1) {
-                    } else {
+                    ////noinspection StatementWithEmptyBody
+                    if (col > 1 || row > 1) {
+                   // } else {
                         pellet = (Pellet[]) append(pellet, new Pellet(Math.round(col * cellWidth + cellWidth / 2), Math.round(row * cellWidth + cellWidth / 2)));
                         coords2 = (Coordinate[]) append(coords2, new Coordinate());
                         //cellCount++;
@@ -574,7 +575,7 @@ public final class pac_man extends PApplet {
         while (messages.length > 6) {
             messages = shorten(messages);
         }
-        if ((millis() - startMillis) % 25 == 0 && (millis() - startMillis) > 500 && messages.length > 0) {
+        if (millis() % 25 == 0 && (millis() - startMillis) > 500 && messages.length > 0) {
             messages = shorten(messages);
         }
         if (messages.length > 4) {

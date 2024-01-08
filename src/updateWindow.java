@@ -28,26 +28,45 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/*
+
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Paths;
 
 final class updateWindow extends window {
     //JLabel label3;
     //JLabel pictureLabel;
 
     //private final float latestVersion = 10.1f;
+    String OS;
+    boolean enableUpdates = false;
+    String installPath;
+
     private updateWindow() {
+        OS = System.getProperty("os.name");
+        OS = OS.toUpperCase();
+        if (OS.contains("WIN") || OS.equals("LINUX")) {
+            enableUpdates = true;
+        }
+        installPath = System.getProperty("user.dir");
+        printCWD1();
+        printCWD2();
+
+        System.out.println(OS);
         //Create the Buttons
         // = createButton("", KeyEvent.VK_, , this, "");
-        JButton launchAbout = createButton("Download new version", KeyEvent.VK_A, true, this, "download");
+        JButton launchAbout = createButton("Download new version", KeyEvent.VK_A, enableUpdates, this, "download");
         JButton checkUpdate = createButton("Check for Updates", KeyEvent.VK_U, false, this, "update");
+        JButton applyUpdate = createButton("Install Update", KeyEvent.VK_I, true, this, "applyUpdate");
         JButton donate = createButton("Donate", KeyEvent.VK_U, true, this, "donate");
         JLabel name = new JLabel("By Langdon Staab 2023");
         JLabel web = new JLabel("www.getpacman.gq");
@@ -62,6 +81,7 @@ final class updateWindow extends window {
         checkPanel.add(web);
         checkPanel.add(launchAbout);
         checkPanel.add(checkUpdate);
+        checkPanel.add(applyUpdate);
         checkPanel.add(donate);
         //checkPanel.add();
 
@@ -108,19 +128,71 @@ final class updateWindow extends window {
         SwingUtilities.invokeLater(updateWindow::createAndShowPopout);
     }
 
-    // --Commented out by Inspection START (2023-12-21, 11:11 a.m.):
-//    private void checkVersion() {
-//        try {
-//            URI oracle = new URI("www2.getpacman.gq/version.txt");
-//            BufferedReader in = new BufferedReader(new InputStreamReader(oracle.toURL().openStream()));
-//            in.close();
-//        } catch (IOException e) {
-//            System.err.println("IOException1!");
-//        } catch (URISyntaxException e) {
-//            System.err.println("URISyntaxException1!");
-//        }
-//    }
-// --Commented out by Inspection STOP (2023-12-21, 11:11 a.m.)
+    private static void printCWD1() {
+        String userDirectory = System.getProperty("user.dir");
+        System.out.println(userDirectory);
+    }
+
+    // Path, Java 7
+    private static void printCWD2() {
+        String userDirectory = Paths.get("")
+                .toAbsolutePath()
+                .toString();
+        System.out.println(userDirectory);
+    }
+
+    static void downloadNewVersion() {
+        URI website;
+        settings.updatePath();
+        try {
+            website = new URI("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar");
+            ReadableByteChannel rbc = Channels.newChannel(website.toURL().openStream());
+            try (FileOutputStream fos = new FileOutputStream(settings.path + "/new.jar")) {
+                fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+            }
+        } catch (IOException e) {
+            System.err.println("IOException2!");
+            error.save(e);
+            error.log(e);
+            e.printStackTrace(System.err);
+        } catch (URISyntaxException e) {
+            System.err.println("URISyntaxException2!");
+            error.save(e);
+            error.log(e);
+        }
+    }
+
+    private void installUpdate() {
+        try {
+            if (OS.equals("LINUX")) {
+                Runtime.getRuntime().exec(new String[]{"x-terminal-emulator", "-e", "~/Desktop/update.sh"});
+                System.exit(0);
+            }
+            if (OS.contains("WIN")) {
+                String commands = "\"echo Updating Pac-Man..." +
+                        " && CD /D " + installPath +
+                        " && MOVE /Y " + settings.path + "\\new.jar new.jar" +
+                        " && DEL old.jar" +
+                        " && pause" +
+                        " && REN Pac-Man.jar old.jar" +
+                        " && REN new.jar Pac-Man.jar" +
+                        " && echo Installation Success!" +
+                        " && You may delete the old version if you wish." +
+                        " && DEL old.jar\"";
+                Runtime.getRuntime().exec(new String[]{"cmd", "/c", commands});
+                System.exit(0);
+                //"cmd" "/c" "\"start somefile.bat && start other.bat && cd C:\\test && test.exe\""
+            }
+
+
+            //Runtime.getRuntime().exec(new String[]{"x-terminal-emulator", "-e", "opt/pac-man/lib/app/update.sh"});
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -128,9 +200,11 @@ final class updateWindow extends window {
                 updateWindow.create();
                 break;
             case "launchAbout":
+                installUpdate();
                 aboutWindow.open();
                 break;
-            case "":
+            case "applyUpdate":
+                installUpdate();
                 break;
             case "download":
                 downloadNewVersion();
@@ -139,9 +213,11 @@ final class updateWindow extends window {
                 try {
                     Desktop.getDesktop().browse(new URI("https://buymeacoff.ee/langdonstaab"));
                 } catch (IOException | URISyntaxException ex) {
+                    error.save(ex);
+                    error.log(ex);
                     throw new RuntimeException(ex);
                 }
                 break;
         }
     }
-}*/
+}
