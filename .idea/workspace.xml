@@ -9,19 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0f76c9c-c62b-4bdd-8b11-4708cba682da" name="Changes" comment="Add files">
+    <list default="true" id="d0f76c9c-c62b-4bdd-8b11-4708cba682da" name="Changes" comment="Added experimental update feature">
       <change afterPath="$PROJECT_DIR$/new.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jar/Pac-Man.jar" beforeDir="false" afterPath="$PROJECT_DIR$/jar/Pac-Man.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jar/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/jar/README.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/README.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SettingsWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SettingsWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/error.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/error.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pac_man.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pac_man.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/settings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/updateWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/updateWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,14 +83,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1693604523434</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Add files">
-      <option name="closed" value="true" />
-      <created>1696618283453</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1696618283453</updated>
     </task>
     <task id="LOCAL-00010" summary="Add files">
       <option name="closed" value="true" />
@@ -486,7 +468,15 @@
       <option name="project" value="LOCAL" />
       <updated>1703294803149</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="Added experimental update feature">
+      <option name="closed" value="true" />
+      <created>1704748205585</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1704748205586</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -503,7 +493,8 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Add files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add files" />
+    <MESSAGE value="Added experimental update feature" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added experimental update feature" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/pac_man_java$pac_man.ic" NAME="pac_man Coverage Results" MODIFIED="1691192296197" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

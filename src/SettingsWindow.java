@@ -75,10 +75,12 @@ final class SettingsWindow extends window implements ItemListener {
         checkPanel.add(startsWMouthBox);
         checkPanel.add(selectClassicHitbox);
         checkPanel.add(chooseDebug);
+        checkPanel.add(chooseCheckUpdate);
         checkPanel.add(launchAbout);
         checkPanel.add(checkUpdate);
         checkPanel.add(donate);
         //checkPanel.add();
+
 
         add(checkPanel, BorderLayout.LINE_START);
         //add(pictureLabel, BorderLayout.CENTER);
@@ -149,6 +151,9 @@ final class SettingsWindow extends window implements ItemListener {
             settings.showGhostWhenStopped = newVal;
         } else if (source == chooseDebug) {
             settings.debug = newVal;
+
+        } else if (source == chooseCheckUpdate) {
+            settings.updateOnStart = newVal;
         }
         settings.save();
     }
