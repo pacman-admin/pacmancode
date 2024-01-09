@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+@SuppressWarnings("CallToPrintStackTrace")
 abstract class window extends JPanel implements ActionListener {
     window() {
         super(new BorderLayout());

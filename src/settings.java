@@ -74,7 +74,7 @@ class settings {
             error.log(e);
         }
         if (newVersion > myVersion) {
-            updateWindow.create();
+            updatePrompt.create();
         }
 
     }

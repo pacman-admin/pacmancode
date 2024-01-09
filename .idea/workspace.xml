@@ -10,9 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0f76c9c-c62b-4bdd-8b11-4708cba682da" name="Changes" comment="Added experimental update feature">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pac_man.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pac_man.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/settings.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Pac-Man.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/old.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +29,7 @@
     <option name="defaultAccountId" value="f36680d3-1e6b-408b-a011-f736f6f316a2" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -84,14 +83,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1693604523434</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Add files">
-      <option name="closed" value="true" />
-      <created>1697383575469</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1697383575469</updated>
     </task>
     <task id="LOCAL-00013" summary="Add files">
       <option name="closed" value="true" />
@@ -477,7 +468,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704761307436</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="Added experimental update feature">
+      <option name="closed" value="true" />
+      <created>1704830162809</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1704830162810</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
