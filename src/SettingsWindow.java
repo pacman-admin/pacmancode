@@ -63,7 +63,7 @@ final class SettingsWindow extends window implements ItemListener {
         startsWMouthBox = createCheckbox("Pac-Man starts as circle", KeyEvent.VK_M, settings.startsAsCircle, this);
         selectSGWS = createCheckbox("Show Ghosts When Stopped", KeyEvent.VK_G, settings.showGhostWhenStopped, this);
         chooseDebug = createCheckbox("Debug Mode", KeyEvent.VK_B, settings.debug, this);
-        chooseCheckUpdate = createCheckbox("", KeyEvent.VK_C, settings.updateOnStart, this);
+        chooseCheckUpdate = createCheckbox("Check for Updates Automatically", KeyEvent.VK_C, settings.updateOnStart, this);
 
         //Put the checkboxes in a column in a panel
         JPanel checkPanel = new JPanel(new GridLayout(0, 1));
