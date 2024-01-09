@@ -9,6 +9,12 @@ import java.net.URISyntaxException;
 abstract class window extends JPanel implements ActionListener {
     window() {
         super(new BorderLayout());
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException ex) {
+            ex.printStackTrace();
+        }
         if (settings.path == null) {
             settings.updatePath();
         }

@@ -54,7 +54,7 @@ final class SettingsWindow extends window implements ItemListener {
         //Set up the picture label
         //pictureLabel = new JLabel();
         //pictureLabel.setFont(pictureLabel.getFont().deriveFont(Font.ITALIC));
-        JLabel name = new JLabel("By Langdon Staab 2023");
+        JLabel name = new JLabel("By Langdon Staab 2024");
         JLabel web = new JLabel("www.getpacman.gq");
         //Create the checkboxes.
 

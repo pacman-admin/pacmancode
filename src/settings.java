@@ -59,16 +59,24 @@ class settings {
     static void getNewVersion() {
         String newVersionStr;
         try {
-            URI oracle = new URI("www2.getpacman.gq/version.txt");
+            URI oracle = new URI("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/version.txt");
             BufferedReader in = new BufferedReader(new InputStreamReader(oracle.toURL().openStream()));
             newVersionStr = in.readLine();
             newVersion = parseFloat(newVersionStr);
             in.close();
         } catch (IOException e) {
             System.err.println("IOException1!");
+            error.save(e);
+            error.log(e);
         } catch (URISyntaxException e) {
             System.err.println("URISyntaxException1!");
+            error.save(e);
+            error.log(e);
         }
+        if (newVersion > myVersion) {
+            updateWindow.create();
+        }
+
     }
 
     static void updatePath() {

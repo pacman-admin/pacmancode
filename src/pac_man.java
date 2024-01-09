@@ -13,12 +13,8 @@ import java.io.StringWriter;
 
 @SuppressWarnings("StatementWithEmptyBody")
 public final class pac_man extends PApplet {
-    // By Langdon S.
-    //current version:
-    private boolean checkForUpdates = settings.updateOnStart;
     private final static String TITLE = "Pac-Man Test Only ";
     private final static float cellWidth = 32;
-
     private final static int pelletWorth = 10;
     private final static int canvasWidth = (int) (cellWidth * 13);
     private final static int canvasHeight = (int) (cellWidth * 13);
@@ -27,11 +23,8 @@ public final class pac_man extends PApplet {
     private final static byte[][] gDesign = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0}, {0, 0, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 0, 0}, {0, 0, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 0, 0}, {0, 1, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 1, 0}, {0, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0}, {0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
     private final static int[][] altGhostBottom = {{0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0}, {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0}};
     private final static boolean[][] cellMap = {{false, true, false, true, true, true, true, true, true, true, true, true}, {false, true, true, true, false, false, false, false, false, false, false, true}, {false, true, false, true, true, true, true, true, true, true, false, true}, {false, true, false, true, false, false, false, false, false, true, false, true}, {false, true, true, true, true, true, true, true, true, true, true, true}, {false, true, false, true, false, true, false, false, true, false, true, true}, {false, true, false, true, false, true, false, true, true, false, true, true}, {false, true, false, true, true, true, true, false, true, false, false, true}, {false, true, false, false, false, true, false, false, true, false, true, true}, {false, true, true, true, true, true, true, false, true, false, true, true}, {false, true, true, false, false, false, true, true, true, false, true, true}};
-
     //Strings
     static String errorInfo; //                   |
-
-
     private final Ghost ghost1 = new Ghost();
     private final Ghost ghost2 = new Ghost();
     private final Ghost ghost3 = new Ghost();
@@ -39,6 +32,9 @@ public final class pac_man extends PApplet {
     private final Cell[][] cells = {new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13]};
     private final Pixel[][] ghostPx = {new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16]};
     private final Pixel[][] ghostBottom2Px = {new Pixel[16], new Pixel[16]};
+    // By Langdon S.
+    //current version:
+    private boolean checkForUpdates;
     private int lives = 3; //                             |
     private int chompSpeed = 8; //                        |
     private boolean playStartSound = true; //             |
@@ -52,7 +48,7 @@ public final class pac_man extends PApplet {
     private boolean pelletFirst;
     private boolean runSetup = true;
     private boolean start;
-    //ints
+
     private int startMillis;
     private int chomp = 30;
     //private int cellCount;
@@ -177,6 +173,7 @@ public final class pac_man extends PApplet {
         startMillis = millis();
         pellet[5].isFruit = true;
         surface.setTitle(TITLE);
+        checkForUpdates = settings.updateOnStart;
 
         System.out.println("Setup success!");
     }
@@ -232,6 +229,10 @@ public final class pac_man extends PApplet {
                     restart();
                 }
             } else {
+                if (checkForUpdates && millis() > 60000) {
+                    checkForUpdates = false;
+                    settings.getNewVersion();
+                }
                 if (frameCount % 2 == 0 && !paused) {
                     if (millis() < duration) {
                         pacman.stop();
@@ -553,7 +554,7 @@ public final class pac_man extends PApplet {
                 if (cellMap[row - 1][col]) {
                     ////noinspection StatementWithEmptyBody
                     if (col > 1 || row > 1) {
-                   // } else {
+                        // } else {
                         pellet = (Pellet[]) append(pellet, new Pellet(Math.round(col * cellWidth + cellWidth / 2), Math.round(row * cellWidth + cellWidth / 2)));
                         coords2 = (Coordinate[]) append(coords2, new Coordinate());
                         //cellCount++;

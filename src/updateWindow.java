@@ -34,6 +34,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
@@ -68,7 +69,7 @@ final class updateWindow extends window {
         JButton checkUpdate = createButton("Check for Updates", KeyEvent.VK_U, false, this, "update");
         JButton applyUpdate = createButton("Install Update", KeyEvent.VK_I, true, this, "applyUpdate");
         JButton donate = createButton("Donate", KeyEvent.VK_U, true, this, "donate");
-        JLabel name = new JLabel("By Langdon Staab 2023");
+        JLabel name = new JLabel("By Langdon Staab 2024");
         JLabel web = new JLabel("www.getpacman.gq");
 
         //Set up the picture label
@@ -165,10 +166,12 @@ final class updateWindow extends window {
     private void installUpdate() {
         try {
             if (OS.equals("LINUX")) {
-                Runtime.getRuntime().exec(new String[]{"x-terminal-emulator", "-e", "~/Desktop/update.sh"});
+                System.out.println("Linux is Awesome!");
+                Runtime.getRuntime().exec(new String[]{"x-terminal-emulator", "-e", " update.sh"});
                 System.exit(0);
             }
             if (OS.contains("WIN")) {
+                System.out.println("Windows Sucks");
                 String commands = "\"echo Updating Pac-Man..." +
                         " && CD /D " + installPath +
                         " && MOVE /Y " + settings.path + "\\new.jar new.jar" +
@@ -177,16 +180,13 @@ final class updateWindow extends window {
                         " && REN Pac-Man.jar old.jar" +
                         " && REN new.jar Pac-Man.jar" +
                         " && echo Installation Success!" +
-                        " && You may delete the old version if you wish." +
-                        " && DEL old.jar\"";
-                Runtime.getRuntime().exec(new String[]{"cmd", "/c", commands});
+                        " && pause\"";
+                String[] command = {"cmd.exe", "/c", "start", "cmd.exe", "/c", commands};
+                ProcessBuilder updateTask = new ProcessBuilder(command);
+                updateTask.directory(new File("C:\\Windows\\system32"));
+                updateTask.start();
                 System.exit(0);
-                //"cmd" "/c" "\"start somefile.bat && start other.bat && cd C:\\test && test.exe\""
             }
-
-
-            //Runtime.getRuntime().exec(new String[]{"x-terminal-emulator", "-e", "opt/pac-man/lib/app/update.sh"});
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
