@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-@SuppressWarnings("CallToPrintStackTrace")
 abstract class window extends JPanel implements ActionListener {
     window() {
         super(new BorderLayout());
@@ -14,7 +13,9 @@ abstract class window extends JPanel implements ActionListener {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
                  UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
+            error.save(ex);
+            error.log(ex);
+            //ex.printStackTrace();
         }
         if (settings.path == null) {
             settings.updatePath();
@@ -36,9 +37,9 @@ abstract class window extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "update":
+            /*case "update":
                 updateWindow.create();
-                break;
+                break;*/
             case "launchAbout":
                 aboutWindow.open();
                 break;

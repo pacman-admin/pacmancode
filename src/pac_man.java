@@ -13,7 +13,7 @@ import java.io.StringWriter;
 
 @SuppressWarnings("StatementWithEmptyBody")
 public final class pac_man extends PApplet {
-    private final static String TITLE = "Pac-Man Test Only ";
+    private final static String TITLE = "Pac-Man 10.6";
     private final static float cellWidth = 32;
     private final static int pelletWorth = 10;
     private final static int canvasWidth = (int) (cellWidth * 13);
@@ -34,7 +34,7 @@ public final class pac_man extends PApplet {
     private final Pixel[][] ghostBottom2Px = {new Pixel[16], new Pixel[16]};
     // By Langdon S.
     //current version:
-    private boolean checkForUpdates;
+    //private boolean checkForUpdates;
     private int lives = 3; //                             |
     private int chompSpeed = 8; //                        |
     private boolean playStartSound = true; //             |
@@ -109,9 +109,9 @@ public final class pac_man extends PApplet {
         background(0);
         noStroke();
         textSize(20);
-        textAlign(CENTER);
+        textAlign(CENTER,CENTER);
         fill(255);
-        text("Loading...\nBy Langdon Staab\n\nSound manager by Tyler Tomas", Math.round(width / 2f), Math.round(height / 2f));
+        text("Loading...\nBy Langdon Staab\n\nSound manager by Tyler Tomas\n\nwww.langdonstaab.ca", Math.round(width / 2f), Math.round(height / 2f));
         frameRate(120);
         //check setup2() for setup
     }
@@ -173,7 +173,7 @@ public final class pac_man extends PApplet {
         startMillis = millis();
         pellet[5].isFruit = true;
         surface.setTitle(TITLE);
-        checkForUpdates = settings.updateOnStart;
+        //checkForUpdates = settings.updateOnStart;
 
         System.out.println("Setup success!");
     }
@@ -205,8 +205,6 @@ public final class pac_man extends PApplet {
                 background(0);
                 textAlign(LEFT, CENTER);
                 text(errorInfo, 4, height / 2f);
-                //} else if (updating) {
-                //askUpdate();\
             } else if (runSetup) {
                 setup2();
                 runSetup = false;
@@ -215,11 +213,10 @@ public final class pac_man extends PApplet {
                 duration = 4500 + millis();
                 startMillis = millis();
                 println(millis());
-            } else if (millis() < 2000) {
+            } else if (millis() < 2000) ;
                 //display loading screen for a minimum of 2 seconds.
                 //wait until 2 seconds have passed
-
-            } else if (lives <= 0) {
+            else if (lives <= 0) {
                 background(0);
                 fill(255, 64, 64);
                 textAlign(CENTER);
@@ -229,10 +226,13 @@ public final class pac_man extends PApplet {
                     restart();
                 }
             } else {
-                if (checkForUpdates && millis() > 60000) {
+                /*if (checkForUpdates && millis() > 60000) {
                     checkForUpdates = false;
                     settings.getNewVersion();
-                }
+                    if (settings.newVersion > settings.myVersion) {
+                        updatePrompt.create();
+                    }
+                }*/
                 if (frameCount % 2 == 0 && !paused) {
                     if (millis() < duration) {
                         pacman.stop();
@@ -638,12 +638,12 @@ public final class pac_man extends PApplet {
         int x = Math.round(cellWidth * 5), y = Math.round(cellWidth * 12);
         if (hitBoxCollision(x, y, mouseX, mouseY)) {
             if (paused) {
-                if (pause_beat.isPlaying()) {
-                    pause_beat.stop();
-                }
+                pause_beat.stop();
+
             } else {
                 pause.play();
                 if (settings.playPauseBeat) {
+                    pause_beat.rewind();
                     pause_beat.loop();
                 }
             }

@@ -55,7 +55,10 @@ final class Sound {
     }
 
     public boolean isPlaying() {
-        //return false;
         return clip.getFrameLength() > clip.getFramePosition();
+    }
+
+    public void rewind() {
+        clip.setFramePosition(0);
     }
 }

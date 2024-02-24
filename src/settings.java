@@ -16,7 +16,7 @@ class settings {
     static String path; //                        |
     static boolean playPauseBeat = true; //       |
     static boolean useClassicHitbox = false;
-    static float myVersion = 11f;
+    static float myVersion = 3f;
     static float newVersion = 10.0f;
     static boolean updateOnStart = true;
 
@@ -57,12 +57,10 @@ class settings {
     }
 
     static void getNewVersion() {
-        String newVersionStr;
         try {
-            URI oracle = new URI("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/version.txt");
-            BufferedReader in = new BufferedReader(new InputStreamReader(oracle.toURL().openStream()));
-            newVersionStr = in.readLine();
-            newVersion = parseFloat(newVersionStr);
+            URI versionF= new URI("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/version.txt");
+            BufferedReader in = new BufferedReader(new InputStreamReader(versionF.toURL().openStream()));
+            newVersion = parseFloat(in.readLine());
             in.close();
         } catch (IOException e) {
             System.err.println("IOException1!");
@@ -73,9 +71,7 @@ class settings {
             error.save(e);
             error.log(e);
         }
-        if (newVersion > myVersion) {
-            updatePrompt.create();
-        }
+
 
     }
 

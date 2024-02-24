@@ -28,7 +28,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
+/*
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,46 +44,77 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Paths;
 
 final class updateWindow extends window {
-    //JLabel label3;
-    //JLabel pictureLabel;
-
-    //private final float latestVersion = 10.1f;
     String OS;
     boolean enableUpdates = false;
     String installPath;
 
     private updateWindow() {
+        JLabel instructionMsg;
+        JLabel instructionMsg2;
+        JLabel instructionMsg3;
+        JLabel instructionMsg4;
+        JLabel instructionMsg5;
+        JLabel instructionMsg6;
+        installPath = System.getProperty("user.dir");
         OS = System.getProperty("os.name");
         OS = OS.toUpperCase();
         if (OS.contains("WIN") || OS.equals("LINUX")) {
             enableUpdates = true;
+            if (installPath.contains("Program Files")) {
+                instructionMsg = new JLabel("Pac-Man appears to be installed in Program files");
+                instructionMsg2 = new JLabel("To update Pac-Man, please go to ");
+                instructionMsg3 = new JLabel("www.langdonstaab.ca/winupdateadmin");
+                instructionMsg4 = new JLabel("for special instructions. Thanks ;)");
+                instructionMsg5 = new JLabel("");
+                instructionMsg6 = new JLabel("");
+            } else {
+                instructionMsg = new JLabel("Your installation of Pac-Man can be updated!");
+                instructionMsg2 = new JLabel("Please see www.langdonstaab.ca/update");
+                instructionMsg3 = new JLabel("for important info");
+                instructionMsg4 = new JLabel("");
+                instructionMsg5 = new JLabel("");
+                instructionMsg6 = new JLabel("");
+            }
+        } else {
+            instructionMsg = new JLabel("You appear to be on macOS.");
+            instructionMsg2 = new JLabel("Unfortunately, updating is not supported.");
+            instructionMsg3 = new JLabel("If this is an error, please email bugs@langdonstaab.ca");
+            instructionMsg4 = new JLabel("Please go to www.langdonstaab.ca/macupdates");
+            instructionMsg5 = new JLabel("for more info.");
+            instructionMsg6 = new JLabel("");
         }
-        installPath = System.getProperty("user.dir");
         printCWD1();
         printCWD2();
 
         System.out.println(OS);
         //Create the Buttons
         // = createButton("", KeyEvent.VK_, , this, "");
-        JButton launchAbout = createButton("Download new version", KeyEvent.VK_A, enableUpdates, this, "download");
-        JButton checkUpdate = createButton("Check for Updates", KeyEvent.VK_U, false, this, "update");
-        JButton applyUpdate = createButton("Install Update", KeyEvent.VK_I, true, this, "applyUpdate");
+        JButton downloadUpdate = createButton("Download new version", KeyEvent.VK_A, enableUpdates, this, "download");
+        JButton checkUpdate = createButton("Check for Updates", KeyEvent.VK_U, true, this, "checkUpdate");
+        JButton applyUpdate = createButton("Install Update", KeyEvent.VK_I, enableUpdates, this, "applyUpdate");
         JButton donate = createButton("Donate", KeyEvent.VK_U, true, this, "donate");
         JLabel name = new JLabel("By Langdon Staab 2024");
-        JLabel web = new JLabel("www.getpacman.gq");
+        JLabel web = new JLabel("www.langdonstaab.ca");
 
-        //Set up the picture label
-        //pictureLabel = new JLabel();
-        //pictureLabel.setFont(pictureLabel.getFont().deriveFont(Font.ITALIC));
+        //JLabel ;
+        //= new JLabel("");
         //Put the checkboxes in a column in a panel
         JPanel checkPanel = new JPanel(new GridLayout(0, 1));
 
         checkPanel.add(name);
         checkPanel.add(web);
-        checkPanel.add(launchAbout);
+        checkPanel.add(instructionMsg);
+        checkPanel.add(instructionMsg2);
+        checkPanel.add(instructionMsg3);
+        checkPanel.add(instructionMsg4);
+        checkPanel.add(instructionMsg5);
+        checkPanel.add(instructionMsg6);
+        checkPanel.add(downloadUpdate);
         checkPanel.add(checkUpdate);
         checkPanel.add(applyUpdate);
         checkPanel.add(donate);
+
+
         //checkPanel.add();
 
         add(checkPanel, BorderLayout.LINE_START);
@@ -136,9 +167,7 @@ final class updateWindow extends window {
 
     // Path, Java 7
     private static void printCWD2() {
-        String userDirectory = Paths.get("")
-                .toAbsolutePath()
-                .toString();
+        String userDirectory = Paths.get("").toAbsolutePath().toString();
         System.out.println(userDirectory);
     }
 
@@ -165,6 +194,7 @@ final class updateWindow extends window {
 
     private void installUpdate() {
         try {
+            System.out.println(installPath);
             if (OS.equals("LINUX")) {
                 System.out.println("Linux is Awesome!");
                 Runtime.getRuntime().exec(new String[]{"x-terminal-emulator", "-e", " update.sh"});
@@ -172,34 +202,41 @@ final class updateWindow extends window {
             }
             if (OS.contains("WIN")) {
                 System.out.println("Windows Sucks");
-                String commands = "\"echo Updating Pac-Man..." +
-                        " && CD /D " + installPath +
-                        " && MOVE /Y " + settings.path + "\\new.jar new.jar" +
-                        " && DEL old.jar" +
-                        " && pause" +
-                        " && REN Pac-Man.jar old.jar" +
-                        " && REN new.jar Pac-Man.jar" +
-                        " && echo Installation Success!" +
-                        " && pause\"";
-                String[] command = {"cmd.exe", "/c", "start", "cmd.exe", "/c", commands};
-                ProcessBuilder updateTask = new ProcessBuilder(command);
-                updateTask.directory(new File("C:\\Windows\\system32"));
+                ProcessBuilder updateTask = getProcessBuilder();
                 updateTask.start();
                 System.exit(0);
             }
         } catch (IOException e) {
+            error.save(e);
+            error.log(e);
             throw new RuntimeException(e);
         }
+    }
+
+    private ProcessBuilder getProcessBuilder() {
+        ProcessBuilder updateTask;
+        String commands;
+        if (installPath.contains("Program Files")) {
+            //Ask to ``scoop install psutils`` or ``scoop install sudo``
+            commands = "\"echo Updating Pac-Man..." + " && CD /D " + installPath + "\\app && sudo MOVE /Y " + settings.path + "\\new.jar " + installPath + "\\app\\new.jar" + " && sudo DEL " + installPath + "\\app\\old.jar" + " && pause" + " && sudo REN " + installPath + "\\app\\Pac-Man.jar " + installPath + "\\app\\old.jar" + " && sudo REN " + installPath + "\\app\\new.jar " + installPath + "\\app\\Pac-Man.jar" + " && echo Installation Success!" + " && pause\"";
+        } else {
+            commands = "\"echo Updating Pac-Man..." + " && CD /D " + installPath + "\\app && MOVE /Y " + settings.path + "\\new.jar " + installPath + "\\app\\new.jar" + " && DEL " + installPath + "\\app\\old.jar" + " && pause" + " && REN " + installPath + "\\app\\Pac-Man.jar " + installPath + "\\app\\old.jar" + " && REN " + installPath + "\\app\\new.jar " + installPath + "\\app\\Pac-Man.jar" + " && echo Installation Success!" + " && pause\"";
+        }
+        String[] command = {"cmd.exe", "/c", "start", "cmd.exe", "/c", commands};
+        updateTask = new ProcessBuilder(command);
+        updateTask.directory(new File("C:\\Windows\\system32"));
+        return updateTask;
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "update":
-                updateWindow.create();
+            case "checkUpdate":
+                settings.getNewVersion();
+                //create popup or something
                 break;
-            case "launchAbout":
+            case "downloadUpdate":
                 installUpdate();
                 aboutWindow.open();
                 break;
@@ -220,4 +257,4 @@ final class updateWindow extends window {
                 break;
         }
     }
-}
+}*/

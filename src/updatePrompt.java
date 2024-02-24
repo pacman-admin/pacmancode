@@ -28,19 +28,24 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
+/*
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 final class updatePrompt extends window {
+    static JFrame frame;
     private updatePrompt() {
 
         JButton donate = createButton("Donate", KeyEvent.VK_D, true, this, "donate");
-        JButton yes = createButton("Yes", KeyEvent.VK_Y, true, this, "yes");
-        JButton no = createButton("No", KeyEvent.VK_N, true, this, "no");
+        JButton yes = createButton("Yes", KeyEvent.VK_Y, true, this, "update");
+        JButton no = createButton("No", KeyEvent.VK_N, true, this, "exit");
         JLabel name = new JLabel("By Langdon Staab 2024");
-        JLabel web = new JLabel("www.getpacman.gq");
+        JLabel web = new JLabel("www.langdonstaab.ca");
         Color blue = new Color(0, 120, 255);
         //yes.setBorderPainted(true);
         yes.setBackground(blue);
@@ -71,7 +76,7 @@ final class updatePrompt extends window {
 
     private static void createAndShowGUI() {
 //Create and set up the window.
-        JFrame frame = new JFrame("Pac-Man Error Report");
+        frame = new JFrame("Pac-Man AutoUpdate");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //Create and set up the content pane.
         JComponent newContentPane = new updatePrompt();
@@ -84,7 +89,7 @@ final class updatePrompt extends window {
 
     private static void createAndShowPopout() {
 //Create and set up the window.
-        JFrame frame = new JFrame("Pac-Man Error Report");
+        frame = new JFrame("Pac-Man AutoUpdate");
 //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //Create and set up the content pane.
         JComponent newContentPane = new updatePrompt();
@@ -106,4 +111,26 @@ final class updatePrompt extends window {
 //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(updatePrompt::createAndShowPopout);
     }
-}
+    public void actionPerformed(ActionEvent e) {
+        switch (e.getActionCommand()) {
+            case "update":
+                updateWindow.create();
+                break;
+            case "launchAbout":
+                aboutWindow.open();
+                break;
+            case "donate":
+                try {
+                    Desktop.getDesktop().browse(new URI("https://buymeacoff.ee/langdonstaab"));
+                } catch (IOException | URISyntaxException ex) {
+                    error.save(ex);
+                    error.log(ex);
+                    throw new RuntimeException(ex);
+                }
+                break;
+            case "exit":
+                frame.dispose();
+                break;
+        }
+    }
+}*/
