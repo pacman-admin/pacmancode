@@ -1,8 +1,4 @@
 import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import static java.lang.Float.parseFloat;
 
 //Stores game settings
 class settings {
@@ -16,8 +12,8 @@ class settings {
     static String path; //                        |
     static boolean playPauseBeat = true; //       |
     static boolean useClassicHitbox = false;
-    static float myVersion = 3f;
-    static float newVersion = 10.0f;
+    //static float myVersion = 3f;
+    //static float newVersion = 10.0f;
     static boolean updateOnStart = true;
 
 
@@ -56,7 +52,7 @@ class settings {
         }
     }
 
-    static void getNewVersion() {
+    /*static void getNewVersion() {
         try {
             URI versionF = new URI("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/version.txt");
             BufferedReader in = new BufferedReader(new InputStreamReader(versionF.toURL().openStream()));
@@ -73,7 +69,7 @@ class settings {
         }
 
 
-    }
+    }*/
 
     static void updatePath() {
         path = System.getProperty("user.home");

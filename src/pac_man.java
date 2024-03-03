@@ -1018,6 +1018,7 @@ public final class pac_man extends PApplet {
         private String dir = "stopped";
         private String lastDir = "stopped";
 
+        @SuppressWarnings("IntegerDivisionInFloatingPointContext")
         private void show(int mouthSize) {
             float mouthOpenTop, mouthOpenBottom;
             if (stopped && settings.startsAsCircle) {
@@ -1036,6 +1037,7 @@ public final class pac_man extends PApplet {
             }
             mouthOpenTop = map(mouthSize, 0, 60, 0, 0.52f);
             mouthOpenBottom = map(mouthSize, 0, 60, TWO_PI, 5.76f);
+
             arc(0, 0, (cellWidth / 16) * 15, (cellWidth / 16) * 15, mouthOpenTop, mouthOpenBottom);
 
             resetMatrix();
