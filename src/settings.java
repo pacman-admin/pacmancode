@@ -8,8 +8,8 @@ import static java.lang.Float.parseFloat;
 class settings {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
     //            G A M E  S E T T I N G S        |
-    final static float ghostSpeed = 2; //         |
-    final static float pacmanSpeed = 3; //        |
+    final static int ghostSpeed = 2; //         |
+    final static int pacmanSpeed = 3; //        |
     static boolean startsAsCircle = true; //     |
     static boolean showGhostWhenStopped = true;// |
     static boolean debug = false; //              |
@@ -58,7 +58,7 @@ class settings {
 
     static void getNewVersion() {
         try {
-            URI versionF= new URI("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/version.txt");
+            URI versionF = new URI("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/version.txt");
             BufferedReader in = new BufferedReader(new InputStreamReader(versionF.toURL().openStream()));
             newVersion = parseFloat(in.readLine());
             in.close();
