@@ -37,7 +37,7 @@ final class aboutWindow extends window {
     private aboutWindow() {
 
         JButton donate = createButton("Donate", KeyEvent.VK_U, true, this, "donate");
-        JLabel name = new JLabel("By Langdon Staab 2023");
+        JLabel name = new JLabel("By Langdon Staab 2024");
         JLabel web = new JLabel("www.langdonstaab.ca");
         // = new JLabel("");
         //credit = new JLabel("");

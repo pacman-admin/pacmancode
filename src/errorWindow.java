@@ -41,7 +41,7 @@ final class errorWindow extends window {
 
         JButton donate = createButton("Donate", KeyEvent.VK_U, true, this, "donate");
         JButton launchAbout = createButton("About Pac-Man", KeyEvent.VK_A, true, this, "launchAbout");
-        JLabel name = new JLabel("By Langdon Staab 2023");
+        JLabel name = new JLabel("By Langdon Staab 2024");
         JLabel web = new JLabel("www.langdonstaab.ca");
         textArea.setEditable(false);
         textArea.setText("An error has occured\nPlease E-Mail Langdon Staab the following Info\nbugs@langdonstaab.ca\n" + error.errorLog);
