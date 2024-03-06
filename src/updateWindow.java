@@ -43,7 +43,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Paths;
 
-final class updateWindow extends window {
+final class updateWindow extends Window {
     String OS;
     boolean enableUpdates = false;
     String installPath;
@@ -123,27 +123,27 @@ final class updateWindow extends window {
     }
 
     private static void createAndShowGUI() {
-        //Create and set up the window.
+        //Create and set up the Window.
         JFrame frame = new JFrame("Update");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Create and set up the content pane.
         JComponent newContentPane = new updateWindow();
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
-        //Display the window.
+        //Display the Window.
         frame.pack();
         frame.setVisible(true);
     }
 
     private static void createAndShowPopout() {
-        //Create and set up the window.
+        //Create and set up the Window.
         JFrame frame = new JFrame("Update");
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Create and set up the content pane.
         JComponent newContentPane = new updateWindow();
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
-        //Display the window.
+        //Display the Window.
         frame.pack();
         frame.setVisible(true);
     }
@@ -173,11 +173,11 @@ final class updateWindow extends window {
 
     static void downloadNewVersion() {
         URI website;
-        settings.updatePath();
+        Settings.updatePath();
         try {
             website = new URI("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/jar/Pac-Man.jar");
             ReadableByteChannel rbc = Channels.newChannel(website.toURL().openStream());
-            try (FileOutputStream fos = new FileOutputStream(settings.path + "/new.jar")) {
+            try (FileOutputStream fos = new FileOutputStream(Settings.path + "/new.jar")) {
                 fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
             }
         } catch (IOException e) {
@@ -218,9 +218,9 @@ final class updateWindow extends window {
         String commands;
         if (installPath.contains("Program Files")) {
             //Ask to ``scoop install psutils`` or ``scoop install sudo``
-            commands = "\"echo Updating Pac-Man..." + " && CD /D " + installPath + "\\app && sudo MOVE /Y " + settings.path + "\\new.jar " + installPath + "\\app\\new.jar" + " && sudo DEL " + installPath + "\\app\\old.jar" + " && pause" + " && sudo REN " + installPath + "\\app\\Pac-Man.jar " + installPath + "\\app\\old.jar" + " && sudo REN " + installPath + "\\app\\new.jar " + installPath + "\\app\\Pac-Man.jar" + " && echo Installation Success!" + " && pause\"";
+            commands = "\"echo Updating Pac-Man..." + " && CD /D " + installPath + "\\app && sudo MOVE /Y " + Settings.path + "\\new.jar " + installPath + "\\app\\new.jar" + " && sudo DEL " + installPath + "\\app\\old.jar" + " && pause" + " && sudo REN " + installPath + "\\app\\Pac-Man.jar " + installPath + "\\app\\old.jar" + " && sudo REN " + installPath + "\\app\\new.jar " + installPath + "\\app\\Pac-Man.jar" + " && echo Installation Success!" + " && pause\"";
         } else {
-            commands = "\"echo Updating Pac-Man..." + " && CD /D " + installPath + "\\app && MOVE /Y " + settings.path + "\\new.jar " + installPath + "\\app\\new.jar" + " && DEL " + installPath + "\\app\\old.jar" + " && pause" + " && REN " + installPath + "\\app\\Pac-Man.jar " + installPath + "\\app\\old.jar" + " && REN " + installPath + "\\app\\new.jar " + installPath + "\\app\\Pac-Man.jar" + " && echo Installation Success!" + " && pause\"";
+            commands = "\"echo Updating Pac-Man..." + " && CD /D " + installPath + "\\app && MOVE /Y " + Settings.path + "\\new.jar " + installPath + "\\app\\new.jar" + " && DEL " + installPath + "\\app\\old.jar" + " && pause" + " && REN " + installPath + "\\app\\Pac-Man.jar " + installPath + "\\app\\old.jar" + " && REN " + installPath + "\\app\\new.jar " + installPath + "\\app\\Pac-Man.jar" + " && echo Installation Success!" + " && pause\"";
         }
         String[] command = {"cmd.exe", "/c", "start", "cmd.exe", "/c", commands};
         updateTask = new ProcessBuilder(command);
@@ -233,7 +233,7 @@ final class updateWindow extends window {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "checkUpdate":
-                settings.getNewVersion();
+                Settings.getNewVersion();
                 //create popup or something
                 break;
             case "downloadUpdate":

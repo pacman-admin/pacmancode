@@ -10,8 +10,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0f76c9c-c62b-4bdd-8b11-4708cba682da" name="Changes" comment="Added experimental update feature">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/SettingsWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/SettingsWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/Sound.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/Sound.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/aboutWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/aboutWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/error.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/error.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/errorWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/errorWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Cell.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Cell.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Ghost.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Ghost.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pacman.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pacman.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pellet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pellet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pixel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pixel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/settings.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/settings.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/window.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/window.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SettingsWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SettingsWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Sound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sound.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/aboutWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aboutWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/error.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/error.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/errorWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/errorWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pac_man.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pac_man.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/settings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/updatePrompt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/updatePrompt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/updateWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/updateWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +48,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GithubDefaultAccount">
@@ -86,14 +113,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1693604523434</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Add files">
-      <option name="closed" value="true" />
-      <created>1697490825445</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1697490825446</updated>
     </task>
     <task id="LOCAL-00014" summary="Add files">
       <option name="closed" value="true" />
@@ -479,7 +498,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704830162810</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="Added experimental update feature">
+      <option name="closed" value="true" />
+      <created>1709484863442</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1709484863442</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

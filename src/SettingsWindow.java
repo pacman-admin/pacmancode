@@ -36,7 +36,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 
-final class SettingsWindow extends window implements ItemListener {
+final class SettingsWindow extends Window implements ItemListener {
     private final JCheckBox playPauseBeatBox, selectClassicHitbox, startsWMouthBox, chooseDebug, chooseCheckUpdate;
     //Show Ghosts When Stopped
     private final JCheckBox selectSGWS;
@@ -58,12 +58,12 @@ final class SettingsWindow extends window implements ItemListener {
         JLabel web = new JLabel("www.langdonstaab.ca");
         //Create the checkboxes.
 
-        playPauseBeatBox = createCheckbox("Play Pause Beat", KeyEvent.VK_P, settings.playPauseBeat, this);
-        selectClassicHitbox = createCheckbox("Use Old Hitbox\n(Glitchy)", KeyEvent.VK_H, settings.useClassicHitbox, this);
-        startsWMouthBox = createCheckbox("Pac-Man starts as circle", KeyEvent.VK_M, settings.startsAsCircle, this);
-        selectSGWS = createCheckbox("Show Ghosts When Stopped", KeyEvent.VK_G, settings.showGhostWhenStopped, this);
-        chooseDebug = createCheckbox("Debug Mode", KeyEvent.VK_B, settings.debug, this);
-        chooseCheckUpdate = createCheckbox("Check for Updates Automatically", KeyEvent.VK_C, settings.updateOnStart, this);
+        playPauseBeatBox = createCheckbox("Play Pause Beat", KeyEvent.VK_P, Settings.playPauseBeat, this);
+        selectClassicHitbox = createCheckbox("Use Old Hitbox\n(Glitchy)", KeyEvent.VK_H, Settings.useClassicHitbox, this);
+        startsWMouthBox = createCheckbox("Pac-Man starts as circle", KeyEvent.VK_M, Settings.startsAsCircle, this);
+        selectSGWS = createCheckbox("Show Ghosts When Stopped", KeyEvent.VK_G, Settings.showGhostWhenStopped, this);
+        chooseDebug = createCheckbox("Debug Mode", KeyEvent.VK_B, Settings.debug, this);
+        chooseCheckUpdate = createCheckbox("Check for Updates Automatically", KeyEvent.VK_C, Settings.updateOnStart, this);
 
         //Put the checkboxes in a column in a panel
         JPanel checkPanel = new JPanel(new GridLayout(0, 1));
@@ -88,36 +88,36 @@ final class SettingsWindow extends window implements ItemListener {
     }
 
     private static void createAndShowGUI() {
-        //Create and set up the window.
+        //Create and set up the Window.
         JFrame frame = new JFrame("Settings");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Create and set up the content pane.
         JComponent newContentPane = new SettingsWindow();
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
-        //Display the window.
+        //Display the Window.
         frame.pack();
         frame.setVisible(true);
     }
 
     private static void createAndShowPopout() {
-        //Create and set up the window.
+        //Create and set up the Window.
         JFrame frame = new JFrame("Settings");
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Create and set up the content pane.
         JComponent newContentPane = new SettingsWindow();
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
-        //Display the window.
+        //Display the Window.
         frame.pack();
         frame.setVisible(true);
     }
 
-    private static JCheckBox createCheckbox(String title, int key, boolean selectedByDefault, SettingsWindow settingsWindow) {
+    private static JCheckBox createCheckbox(String title, int key, boolean selectedByDefault, SettingsWindow SettingsWindow) {
         JCheckBox checkBox = new JCheckBox(title);
         checkBox.setMnemonic(key);
         checkBox.setSelected(selectedByDefault);
-        checkBox.addItemListener(settingsWindow);
+        checkBox.addItemListener(SettingsWindow);
         return checkBox;
     }
 
@@ -142,19 +142,19 @@ final class SettingsWindow extends window implements ItemListener {
             newVal = true;
         }
         if (source == playPauseBeatBox) {
-            settings.playPauseBeat = newVal;
+            Settings.playPauseBeat = newVal;
         } else if (source == selectClassicHitbox) {
-            settings.useClassicHitbox = newVal;
+            Settings.useClassicHitbox = newVal;
         } else if (source == startsWMouthBox) {
-            settings.startsAsCircle = newVal;
+            Settings.startsAsCircle = newVal;
         } else if (source == selectSGWS) {
-            settings.showGhostWhenStopped = newVal;
+            Settings.showGhostWhenStopped = newVal;
         } else if (source == chooseDebug) {
-            settings.debug = newVal;
+            Settings.debug = newVal;
 
         } else if (source == chooseCheckUpdate) {
-            settings.updateOnStart = newVal;
+            Settings.updateOnStart = newVal;
         }
-        settings.save();
+        Settings.save();
     }
 }

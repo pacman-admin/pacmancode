@@ -33,18 +33,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-final class errorWindow extends window {
-    private errorWindow() {
+final class ErrorWindow extends Window {
+    private ErrorWindow() {
         JTextArea textArea = new JTextArea();
 
         JScrollPane scrollPane = new JScrollPane(textArea);
 
         JButton donate = createButton("Donate", KeyEvent.VK_U, true, this, "donate");
         JButton launchAbout = createButton("About Pac-Man", KeyEvent.VK_A, true, this, "launchAbout");
-        JLabel name = new JLabel("By Langdon Staab 2024");
+        JLabel name = new JLabel("By Langdon Staab 2023");
         JLabel web = new JLabel("www.langdonstaab.ca");
         textArea.setEditable(false);
-        textArea.setText("An error has occured\nPlease E-Mail Langdon Staab the following Info\nbugs@langdonstaab.ca\n" + error.errorLog);
+        textArea.setText("An error has occured\nPlease E-Mail Langdon Staab the following Info\nbugs@langdonstaab.ca\n" + Error.errorLog);
 
         JPanel infoPanel = new JPanel(new GridLayout(0, 1));
         infoPanel.add(name);
@@ -59,27 +59,27 @@ final class errorWindow extends window {
     }
 
     private static void createAndShowGUI() {
-        //Create and set up the window.
+        //Create and set up the Window.
         JFrame frame = new JFrame("Pac-Man Error Report");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Create and set up the content pane.
-        JComponent newContentPane = new errorWindow();
+        JComponent newContentPane = new ErrorWindow();
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
-        //Display the window.
+        //Display the Window.
         frame.pack();
         frame.setVisible(true);
     }
 
     private static void createAndShowPopout() {
-        //Create and set up the window.
+        //Create and set up the Window.
         JFrame frame = new JFrame("Pac-Man Error Report");
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Create and set up the content pane.
-        JComponent newContentPane = new errorWindow();
+        JComponent newContentPane = new ErrorWindow();
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
-        //Display the window.
+        //Display the Window.
         frame.pack();
         frame.setVisible(true);
     }
@@ -87,12 +87,12 @@ final class errorWindow extends window {
     public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(errorWindow::createAndShowGUI);
+        javax.swing.SwingUtilities.invokeLater(ErrorWindow::createAndShowGUI);
     }
 
     public static void create() {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(errorWindow::createAndShowPopout);
+        javax.swing.SwingUtilities.invokeLater(ErrorWindow::createAndShowPopout);
     }
 }

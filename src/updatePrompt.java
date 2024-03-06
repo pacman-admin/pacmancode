@@ -37,7 +37,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-final class updatePrompt extends window {
+final class updatePrompt extends Window {
     static JFrame frame;
     private updatePrompt() {
 
@@ -75,27 +75,27 @@ final class updatePrompt extends window {
     }
 
     private static void createAndShowGUI() {
-//Create and set up the window.
+//Create and set up the Window.
         frame = new JFrame("Pac-Man AutoUpdate");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //Create and set up the content pane.
         JComponent newContentPane = new updatePrompt();
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
-//Display the window.
+//Display the Window.
         frame.pack();
         frame.setVisible(true);
     }
 
     private static void createAndShowPopout() {
-//Create and set up the window.
+//Create and set up the Window.
         frame = new JFrame("Pac-Man AutoUpdate");
 //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //Create and set up the content pane.
         JComponent newContentPane = new updatePrompt();
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
-//Display the window.
+//Display the Window.
         frame.pack();
         frame.setVisible(true);
     }

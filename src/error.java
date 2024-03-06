@@ -3,7 +3,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-class error {
+final class Error {
     static String errorLog;
 
     //static boolean windowOpen = false;
@@ -12,7 +12,7 @@ class error {
             errorLog = "";
         }
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(settings.path + "/Desktop/pacmanerror.txt", true));
+            BufferedWriter out = new BufferedWriter(new FileWriter(Settings.path + "/Desktop/pacmanerror.txt", true));
             PrintWriter pWriter = new PrintWriter(out, true);
             e.printStackTrace(pWriter);
         } catch (Exception ie) {
@@ -32,6 +32,6 @@ class error {
         pac_man.errorInfo = sw.toString();
         e.printStackTrace(System.err);
         errorLog += sw.toString();
-        errorWindow.create();
+        ErrorWindow.create();
     }
 }

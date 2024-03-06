@@ -1,7 +1,11 @@
 import java.io.*;
+//import java.net.URI;
+//import java.net.URISyntaxException;
+
+//import static java.lang.Float.parseFloat;
 
 //Stores game settings
-class settings {
+final class Settings {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
     //            G A M E  S E T T I N G S        |
     final static int ghostSpeed = 2; //         |
@@ -14,7 +18,7 @@ class settings {
     static boolean useClassicHitbox = false;
     //static float myVersion = 3f;
     //static float newVersion = 10.0f;
-    static boolean updateOnStart = true;
+    static boolean updateOnStart = false;
 
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
@@ -47,8 +51,8 @@ class settings {
             dos.close();
         } catch (IOException ee) {
             System.err.println("An Error occurred while saving settings.");
-            error.save(ee);
-            error.log(ee);
+            Error.save(ee);
+            Error.log(ee);
         }
     }
 
@@ -60,12 +64,12 @@ class settings {
             in.close();
         } catch (IOException e) {
             System.err.println("IOException1!");
-            error.save(e);
-            error.log(e);
+            Error.save(e);
+            Error.log(e);
         } catch (URISyntaxException e) {
             System.err.println("URISyntaxException1!");
-            error.save(e);
-            error.log(e);
+            Error.save(e);
+            Error.log(e);
         }
 
 

@@ -33,11 +33,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-final class aboutWindow extends window {
-    private aboutWindow() {
+final class AboutWindow extends Window {
+    private AboutWindow() {
 
         JButton donate = createButton("Donate", KeyEvent.VK_U, true, this, "donate");
-        JLabel name = new JLabel("By Langdon Staab 2024");
+        JLabel name = new JLabel("By Langdon Staab 2023");
         JLabel web = new JLabel("www.langdonstaab.ca");
         // = new JLabel("");
         //credit = new JLabel("");
@@ -65,14 +65,14 @@ final class aboutWindow extends window {
     }
 
     private static void createAndShowGUI() {
-        //Create and set up the window.
+        //Create and set up the Window.
         JFrame frame = new JFrame("About Pac-Man");
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Create and set up the content pane.
-        JComponent newContentPane = new aboutWindow();
+        JComponent newContentPane = new AboutWindow();
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
-        //Display the window.
+        //Display the Window.
         frame.pack();
         frame.setVisible(true);
     }
@@ -80,6 +80,6 @@ final class aboutWindow extends window {
     public static void open() {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(aboutWindow::createAndShowGUI);
+        javax.swing.SwingUtilities.invokeLater(AboutWindow::createAndShowGUI);
     }
 }

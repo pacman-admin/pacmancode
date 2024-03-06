@@ -12,7 +12,6 @@ import java.net.MalformedURLException;
  */
 final class Sound {
     private final Clip clip;
-
     public Sound(String filename) {
         try (InputStream in = getClass().getResourceAsStream(filename)) {
             assert in != null;
