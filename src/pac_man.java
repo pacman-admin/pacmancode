@@ -121,9 +121,11 @@ public final class pac_man extends PApplet {
         noStroke();
         surface.setResizable(true);
         imageMode(CENTER);
+
         changeAppIcon();
 
-        Settings.path = System.getProperty("user.home");
+
+        Settings.updatePath();
 
         String temp = loadString(Settings.path + "/highscore.txt");
         if (temp.equals("error")) {
@@ -146,6 +148,9 @@ public final class pac_man extends PApplet {
             prevHighScore = java.lang.Integer.parseInt(temp);
         }
         Settings.load();
+        if (Settings.useOpenGL) {
+            System.setProperty("sun.java2d.opengl", "True");
+        }
 
 
         startSound = new Sound("game_start.wav");

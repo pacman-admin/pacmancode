@@ -16,6 +16,7 @@ final class Settings {
     static String path; //                        |
     static boolean playPauseBeat = true; //       |
     static boolean useClassicHitbox = false;
+    static boolean useOpenGL = false;
     //static float myVersion = 3f;
     //static float newVersion = 10.0f;
     static boolean updateOnStart = false;
@@ -32,6 +33,7 @@ final class Settings {
             startsAsCircle = din.readBoolean();
             useClassicHitbox = din.readBoolean();
             updateOnStart = din.readBoolean();
+            useOpenGL = din.readBoolean();
             //System.out.println(debug + ", " + playPauseBeat + ", " + showGhostWhenStopped + ", " + startsAsCircle/* + ", " + useClassicHitbox/*+", "+*/);
         } catch (IOException e) {
             System.err.println("An Error occurred while loading.");
@@ -48,6 +50,7 @@ final class Settings {
             dos.writeBoolean(startsAsCircle);
             dos.writeBoolean(useClassicHitbox);
             dos.writeBoolean(updateOnStart);
+            dos.writeBoolean(useOpenGL);
             dos.close();
         } catch (IOException ee) {
             System.err.println("An Error occurred while saving settings.");

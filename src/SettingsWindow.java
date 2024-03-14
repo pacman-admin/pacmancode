@@ -39,7 +39,7 @@ import java.awt.event.KeyEvent;
 final class SettingsWindow extends Window implements ItemListener {
     private final JCheckBox playPauseBeatBox, selectClassicHitbox, startsWMouthBox, chooseDebug, chooseCheckUpdate;
     //Show Ghosts When Stopped
-    private final JCheckBox selectSGWS;
+    private final JCheckBox selectSGWS, chooseOpenGL;
     //JLabel ;
     //JLabel label3;
     //JLabel pictureLabel;
@@ -64,6 +64,7 @@ final class SettingsWindow extends Window implements ItemListener {
         selectSGWS = createCheckbox("Show Ghosts When Stopped", KeyEvent.VK_G, Settings.showGhostWhenStopped, this);
         chooseDebug = createCheckbox("Debug Mode", KeyEvent.VK_B, Settings.debug, this);
         chooseCheckUpdate = createCheckbox("Check for Updates Automatically", KeyEvent.VK_C, Settings.updateOnStart, this);
+        chooseOpenGL = createCheckbox("Use Hardware Acceleration(Beta)", KeyEvent.VK_A, Settings.useOpenGL, this);
 
         //Put the checkboxes in a column in a panel
         JPanel checkPanel = new JPanel(new GridLayout(0, 1));
@@ -76,6 +77,7 @@ final class SettingsWindow extends Window implements ItemListener {
         checkPanel.add(selectClassicHitbox);
         checkPanel.add(chooseDebug);
         checkPanel.add(chooseCheckUpdate);
+        checkPanel.add(chooseOpenGL);
         checkPanel.add(launchAbout);
         checkPanel.add(checkUpdate);
         checkPanel.add(donate);
@@ -88,6 +90,9 @@ final class SettingsWindow extends Window implements ItemListener {
     }
 
     private static void createAndShowGUI() {
+        if (Settings.useOpenGL) {
+            System.setProperty("sun.java2d.opengl", "True");
+        }
         //Create and set up the Window.
         JFrame frame = new JFrame("Settings");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -101,6 +106,9 @@ final class SettingsWindow extends Window implements ItemListener {
     }
 
     private static void createAndShowPopout() {
+        if (Settings.useOpenGL) {
+            System.setProperty("sun.java2d.opengl", "True");
+        }
         //Create and set up the Window.
         JFrame frame = new JFrame("Settings");
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -151,9 +159,10 @@ final class SettingsWindow extends Window implements ItemListener {
             Settings.showGhostWhenStopped = newVal;
         } else if (source == chooseDebug) {
             Settings.debug = newVal;
-
         } else if (source == chooseCheckUpdate) {
             Settings.updateOnStart = newVal;
+        } else if (source == chooseOpenGL) {
+            Settings.useOpenGL = newVal;
         }
         Settings.save();
     }
