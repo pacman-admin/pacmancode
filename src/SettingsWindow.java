@@ -37,7 +37,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 
 final class SettingsWindow extends Window implements ItemListener {
-    private final JCheckBox playPauseBeatBox, selectClassicHitbox, startsWMouthBox, chooseDebug, chooseCheckUpdate;
+    private final JCheckBox playPauseBeatBox, selectClassicHitbox, startsWMouthBox, chooseDebug/*, chooseCheckUpdate*/;
     //Show Ghosts When Stopped
     private final JCheckBox selectSGWS, chooseOpenGL;
     //JLabel ;
@@ -49,7 +49,7 @@ final class SettingsWindow extends Window implements ItemListener {
         //Create the Buttons
         // = createButton("", KeyEvent.VK_, , this, "");
         JButton launchAbout = createButton("About Pac-Man", KeyEvent.VK_A, true, this, "launchAbout");
-        JButton checkUpdate = createButton("Check for Updates", KeyEvent.VK_U, false, this, "update");
+        // JButton checkUpdate = createButton("Check for Updates", KeyEvent.VK_U, false, this, "update");
         JButton donate = createButton("Donate", KeyEvent.VK_D, true, this, "donate");
         //Set up the picture label
         //pictureLabel = new JLabel();
@@ -63,7 +63,7 @@ final class SettingsWindow extends Window implements ItemListener {
         startsWMouthBox = createCheckbox("Pac-Man starts as circle", KeyEvent.VK_M, Settings.startsAsCircle, this);
         selectSGWS = createCheckbox("Show Ghosts When Stopped", KeyEvent.VK_G, Settings.showGhostWhenStopped, this);
         chooseDebug = createCheckbox("Debug Mode", KeyEvent.VK_B, Settings.debug, this);
-        chooseCheckUpdate = createCheckbox("Check for Updates Automatically", KeyEvent.VK_C, Settings.updateOnStart, this);
+        //chooseCheckUpdate = createCheckbox("Check for Updates Automatically", KeyEvent.VK_C, Settings.updateOnStart, this);
         chooseOpenGL = createCheckbox("Use Hardware Acceleration(Beta)", KeyEvent.VK_A, Settings.useOpenGL, this);
 
         //Put the checkboxes in a column in a panel
@@ -76,10 +76,10 @@ final class SettingsWindow extends Window implements ItemListener {
         checkPanel.add(startsWMouthBox);
         checkPanel.add(selectClassicHitbox);
         checkPanel.add(chooseDebug);
-        checkPanel.add(chooseCheckUpdate);
+        //checkPanel.add(chooseCheckUpdate);
         checkPanel.add(chooseOpenGL);
         checkPanel.add(launchAbout);
-        checkPanel.add(checkUpdate);
+        //checkPanel.add(checkUpdate);
         checkPanel.add(donate);
         //checkPanel.add();
 
@@ -159,9 +159,9 @@ final class SettingsWindow extends Window implements ItemListener {
             Settings.showGhostWhenStopped = newVal;
         } else if (source == chooseDebug) {
             Settings.debug = newVal;
-        } else if (source == chooseCheckUpdate) {
+        } /*else if (source == chooseCheckUpdate) {
             Settings.updateOnStart = newVal;
-        } else if (source == chooseOpenGL) {
+        }*/ else if (source == chooseOpenGL) {
             Settings.useOpenGL = newVal;
         }
         Settings.save();

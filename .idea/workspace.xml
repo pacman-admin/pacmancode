@@ -9,28 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0f76c9c-c62b-4bdd-8b11-4708cba682da" name="Changes" comment="Added experimental update feature">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/core.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/core.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/core1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pac-Man.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Pac-Man.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Pac-Man.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/new.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/SettingsWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/SettingsWindow.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Cell.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Cell.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Ghost.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Ghost.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pacman.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pacman.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pellet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pellet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pixel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pixel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/settings.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/settings.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/sudo.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Command.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SettingsWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SettingsWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pac_man.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pac_man.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/settings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sudo.bat" beforeDir="false" />
-    </list>
+    <list default="true" id="d0f76c9c-c62b-4bdd-8b11-4708cba682da" name="Changes" comment="Added experimental update feature" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -109,14 +88,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1693604523434</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Add files">
-      <option name="closed" value="true" />
-      <created>1697649433506</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1697649433506</updated>
     </task>
     <task id="LOCAL-00017" summary="Add files">
       <option name="closed" value="true" />
@@ -502,7 +473,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709762998494</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="Added experimental update feature">
+      <option name="closed" value="true" />
+      <created>1710421158580</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1710421158581</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

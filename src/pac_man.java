@@ -6,6 +6,7 @@ import processing.core.PImage;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 
 /**
  * @author Langdon S.
@@ -13,7 +14,7 @@ import java.io.StringWriter;
 
 @SuppressWarnings("StatementWithEmptyBody")
 public final class pac_man extends PApplet {
-    private final static String TITLE = "Pac-Man 10.6";
+    private final static String TITLE = "Pac-Man 10.7";
     private final static int CELLWIDTH = 32;
     private final static int HALF_CELLWIDTH = 16;
 
@@ -34,6 +35,8 @@ public final class pac_man extends PApplet {
     private final Cell[][] cells = {new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13]};
     private final Pixel[][] ghostPx = {new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16], new Pixel[16]};
     private final Pixel[][] ghostBottom2Px = {new Pixel[16], new Pixel[16]};
+    //private String[] messages = {};
+    public ArrayList<String> messages = new ArrayList<>();
     // By Langdon S.
     //current version:
     //private boolean checkForUpdates;
@@ -66,7 +69,6 @@ public final class pac_man extends PApplet {
     private int coordsX;
     private int coordsY;
     private int prevHighScore;
-    private String[] messages = {};
     private PImage cherry;
     private PImage strawberry;
     private PImage apple;
@@ -135,7 +137,7 @@ public final class pac_man extends PApplet {
                 file.close();
                 prevHighScore = 0;
             } catch (FileNotFoundException e) {
-                messages = splice(messages, "An Error  occurred while creating high score file", 0);
+                messages.add("An Error  occurred while creating high score file");
                 System.err.println("An error occurred while creating the high score file.");
                 Error.log(e);
                 prevHighScore = 0;
@@ -197,11 +199,11 @@ public final class pac_man extends PApplet {
     }
 
     private void lazyLoad() {
-        messages = splice(messages, "Loading more fruit sprites...", 0);
+        messages.add("Loading more fruit sprites...");
         galaxian = loadImage("galaxian.png");
         bell = loadImage("bell.png");
         keyI = loadImage("key.png");
-        messages = splice(messages, "All fruit sprites loaded successfully.", 0);
+        messages.add("All fruit sprites loaded successfully.");
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN PROGRAM ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
@@ -218,7 +220,7 @@ public final class pac_man extends PApplet {
                 durationStart = millis();
                 duration = 4500 + millis();
                 startMillis = millis();
-                println(millis());
+                //println(millis());
             } else if (millis() < 2000) ;
                 //display loading screen for a minimum of 2 seconds.
                 //wait until 2 seconds have passed
@@ -384,6 +386,9 @@ public final class pac_man extends PApplet {
     }
 
     private void display() {
+       /* if(frameCount % 20 == 0){
+            println(messages.size());
+        }*/
         drawButtons();
         fill(255);
         textAlign(CENTER);
@@ -419,8 +424,8 @@ public final class pac_man extends PApplet {
     private void displayMessages() {
         textSize(12);
         fill(0, 255, 50);
-        for (int i = 0; i < messages.length; i++) {
-            text(messages[i], 20, 20 + (i * 20));
+        for (int i = (messages.size() - 1); i >= 0; i--) {
+            text(messages.get(i), 20, 20 + (i * 20));
         }
     }
 
@@ -428,7 +433,7 @@ public final class pac_man extends PApplet {
         lives++;
         livesClaimed++;
         extra_life.play();
-        messages = splice(messages, "Claimed extra life!", 0);
+        messages.add("Claimed extra life!");
     }
 
     private void giveLives() {
@@ -579,14 +584,14 @@ public final class pac_man extends PApplet {
     }
 
     private void destroyUselessMessages() {
-        while (messages.length > 6) {
-            messages = shorten(messages);
+        while (messages.size() > 6) {
+            messages.removeFirst();
         }
-        if (millis() % 25 == 0 && (millis() - startMillis) > 500 && messages.length > 0) {
-            messages = shorten(messages);
+        if (millis() % 25 == 0 && (millis() - startMillis) > 500 && !messages.isEmpty()) {
+            messages.removeFirst();
         }
-        if (messages.length > 4) {
-            messages = shorten(messages);
+        if (messages.size() > 4) {
+            messages.removeFirst();
         }
     }
 
@@ -676,7 +681,7 @@ public final class pac_man extends PApplet {
 
     private void determineFruitType() {
         if (level == 8) {
-            println(FRUIT_POINTS[level]);
+            //println(FRUIT_POINTS[level]);
             lazyLoad();
         }
         if (level < FRUIT_POINTS.length) {
@@ -873,13 +878,13 @@ public final class pac_man extends PApplet {
         private void goodPosition(int coordsX, int coordsY) {
             if (!cells[coordsX][coordsY].open) {
                 newGame();
-                messages = splice(messages, "Adjustment in Progress...", 0);
+                messages.add("Adjustment in Progress...");
             }
             if (coordsX == 1) {
                 right();
             }
             if (x > CANVAS_WIDTH - CELLWIDTH || x < CELLWIDTH || y > CANVAS_HEIGHT - CELLWIDTH || y < CELLWIDTH) {
-                messages = splice(messages, "Adjustment in Progress...", 0);
+                messages.add("Adjustment in Progress...");
                 newGame();
             }
         }
@@ -956,7 +961,7 @@ public final class pac_man extends PApplet {
                 }
                 eaten = true;
                 giveLives();
-                messages = splice(messages, "Your score is:" + str(score), 0);
+                messages.add("Your score is:" + str(score));
                 increaseHighScore();
             }
         }
@@ -1001,8 +1006,8 @@ public final class pac_man extends PApplet {
                 fill(255, 128, 255);
                 ellipse(x, y, HALF_CELLWIDTH - 1, HALF_CELLWIDTH - 1);
                 pelletErrors++;
-                messages = splice(messages, "Adjustment in Progress...", 0);
-                messages = splice(messages, str(pelletErrors) + "pellet(s) were misplaced", 0);
+                messages.add("Adjustment in Progress...");
+                messages.add(str(pelletErrors) + "pellet(s) were misplaced");
                 makePelletCoords();
             }
             if (isFruit) {
