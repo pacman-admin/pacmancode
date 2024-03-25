@@ -19,7 +19,7 @@ final class Settings {
     static boolean useOpenGL = false;
     //static float myVersion = 3f;
     //static float newVersion = 10.0f;
-    static boolean updateOnStart = false;
+    private static boolean updateOnStart = false;
 
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
