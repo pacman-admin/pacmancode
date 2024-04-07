@@ -28,7 +28,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/*
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -39,26 +39,26 @@ import java.net.URISyntaxException;
 
 final class updatePrompt extends Window {
     static JFrame frame;
+
     private updatePrompt() {
 
         JButton donate = createButton("Donate", KeyEvent.VK_D, true, this, "donate");
         JButton yes = createButton("Yes", KeyEvent.VK_Y, true, this, "update");
         JButton no = createButton("No", KeyEvent.VK_N, true, this, "exit");
-        JLabel name = new JLabel("By Langdon Staab 2024");
-        JLabel web = new JLabel("www.langdonstaab.ca");
-        Color blue = new Color(0, 120, 255);
-        //yes.setBorderPainted(true);
+        JLabel name = new JLabel("By Langdon Staab 2024        www.langdonstaab.ca");
+        //JLabel web = new JLabel("www.langdonstaab.ca");
+        JLabel web = new JLabel("");
+
+        Color blue = new Color(8, 64, 255);
+
         yes.setBackground(blue);
-        //no.setBorderPainted(false);
-// = new JLabel("");
-//msg = new JLabel("");
+
         JLabel msg1 = new JLabel("A new version of Pac-Man has been released.");
-        JLabel msg2 = new JLabel("Would you like to download it?");
+        JLabel msg2 = new JLabel("Would you like to install it?");
         JLabel msg3 = new JLabel("");
-        JLabel msg4 = new JLabel("");
-        JLabel msg5 = new JLabel("");
+        JLabel msg4 = new JLabel("Updates give you bug fixes, new features,");
+        JLabel msg5 = new JLabel(" and performance improvements.");
         JPanel infoPanel = new JPanel(new GridLayout(0, 1));
-//java.awt.Desktop.getDesktop().browse(theURI);
 
         infoPanel.add(name);
         infoPanel.add(web);
@@ -67,7 +67,8 @@ final class updatePrompt extends Window {
         infoPanel.add(msg3);
         infoPanel.add(msg4);
         infoPanel.add(msg5);
-        infoPanel.add(yes);//infoPanel.add();
+        infoPanel.add(yes);
+        //infoPanel.add();
         infoPanel.add(no);
         infoPanel.add(donate);
         add(infoPanel, BorderLayout.LINE_START);
@@ -111,20 +112,27 @@ final class updatePrompt extends Window {
 //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(updatePrompt::createAndShowPopout);
     }
+
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "update":
-                updateWindow.create();
+                try {
+                    Desktop.getDesktop().browse(new URI("https://www.langdonstaab.ca/"));
+                } catch (IOException | URISyntaxException ex) {
+                    Error.save(ex);
+                    Error.log(ex);
+                    throw new RuntimeException(ex);
+                }
                 break;
             case "launchAbout":
-                aboutWindow.open();
+                AboutWindow.open();
                 break;
             case "donate":
                 try {
                     Desktop.getDesktop().browse(new URI("https://buymeacoff.ee/langdonstaab"));
                 } catch (IOException | URISyntaxException ex) {
-                    error.save(ex);
-                    error.log(ex);
+                    Error.save(ex);
+                    Error.log(ex);
                     throw new RuntimeException(ex);
                 }
                 break;
@@ -133,4 +141,4 @@ final class updatePrompt extends Window {
                 break;
         }
     }
-}*/
+}

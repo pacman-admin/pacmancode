@@ -40,34 +40,33 @@ public final class pac_man extends PApplet {
     private final Pixel[][] ghostPx = {new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14]};
     private final Pixel[][] ghostBottom2Px = {new Pixel[14], new Pixel[14]};
     final private Pellet[] pellet = new Pellet[78];
-    //private String[] messages = {};
     private final ArrayList<String> messages = new ArrayList<>();
     // By Langdon S.
     //current version:
-    //private boolean checkForUpdates;
+    private boolean checkForUpdates;
     private int lives = 3; //                             |
     private int chompSpeed = 8; //                        |
     private boolean playStartSound = true; //             |
     //booleans
     private boolean errorScreen;
     private boolean finishedDelay;
-    //private boolean first;
     private boolean first1 = true;
     private boolean lostLife;
     private boolean paused;
     private boolean pelletFirst;
     private boolean runSetup = true;
-    //private boolean start;
+
     private int startMillis;
     private int chomp = 30;
-    //private int cellCount;
+
     private int duration;
     private int durationStart;
     private int fruitWorth;
     private int highScore;
     private int level;
     private int livesClaimed;
-    // private int pelletErrors;
+
+
     private int pelletsEaten;
     private int score;
     private int startFrames;
@@ -83,7 +82,7 @@ public final class pac_man extends PApplet {
     private PImage bell;
     private PImage keyI;
     private PImage restartB;
-    private PImage SettingsB;
+    private PImage settingsB;
     private Sound dieS;
     private Sound startSound;
     private Sound dotSound1;
@@ -92,7 +91,6 @@ public final class pac_man extends PApplet {
     private Sound extra_life;
     private Sound pause;
     private Sound pause_beat;
-    // private Coordinate[] coords2 = {};
 
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ A FEW RANDOM FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~///
@@ -132,11 +130,27 @@ public final class pac_man extends PApplet {
         noStroke();
         surface.setResizable(true);
         imageMode(CENTER);
-
         changeAppIcon();
 
-        Settings.updatePath();
+        System.out.println("Loading Game Assets...");
+        startSound = new Sound("game_start.wav");
+        dotSound1 = new Sound("dot_1.wav");
+        dotSound2 = new Sound("dot_2.wav");
+        pause = new Sound("pause.wav");
+        pause_beat = new Sound("pause_beat.wav");
+        dieS = new Sound("death.wav");
+        fruit = new Sound("fruit.wav");
+        extra_life = new Sound("extra_life.wav");
+        cherry = loadImage("cherry.png");
+        settingsB = loadImage("settings.png");
+        restartB = loadImage("restart.png");
+        strawberry = loadImage("strawberry.png");
+        orange = loadImage("orange.png");
+        apple = loadImage("apple.png");
+        melon = loadImage("melon.png");
 
+        System.out.println("Loading User Data...");
+        Settings.updatePath();
         String temp = loadString(Settings.path + "/highscore.txt");
         if (temp.equals("error")) {
             try {
@@ -162,34 +176,14 @@ public final class pac_man extends PApplet {
             System.setProperty("sun.java2d.opengl", "True");
         }
 
-        startSound = new Sound("game_start.wav");
-        dotSound1 = new Sound("dot_1.wav");
-        dotSound2 = new Sound("dot_2.wav");
-        pause = new Sound("pause.wav");
-        pause_beat = new Sound("pause_beat.wav");
-        dieS = new Sound("death.wav");
-        fruit = new Sound("fruit.wav");
-        extra_life = new Sound("extra_life.wav");
-        System.out.println("Sound load success!");
-
-        cherry = loadImage("cherry.png");
-        SettingsB = loadImage("Settings.png");
-        restartB = loadImage("restart.png");
-        strawberry = loadImage("strawberry.png");
-        orange = loadImage("orange.png");
-        apple = loadImage("apple.png");
-        melon = loadImage("melon.png");
-        System.out.println("Image load success!");
-
+        System.out.println("Initializing...");
         createMaze();
         initializeMaze();
-        //makePelletCoords();
         pxInit();
-        startMillis = millis();
         pellet[5].isFruit = true;
+        checkForUpdates = Settings.updateOnStart;
         surface.setTitle(TITLE);
-        //checkForUpdates = Settings.updateOnStart;
-        System.out.println("Setup success!");
+        System.out.println("Loading Complete!");
     }
 
     private String loadString(String filename) {
@@ -211,6 +205,7 @@ public final class pac_man extends PApplet {
         keyI = loadImage("key.png");
         messages.add("All fruit sprites loaded successfully.");
     }
+
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN PROGRAM ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     public void draw() {
@@ -241,13 +236,13 @@ public final class pac_man extends PApplet {
                     restart();
                 }
             } else {
-                /*if (checkForUpdates && millis() > 60000) {
+                if (checkForUpdates && (millis() > 6000)) {
                     checkForUpdates = false;
                     Settings.getNewVersion();
-                    if (Settings.newVersion > Settings.myVersion) {
+                    if (Settings.newVersion > Settings.myVersion || true) {
                         updatePrompt.create();
                     }
-                }*/
+                }
                 if (frameCount % 2 == 0 && !paused) {
                     if (millis() < duration) {
                         pacman.stop();
@@ -626,7 +621,7 @@ public final class pac_man extends PApplet {
     private void drawButtons() {
         image(restartB, CELLWIDTH * 4 + HALF_CELLWIDTH, CELLWIDTH * 12 + HALF_CELLWIDTH, CELLWIDTH - 4, CELLWIDTH - 4);
 
-        image(SettingsB, CELLWIDTH * 3 + HALF_CELLWIDTH, CELLWIDTH * 12 + HALF_CELLWIDTH, CELLWIDTH - 4, CELLWIDTH - 4);
+        image(settingsB, CELLWIDTH * 3 + HALF_CELLWIDTH, CELLWIDTH * 12 + HALF_CELLWIDTH, CELLWIDTH - 4, CELLWIDTH - 4);
         fill(0);
         rect(CELLWIDTH * 5.2f, CELLWIDTH * 12.1f, CELLWIDTH / 4f, CELLWIDTH * 0.8f, 10);
         rect(CELLWIDTH * 5.55f, CELLWIDTH * 12.1f, CELLWIDTH / 4f, CELLWIDTH * 0.8f, 10);

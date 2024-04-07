@@ -1,28 +1,29 @@
 import java.io.*;
-//import java.net.URI;
-//import java.net.URISyntaxException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
-//import static java.lang.Float.parseFloat;
+import static java.lang.Float.parseFloat;
+
 
 //Stores game settings
 final class Settings {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-    //            G A M E  S E T T I N G S        |
-    final static int ghostSpeed = 2; //         |
-    final static int pacmanSpeed = 3; //        |
-    static boolean startsAsCircle = true; //     |
+    //          G A M E  S E T T I N G S          |
+    final static int ghostSpeed = 2; //           |
+    final static int pacmanSpeed = 3; //          |
+    static boolean startsAsCircle = true; //      |
     static boolean showGhostWhenStopped = true;// |
     static boolean debug = false; //              |
     static String path; //                        |
     static boolean playPauseBeat = true; //       |
-    static boolean useClassicHitbox = false;
-    static boolean useOpenGL = false;
-    //static float myVersion = 3f;
-    //static float newVersion = 10.0f;
-    private static boolean updateOnStart = false;
-
+    static boolean useClassicHitbox = false; //   |
+    static boolean useOpenGL = false; //          |
+    static boolean updateOnStart = true; //       |
+    static float myVersion = 12f; //              |
+    static float newVersion = 11f; //             |
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+
     static void load() {
         path = System.getProperty("user.home");
         try {
@@ -59,9 +60,9 @@ final class Settings {
         }
     }
 
-    /*static void getNewVersion() {
+    static void getNewVersion() {
         try {
-            URI versionF = new URI("https://raw.githubusercontent.com/pacman-admin/pacmancode/master/version.txt");
+            URI versionF = new URI("https://www2.langdonstaab.ca/files/Pac-Man_VERSION.txt");
             BufferedReader in = new BufferedReader(new InputStreamReader(versionF.toURL().openStream()));
             newVersion = parseFloat(in.readLine());
             in.close();
@@ -74,9 +75,7 @@ final class Settings {
             Error.save(e);
             Error.log(e);
         }
-
-
-    }*/
+    }
 
     static void updatePath() {
         path = System.getProperty("user.home");

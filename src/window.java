@@ -35,11 +35,14 @@ abstract class Window extends JPanel implements ActionListener {
     }
     /*protected static ImageIcon createImageIcon(String path) {java.net.URL imgURL = window.class.getResource(path);if (imgURL != null) {return new ImageIcon(imgURL);} else {System.err.println("Couldn't find file: " + path);return null;}}*/
 
-    public final void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            /*case "update":
-                updateWindow.create();
-                break;*/
+            case "update":
+                Settings.getNewVersion();
+                if (Settings.newVersion > Settings.myVersion) {
+                    updatePrompt.create();
+                }
+                break;
             case "launchAbout":
                 AboutWindow.open();
                 break;
