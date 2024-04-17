@@ -78,6 +78,9 @@ final class AboutWindow extends Window {
     }
 
     public static void open() {
+        if (Settings.useOpenGL) {
+            System.setProperty("sun.java2d.opengl", "True");
+        }
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(AboutWindow::createAndShowGUI);

@@ -76,6 +76,9 @@ final class updatePrompt extends Window {
     }
 
     private static void createAndShowGUI() {
+        if (Settings.useOpenGL) {
+            System.setProperty("sun.java2d.opengl", "True");
+        }
 //Create and set up the Window.
         frame = new JFrame("Pac-Man AutoUpdate");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,12 +105,18 @@ final class updatePrompt extends Window {
     }
 
     public static void main(String[] args) {
+        if (Settings.useOpenGL) {
+            System.setProperty("sun.java2d.opengl", "True");
+        }
 //Schedule a job for the event-dispatching thread:
 //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(updatePrompt::createAndShowGUI);
     }
 
     public static void create() {
+        if (Settings.useOpenGL) {
+            System.setProperty("sun.java2d.opengl", "True");
+        }
 //Schedule a job for the event-dispatching thread:
 //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(updatePrompt::createAndShowPopout);

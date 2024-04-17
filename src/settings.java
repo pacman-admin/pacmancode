@@ -17,7 +17,7 @@ final class Settings {
     static String path; //                        |
     static boolean playPauseBeat = true; //       |
     static boolean useClassicHitbox = false; //   |
-    static boolean useOpenGL = false; //          |
+    static boolean useOpenGL = true; //          |
     static boolean updateOnStart = true; //       |
     static float myVersion = 12f; //              |
     static float newVersion = 11f; //             |
