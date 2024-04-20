@@ -12,10 +12,7 @@ import java.util.ArrayList;
 /**
  * @author Langdon S.
  */
-
-
 public final class pac_man extends PApplet {
-
     private final static String TITLE = "Pac-Man 12";
     private final static int CELLWIDTH = 32;
     private final static int HALF_CELLWIDTH = 16;
@@ -23,9 +20,7 @@ public final class pac_man extends PApplet {
     private final static int CANVAS_WIDTH = (CELLWIDTH * 13);
     private final static int CANVAS_HEIGHT = (CELLWIDTH * 13);
     private final static Fruit[] FRUIT_POINTS = {Fruit.CHERRY, Fruit.STRAWBERRY, Fruit.ORANGE, Fruit.ORANGE, Fruit.APPLE, Fruit.APPLE, Fruit.MELON, Fruit.MELON, Fruit.GALAXIAN, Fruit.GALAXIAN, Fruit.BELL, Fruit.BELL, Fruit.KEY, Fruit.KEY};
-    //private final static byte[][] GHOST_DESIGN = {{0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 0}, {0, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 0}, {1, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 1}, {1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1}, {0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0}};
-    //private final static int[][] GHOST_BOTTOM_DESIv GN = {{1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1}, {1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1}};
-    private final static boolean[][] MAP_DESIGN = {{true, false, true, true, true, true, true, true, true, true, true}, {true, true, true, false, false, false, false, false, false, false, true}, {true, false, true, true, true, true, true, true, true, false, true}, {true, false, true, false, false, false, false, false, true, false, true}, {true, true, true, true, true, true, true, true, true, true, true}, {true, false, true, false, true, false, false, true, false, true, true}, {true, false, true, false, true, false, true, true, false, true, true}, {true, false, true, true, true, true, false, true, false, false, true}, {true, false, false, false, true, false, false, true, false, true, true}, {true, true, true, true, true, true, false, true, false, true, true}, {true, true, false, false, false, true, true, true, false, true, true}};
+   private final static boolean[][] MAP_DESIGN = {{true, false, true, true, true, true, true, true, true, true, true}, {true, true, true, false, false, false, false, false, false, false, true}, {true, false, true, true, true, true, true, true, true, false, true}, {true, false, true, false, false, false, false, false, true, false, true}, {true, true, true, true, true, true, true, true, true, true, true}, {true, false, true, false, true, false, false, true, false, true, true}, {true, false, true, false, true, false, true, true, false, true, true}, {true, false, true, true, true, true, false, true, false, false, true}, {true, false, false, false, true, false, false, true, false, true, true}, {true, true, true, true, true, true, false, true, false, true, true}, {true, true, false, false, false, true, true, true, false, true, true}};
     //Strings
     static String errorInfo; //                   |
     private final Ghost blinky = new Ghost();
@@ -33,8 +28,6 @@ public final class pac_man extends PApplet {
     private final Ghost pinky = new Ghost();
     private final Pacman pacman = new Pacman();
     private final Cell[][] cells = {new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13]};
-    //private final Pixel[][] ghostPx = {new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14], new Pixel[14]};
-    //private final Pixel[][] ghostBottom2Px = {new Pixel[14], new Pixel[14]};
     final private Pellet[] pellet = new Pellet[78];
     private final ArrayList<String> messages = new ArrayList<>();
     private final PImage[] blinky_Up = {null, null};
@@ -49,10 +42,8 @@ public final class pac_man extends PApplet {
     private final PImage[] inky_Down = {null, null};
     private final PImage[] inky_Left = {null, null};
     private final PImage[] inky_Right = {null, null};
-    PFont pxFont;
-    //private static final int blinky_COLOUR = -3129831;
-    //private static final int inky_COLOUR = -1408283;
-    //private static final int pinky_COLOUR = -12140562;
+    private PFont pxFont;
+    private final boolean[] keys = new boolean[255];
     private PImage maze_blue;
     private PImage maze_white;
     //private PImage pelletImg;
@@ -102,6 +93,7 @@ public final class pac_man extends PApplet {
     private Sound extra_life;
     private Sound pause;
     private Sound pause_beat;
+    private PImage pauseButtonImg;
 
     public static void main(String[] passedArgs) {
         String[] appletArgs = new String[]{"pac_man"};
@@ -120,6 +112,53 @@ public final class pac_man extends PApplet {
         return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
     }
 
+    public void keyPressed() {
+        keys[keyCode] = true;
+        //messages.add("Key Pressed: " + keyCode);
+    }
+
+    public void keyReleased() {
+        keys[keyCode] = false;
+    }
+
+    void updateKeys() {
+        if (keys[LEFT]) {
+            pacman.left();
+        }
+        if (keys[RIGHT]) {
+            pacman.right();
+        }
+        if (keys[UP]) {
+            pacman.up();
+        }
+        if (keys[DOWN]) {
+            pacman.down();
+        }
+        if (keys[65]) {
+            pacman.left();
+        }
+        if (keys[68]) {
+            pacman.right();
+        }
+        if (keys[87]) {
+            pacman.up();
+        }
+        if (keys[83]) {
+            pacman.down();
+        }
+        /*
+        if (keyPressed) {
+                switch (keyCode) {
+                    case UP, 87 -> pacman.up();
+                    case DOWN, 83 -> pacman.down();
+                    case RIGHT, 68 -> pacman.right();
+                    case LEFT, 65 -> pacman.left();
+                }
+                messages.add("Key Pressed: " + keyCode);
+            }
+         */
+    }
+
     private Dir createRDir(int posX, int posY) {
         int tempVar = Math.round(random(3));
         Dir possDir = makeDir(tempVar);
@@ -132,7 +171,7 @@ public final class pac_man extends PApplet {
 
     public void settings() {
         size(CANVAS_WIDTH, CANVAS_HEIGHT);
-        noSmooth();
+        //noSmooth();
     }
 
     public void setup() {
@@ -146,15 +185,13 @@ public final class pac_man extends PApplet {
         text("Loading...\nBy Langdon Staab\n\nSound manager by Tyler Tomas\n\nwww.langdonstaab.ca", Math.round(width / 2f), Math.round(height / 2f));
         frameRate(120);
         //frameRate(60);
-        //check setup2() for setup
+        //check setupacman() for setup
     }
 
     private void setup2() {
-
         surface.setResizable(true);
         imageMode(CENTER);
         changeAppIcon();
-
 
         System.out.println("Loading Game Assets...");
         startSound = new Sound("game_start.wav");
@@ -165,6 +202,7 @@ public final class pac_man extends PApplet {
         dieS = new Sound("death.wav");
         fruit = new Sound("fruit.wav");
         extra_life = new Sound("extra_life.wav");
+
         cherry = loadImage("cherry.png");
         settingsB = loadImage("settings.png");
         restartB = loadImage("restart.png");
@@ -172,8 +210,10 @@ public final class pac_man extends PApplet {
         orange = loadImage("orange.png");
         apple = loadImage("apple.png");
         melon = loadImage("melon.png");
+
         pxFont = createFont("minecraft-seven-classic/minecraft-seven-classic.ttf", 8, false);
 
+        pauseButtonImg = loadImage("pause_button.png");
         blinky_Down[0] = loadImage("ghost/blinky/down.png");
         blinky_Down[1] = loadImage("ghost/blinky/down2.png");
         blinky_Up[0] = loadImage("ghost/blinky/up.png");
@@ -234,12 +274,10 @@ public final class pac_man extends PApplet {
 
         System.out.println("Initializing...");
         createMaze();
-        //initializeMaze();
-        //pxInit();
         pellet[5].isFruit = true;
         surface.setTitle(TITLE);
-        System.out.println("Loading Complete!");
         new UpdateChecker();
+        System.out.println("Loading Complete!");
     }
 
     private String loadString(String filename) {
@@ -265,6 +303,7 @@ public final class pac_man extends PApplet {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN PROGRAM ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     public void draw() {
         try {
+            updateKeys();
             if (errorScreen) {
                 background(0);
                 //textAlign(LEFT, CENTER);
@@ -353,13 +392,9 @@ public final class pac_man extends PApplet {
                     blinky.update();
                     inky.update();
                     pinky.update();
-                    //blinky.goodPosition();
-                    //inky.goodPosition();
-                    //pinky.goodPosition();
-
+                    updateKeys();
                     image(maze_blue, 208, 208);
-
-                    if (pelletsEaten >= pellet.length - 1 && !lostLife) {
+                    if (pelletsEaten >= pellet.length - 1) {
                         blinky.halt();
                         inky.halt();
                         pinky.halt();
@@ -381,15 +416,6 @@ public final class pac_man extends PApplet {
                     display();
                     //int useless = 5 / 0;
                 }
-                if (keyPressed) {
-                    switch (keyCode) {
-                        case UP, 87 -> pacman.up();
-                        case DOWN, 83 -> pacman.down();
-                        case RIGHT, 68 -> pacman.right();
-                        case LEFT, 65 -> pacman.left();
-                    }
-
-                }
             }
         } catch (Exception e) {
             paused = true;
@@ -409,15 +435,15 @@ public final class pac_man extends PApplet {
     private void display() throws FileNotFoundException {
         drawButtons();
         showLives();
-        push();
+        //push();
         fill(255, 128, 0);
         for (Pellet value : pellet) {
             value.isBEaten();
             value.draw();
         }
-        pop();
+        //pop();
         drawGhosts();
-        //fill(255);
+        fill(255);
         float tempFPSVal = ((millis() - startMillis) / 1000f) > 0 ? ((millis() - startMillis) / 1000f) : 1;
         text(str(Math.round((frameCount - startFrames) / tempFPSVal)), 330, 10);
         text("HIGH SCORE\n" + highScore, width / 2f, 16);
@@ -431,12 +457,12 @@ public final class pac_man extends PApplet {
 
     private void displayMessages() {
         //textSize(16);
-        push();
+        //push();
         fill(0, 255, 50);
         for (int i = (messages.size() - 1); i >= 0; i--) {
             text(messages.get(i), 64, 8 + (i * 16));
         }
-        pop();
+        //pop();
     }
 
 
@@ -562,7 +588,7 @@ public final class pac_man extends PApplet {
                 }
             }
         }
-        println(cellCount);
+        //println(cellCount);
     }
     private void showMaze(int mazeColor) {
         for (Cell[] cell : cells) {
@@ -589,12 +615,12 @@ public final class pac_man extends PApplet {
         float sizeT, sizeB;
         sizeT = map(size, 0, 60, 0, 0.52f);
         sizeB = map(size, 0, 60, TWO_PI, 5.76f);
-        push();
+        //push();
         fill(255, 202, 0);
         for (int x = 1; x < lives; x++) {
             arc(25 * x, height - HALF_CELLWIDTH, 20, 20, sizeT, sizeB);
         }
-        pop();
+        //pop();
     }
 
     private void increaseHighScore() throws FileNotFoundException {
@@ -654,7 +680,7 @@ public final class pac_man extends PApplet {
                     pause_beat.loop();
                 }
             }
-            delay(10);
+            ////delay(10);
             paused = !paused;
         }
     }
@@ -667,14 +693,9 @@ public final class pac_man extends PApplet {
     }
 
     private void drawButtons() {
-        image(restartB, CELLWIDTH * 4 + HALF_CELLWIDTH, CELLWIDTH * 12 + HALF_CELLWIDTH/*, CELLWIDTH - 4, CELLWIDTH - 4*/);
-
-        image(settingsB, CELLWIDTH * 3 + HALF_CELLWIDTH, CELLWIDTH * 12 + HALF_CELLWIDTH/*, CELLWIDTH - 4, CELLWIDTH - 4*/);
-        push();
-        fill(0);
-        rect(CELLWIDTH * 5.2f, CELLWIDTH * 12.1f, CELLWIDTH / 4f, CELLWIDTH * 0.8f, 10);
-        rect(CELLWIDTH * 5.55f, CELLWIDTH * 12.1f, CELLWIDTH / 4f, CELLWIDTH * 0.8f, 10);
-        pop();
+        image(settingsB, CELLWIDTH * 3.5f, CELLWIDTH * 12.5f);
+        image(restartB, CELLWIDTH * 4.5f, CELLWIDTH * 12.5f);
+        image(pauseButtonImg, CELLWIDTH * 5.5f, CELLWIDTH * 12.5f/*, CELLWIDTH - 4, CELLWIDTH - 4*/);
     }
 
     private void determineFruitType() {
@@ -719,17 +740,17 @@ public final class pac_man extends PApplet {
         if (!inky.dir.equals(Dir.STOPPED) || Settings.showGhostWhenStopped) {
             if ((frameCount - startFrames) % 100 < 45) {
                 switch (inky.dir) {
-                    case Dir.UP -> image(inky_Up[0], inky.x, inky.y, CELLWIDTH, CELLWIDTH);
-                    case Dir.DOWN -> image(inky_Down[0], inky.x, inky.y, CELLWIDTH, CELLWIDTH);
-                    case Dir.RIGHT -> image(inky_Right[0], inky.x, inky.y, CELLWIDTH, CELLWIDTH);
-                    case Dir.LEFT -> image(inky_Left[0], inky.x, inky.y, CELLWIDTH, CELLWIDTH);
+                    case Dir.UP -> image(inky_Up[0] , inky.x, inky.y/*, CELLWIDTH, CELLWIDTH*/);
+                    case Dir.DOWN -> image(inky_Down[0] , inky.x, inky.y/*, CELLWIDTH, CELLWIDTH*/);
+                    case Dir.RIGHT -> image(inky_Right[0] , inky.x, inky.y/*, CELLWIDTH, CELLWIDTH*/);
+                    case Dir.LEFT -> image(inky_Left[0] , inky.x, inky.y/*, CELLWIDTH, CELLWIDTH*/);
                 }
             } else {
                 switch (inky.dir) {
-                    case Dir.UP -> image(inky_Up[1], inky.x, inky.y, CELLWIDTH, CELLWIDTH);
-                    case Dir.DOWN -> image(inky_Down[1], inky.x, inky.y, CELLWIDTH, CELLWIDTH);
-                    case Dir.RIGHT -> image(inky_Right[1], inky.x, inky.y, CELLWIDTH, CELLWIDTH);
-                    case Dir.LEFT -> image(inky_Left[1], inky.x, inky.y, CELLWIDTH, CELLWIDTH);
+                    case Dir.UP -> image(inky_Up[1] , inky.x, inky.y/*, CELLWIDTH, CELLWIDTH*/);
+                    case Dir.DOWN -> image(inky_Down[1] , inky.x, inky.y/*, CELLWIDTH, CELLWIDTH*/);
+                    case Dir.RIGHT -> image(inky_Right[1] , inky.x, inky.y/*, CELLWIDTH, CELLWIDTH*/);
+                    case Dir.LEFT -> image(inky_Left[1] , inky.x, inky.y/*, CELLWIDTH, CELLWIDTH*/);
                 }
             }
         }
@@ -875,7 +896,6 @@ public final class pac_man extends PApplet {
         }
 
         void update() {
-            //pelletsEaten = 0;
             eaten = false;
             if (isFruit) {
                 fruitWorth = 100;
@@ -883,7 +903,7 @@ public final class pac_man extends PApplet {
         }
 
         private void isBEaten() throws FileNotFoundException {
-            if (!eaten && fastDist(x, y, pacman.x, pacman.y) < CELLWIDTH / 8f + Pacman.size / 8f) {
+            if (!eaten && fastDist(x, y, pacman.x, pacman.y) < CELLWIDTH / 8D + Pacman.size / 8D) {
                 if (isFruit) {
                     switch (fruitType) {
                         case Fruit.CHERRY -> fruitWorth = 100;
@@ -965,7 +985,7 @@ public final class pac_man extends PApplet {
 
             mouthOpenTop = map(mouthSize, 0, 60, 0, 0.52f);
             mouthOpenBottom = map(mouthSize, 0, 60, TWO_PI, 5.76f);
-            push();
+            //push();
             fill(255, 255, 0);
             translate(x, y);
             switch (lastDir) {
@@ -974,7 +994,7 @@ public final class pac_man extends PApplet {
                 case Dir.LEFT -> rotate(PI);
             }
             arc(0, 0, (CELLWIDTH / 16) * 15, (CELLWIDTH / 16) * 15, mouthOpenTop, mouthOpenBottom);
-            pop();
+            //pop();
             //resetMatrix();
         }
 

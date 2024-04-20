@@ -10,50 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0f76c9c-c62b-4bdd-8b11-4708cba682da" name="Changes" comment="Made performance improvements.">
-      <change afterPath="$PROJECT_DIR$/src/ghost/blinky/down.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/blinky/down2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/blinky/left.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/blinky/left2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/blinky/right.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/blinky/right2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/blinky/up.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/blinky/up2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/inky/down.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/inky/down2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/inky/left.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/inky/left2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/inky/right.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/inky/right2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/inky/up.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/inky/up2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/pinky/down.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/pinky/down2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/pinky/left.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/pinky/left2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/pinky/right.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/pinky/right2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/pinky/up.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ghost/pinky/up2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/minecraft-seven-classic/License.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/minecraft-seven-classic/ReadMe.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/minecraft-seven-classic/minecraft-seven-classic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pellet.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/SettingsWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/SettingsWindow.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/aboutWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/aboutWindow.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/errorWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/errorWindow.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Cell.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Cell.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Ghost.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Ghost.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pacman.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pacman.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pellet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pellet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pixel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/settings.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/settings.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SettingsWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SettingsWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aboutWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aboutWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/errorWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/errorWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pac_man.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pac_man.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/settings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/updatePrompt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/updatePrompt.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,22 +93,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1693604523434</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Add files">
-      <option name="closed" value="true" />
-      <created>1697668792993</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1697668792993</updated>
-    </task>
-    <task id="LOCAL-00021" summary="Add files">
-      <option name="closed" value="true" />
-      <created>1698106345515</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1698106345515</updated>
     </task>
     <task id="LOCAL-00022" summary="Add files">
       <option name="closed" value="true" />
@@ -527,7 +470,23 @@
       <option name="project" value="LOCAL" />
       <updated>1712448476903</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="Made performance improvements.">
+      <option name="closed" value="true" />
+      <created>1713380281010</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1713380281010</updated>
+    </task>
+    <task id="LOCAL-00070" summary="Made performance improvements.">
+      <option name="closed" value="true" />
+      <created>1713380310272</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1713380310272</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
