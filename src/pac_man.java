@@ -146,17 +146,6 @@ public final class pac_man extends PApplet {
         if (keys[83]) {
             pacman.down();
         }
-        /*
-        if (keyPressed) {
-                switch (keyCode) {
-                    case UP, 87 -> pacman.up();
-                    case DOWN, 83 -> pacman.down();
-                    case RIGHT, 68 -> pacman.right();
-                    case LEFT, 65 -> pacman.left();
-                }
-                messages.add("Key Pressed: " + keyCode);
-            }
-         */
     }
 
     private Dir createRDir(int posX, int posY) {
@@ -859,9 +848,9 @@ public final class pac_man extends PApplet {
             dir = Dir.UP;
         }
 
-        private void right() {
+        /*private void right() {
             dir = Dir.RIGHT;
-        }
+        }*/
 
         private void halt() {
             //stopped = true;

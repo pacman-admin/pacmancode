@@ -10,8 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0f76c9c-c62b-4bdd-8b11-4708cba682da" name="Changes" comment="Made performance improvements.">
-      <change afterPath="$PROJECT_DIR$/src/pellet.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Cell.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Cell.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Ghost.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Ghost.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pacman.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pacman.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pellet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pellet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pac_man.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pac_man.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,6 +73,7 @@
     <configuration name="pac_man" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="pac_man" />
       <module name="Pac-Man" />
+      <option name="PROGRAM_PARAMETERS" value="-Dsun.java2d.translaccel=True -Dsun.java2d.trace=help -Dsun.java2d.xrender=True -Dsun.java2d.opengl=True" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -93,14 +98,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1693604523434</updated>
-    </task>
-    <task id="LOCAL-00022" summary="Add files">
-      <option name="closed" value="true" />
-      <created>1698189772899</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1698189772899</updated>
     </task>
     <task id="LOCAL-00023" summary="Add files">
       <option name="closed" value="true" />
@@ -486,7 +483,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713380310272</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="Made performance improvements.">
+      <option name="closed" value="true" />
+      <created>1713645188948</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1713645188949</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
