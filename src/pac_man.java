@@ -108,51 +108,6 @@ public final class pac_man extends PApplet {
         return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
     }
 
-    public void keyPressed() {
-        keys[keyCode] = true;
-    }
-
-    public void keyReleased() {
-        keys[keyCode] = false;
-    }
-
-    private void updateKeys() {
-        if (keys[LEFT]) {
-            pacman.left();
-        }
-        if (keys[RIGHT]) {
-            pacman.right();
-        }
-        if (keys[UP]) {
-            pacman.up();
-        }
-        if (keys[DOWN]) {
-            pacman.down();
-        }
-        if (keys[65]) {
-            pacman.left();
-        }
-        if (keys[68]) {
-            pacman.right();
-        }
-        if (keys[87]) {
-            pacman.up();
-        }
-        if (keys[83]) {
-            pacman.down();
-        }
-    }
-
-    private Dir createRDir(int posX, int posY) {
-        int tempVar = Math.round(random(3));
-        Dir possDir = makeDir(tempVar);
-        while (checkGoodDir(possDir, posX, posY)) {
-            tempVar = makeDirNum();
-            possDir = makeDir(tempVar);
-        }
-        return possDir;
-    }
-
     public void settings() {
         size(CANVAS_WIDTH, CANVAS_HEIGHT);
     }
@@ -255,26 +210,6 @@ public final class pac_man extends PApplet {
         surface.setTitle(TITLE);
         new UpdateChecker();
         System.out.println("Loading Complete!");
-    }
-
-    private String loadString(String filename) {
-        String[] ret;
-        String data;
-        try {
-            ret = loadStrings(filename);
-            data = ret[0];
-            return data;
-        } catch (Exception ignored) {
-            return "error";
-        }
-    }
-
-    private void lazyLoad() {
-        messages.add("Loading more fruit sprites...");
-        galaxian = loadImage("galaxian.png");
-        bell = loadImage("bell.png");
-        keyI = loadImage("key.png");
-        messages.add("All fruit sprites loaded successfully.");
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN PROGRAM ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
@@ -416,6 +351,72 @@ public final class pac_man extends PApplet {
         displayMessages();
         pacman.show(chomp);
     }
+
+    private String loadString(String filename) {
+        String[] ret;
+        String data;
+        try {
+            ret = loadStrings(filename);
+            data = ret[0];
+            return data;
+        } catch (Exception ignored) {
+            return "error";
+        }
+    }
+
+    private void lazyLoad() {
+        messages.add("Loading more fruit sprites...");
+        galaxian = loadImage("galaxian.png");
+        bell = loadImage("bell.png");
+        keyI = loadImage("key.png");
+        messages.add("All fruit sprites loaded successfully.");
+    }
+
+    public void keyPressed() {
+        keys[keyCode] = true;
+    }
+
+    public void keyReleased() {
+        keys[keyCode] = false;
+    }
+
+    private void updateKeys() {
+        if (keys[LEFT]) {
+            pacman.left();
+        }
+        if (keys[RIGHT]) {
+            pacman.right();
+        }
+        if (keys[UP]) {
+            pacman.up();
+        }
+        if (keys[DOWN]) {
+            pacman.down();
+        }
+        if (keys[65]) {
+            pacman.left();
+        }
+        if (keys[68]) {
+            pacman.right();
+        }
+        if (keys[87]) {
+            pacman.up();
+        }
+        if (keys[83]) {
+            pacman.down();
+        }
+    }
+
+    private Dir createRDir(int posX, int posY) {
+        int tempVar = Math.round(random(3));
+        Dir possDir = makeDir(tempVar);
+        while (checkGoodDir(possDir, posX, posY)) {
+            tempVar = makeDirNum();
+            possDir = makeDir(tempVar);
+        }
+        return possDir;
+    }
+
 
     private void changeAppIcon() {
         getSurface().setIcon(loadImage("icon.png"));
@@ -712,13 +713,13 @@ public final class pac_man extends PApplet {
         }
 
         private void updateCoords() {
-            final int a = 3, b = 1;
+            final float a = 3, b = 1;
             float offsetY = 0, offsetX = 0;
             switch (dir) {
-                case Dir.UP -> offsetY += (float) (CELLWIDTH / a) + b;
-                case Dir.DOWN -> offsetY -= ((float) (CELLWIDTH / a)) + b;
-                case Dir.RIGHT -> offsetX -= (float) (CELLWIDTH / a) + b;
-                case Dir.LEFT -> offsetX += (float) (CELLWIDTH / a) + b;
+                case Dir.UP -> offsetY +=  (CELLWIDTH / a) + b;
+                case Dir.DOWN -> offsetY -= (CELLWIDTH / a) + b;
+                case Dir.RIGHT -> offsetX -= (CELLWIDTH / a) + b;
+                case Dir.LEFT -> offsetX += (CELLWIDTH / a) + b;
             }
             coordsX = Math.round((x + offsetX) / CELLWIDTH + 0.5f) - 1;
             coordsY = Math.round((y + offsetY) / CELLWIDTH + 0.5f) - 1;
@@ -873,15 +874,14 @@ public final class pac_man extends PApplet {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Pacman~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     final class Pacman {
-        static final int size = CELLWIDTH - 1;
-        int x = HALF_CELLWIDTH + CELLWIDTH;
-        int y = HALF_CELLWIDTH + CELLWIDTH;
+        static final float size = CELLWIDTH - 2;
+        float x = HALF_CELLWIDTH + CELLWIDTH;
+        float y = HALF_CELLWIDTH + CELLWIDTH;
         private boolean stopped = true;
         private Dir nextDir = Dir.STOPPED;
         private Dir dir = Dir.STOPPED;
         private Dir lastDir = Dir.STOPPED;
 
-        @SuppressWarnings("IntegerDivisionInFloatingPointContext")
         private void show(int mouthSize) {
             float mouthOpenTop, mouthOpenBottom;
             if (stopped && Settings.startsAsCircle) {
@@ -901,7 +901,7 @@ public final class pac_man extends PApplet {
                 case Dir.DOWN -> rotate(HALF_PI);
                 case Dir.LEFT -> rotate(PI);
             }
-            arc(0, 0, (CELLWIDTH / 16) * 15, (CELLWIDTH / 16) * 15, mouthOpenTop, mouthOpenBottom);
+            arc(0, 0, size, size, mouthOpenTop, mouthOpenBottom);
         }
 
         private void update() {
@@ -919,8 +919,8 @@ public final class pac_man extends PApplet {
                 coordsX = round((x + offsetX) / CELLWIDTH + 0.5f) - 1;
                 coordsY = round((y + offsetY) / CELLWIDTH + 0.5f) - 1;
             } else {
-                coordsX = Math.round(((float) (x / CELLWIDTH)) + 0.5f) - 1;
-                coordsY = Math.round(((float) (y / CELLWIDTH)) + 0.5f) - 1;
+                coordsX = Math.round(( (x / CELLWIDTH)) + 0.5f) - 1;
+                coordsY = Math.round(( (y / CELLWIDTH)) + 0.5f) - 1;
             }
             if (pelletsEaten >= pellet.length - 1) {
                 for (Pellet value : pellet) {
@@ -1149,13 +1149,13 @@ public final class pac_man extends PApplet {
             if (y > 400) {
                 y = CELLWIDTH + size / 2;
             }
-            coordsX = Math.round((float) (x / CELLWIDTH) + 0.5f) - 1;
-            coordsY = Math.round((float) (y / CELLWIDTH) + 0.5f) - 1;
+            coordsX = Math.round((x / CELLWIDTH) + 0.5f) - 1;
+            coordsY = Math.round((y / CELLWIDTH) + 0.5f) - 1;
         }
 
         private void up() {
-            coordsX = Math.round(((float) x / CELLWIDTH) + 0.5f) - 1;
-            coordsY = Math.round((float) (y / CELLWIDTH) + 0.5f) - 1;
+            coordsX = Math.round((x / CELLWIDTH) + 0.5f) - 1;
+            coordsY = Math.round((y / CELLWIDTH) + 0.5f) - 1;
             if (cells[coordsX][coordsY - 1].open) {
                 dir = Dir.UP;
                 nextDir = Dir.UP;
@@ -1171,8 +1171,8 @@ public final class pac_man extends PApplet {
         }
 
         private void down() {
-            coordsX = Math.round(((float) (x / CELLWIDTH)) + 0.5f) - 1;
-            coordsY = Math.round((float) (y / CELLWIDTH) + 0.5f) - 1;
+            coordsX = Math.round((x / CELLWIDTH) + 0.5f) - 1;
+            coordsY = Math.round((y / CELLWIDTH) + 0.5f) - 1;
             if (cells[coordsX][coordsY + 1].open) {
                 dir = Dir.DOWN;
                 nextDir = Dir.DOWN;
@@ -1190,8 +1190,8 @@ public final class pac_man extends PApplet {
         }
 
         private void right() {
-            coordsX = Math.round((float) (x / CELLWIDTH) + 0.5f) - 1;
-            coordsY = Math.round((float) (y / CELLWIDTH) + 0.5f) - 1;
+            coordsX = Math.round((x / CELLWIDTH) + 0.5f) - 1;
+            coordsY = Math.round((y / CELLWIDTH) + 0.5f) - 1;
             if (cells[coordsX + 1][coordsY].open) {
                 dir = Dir.RIGHT;
                 nextDir = Dir.RIGHT;
@@ -1209,8 +1209,8 @@ public final class pac_man extends PApplet {
         }
 
         private void left() {
-            coordsX = Math.round(((float) (x / CELLWIDTH)) + 0.5f) - 1;
-            coordsY = Math.round(((float) (y / CELLWIDTH)) + 0.5f) - 1;
+            coordsX = Math.round((x / CELLWIDTH) + 0.5f) - 1;
+            coordsY = Math.round((y / CELLWIDTH) + 0.5f) - 1;
             if (cells[coordsX - 1][coordsY].open) {
                 dir = Dir.LEFT;
                 nextDir = Dir.LEFT;
