@@ -40,7 +40,7 @@ abstract class Window extends JPanel implements ActionListener {
             case "update":
                 Settings.getNewVersion();
                 if (Settings.newVersion > Settings.myVersion) {
-                    updatePrompt.create();
+                    UpdatePrompt.create();
                 }
                 break;
             case "launchAbout":

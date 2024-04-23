@@ -37,7 +37,7 @@ final class AboutWindow extends Window {
     private AboutWindow() {
 
         JButton donate = createButton("Donate", KeyEvent.VK_U, true, this, "donate");
-        JLabel name = new JLabel("By Langdon Staab 2023");
+        JLabel name = new JLabel("By Langdon Staab 2024");
         JLabel web = new JLabel("www.langdonstaab.ca");
         // = new JLabel("");
         //credit = new JLabel("");
@@ -78,11 +78,12 @@ final class AboutWindow extends Window {
     }
 
     public static void open() {
-        if (Settings.useOpenGL) {
-            System.setProperty("sun.java2d.opengl", "True");
-        }
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
+        javax.swing.SwingUtilities.invokeLater(AboutWindow::createAndShowGUI);
+    }
+
+    public void run() {
         javax.swing.SwingUtilities.invokeLater(AboutWindow::createAndShowGUI);
     }
 }

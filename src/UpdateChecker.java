@@ -1,9 +1,9 @@
-public class UpdateChecker extends Thread {
+final class UpdateChecker extends Thread {
     public UpdateChecker() {
         this.start();
     }
 
-    public void run() {
+    public final void run() {
         System.out.println("Running thread...");
         Settings.load();
         if (Settings.useOpenGL) {
@@ -12,7 +12,7 @@ public class UpdateChecker extends Thread {
         Settings.getNewVersion();
         if (Settings.updateOnStart) {
             if (Settings.newVersion > Settings.myVersion) {
-                updatePrompt.create();
+                UpdatePrompt.create();
             }
         }
         System.out.println("Thread done!");

@@ -37,10 +37,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-final class updatePrompt extends Window {
-    static JFrame frame;
+final class UpdatePrompt extends Window {
+    private static JFrame frame;
 
-    private updatePrompt() {
+    private UpdatePrompt() {
 
         JButton donate = createButton("Donate", KeyEvent.VK_D, true, this, "donate");
         JButton yes = createButton("Yes", KeyEvent.VK_Y, true, this, "update");
@@ -83,7 +83,7 @@ final class updatePrompt extends Window {
         frame = new JFrame("Pac-Man AutoUpdate");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //Create and set up the content pane.
-        JComponent newContentPane = new updatePrompt();
+        JComponent newContentPane = new UpdatePrompt();
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
 //Display the Window.
@@ -96,7 +96,7 @@ final class updatePrompt extends Window {
         frame = new JFrame("Pac-Man AutoUpdate");
 //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //Create and set up the content pane.
-        JComponent newContentPane = new updatePrompt();
+        JComponent newContentPane = new UpdatePrompt();
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
 //Display the Window.
@@ -110,7 +110,7 @@ final class updatePrompt extends Window {
         }
 //Schedule a job for the event-dispatching thread:
 //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(updatePrompt::createAndShowGUI);
+        javax.swing.SwingUtilities.invokeLater(UpdatePrompt::createAndShowGUI);
     }
 
     public static void create() {
@@ -119,7 +119,7 @@ final class updatePrompt extends Window {
         }
 //Schedule a job for the event-dispatching thread:
 //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(updatePrompt::createAndShowPopout);
+        javax.swing.SwingUtilities.invokeLater(UpdatePrompt::createAndShowPopout);
     }
 
     public void actionPerformed(ActionEvent e) {

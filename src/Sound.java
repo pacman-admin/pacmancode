@@ -12,10 +12,11 @@ import java.net.MalformedURLException;
  */
 final class Sound {
     private final Clip clip;
+
     public Sound(String filename) {
         try (InputStream in = getClass().getResourceAsStream(filename)) {
             assert in != null;
-            InputStream bufferedIn = new BufferedInputStream(in);
+            BufferedInputStream bufferedIn = new BufferedInputStream(in);
             try (AudioInputStream audioIn = AudioSystem.getAudioInputStream(bufferedIn)) {
                 clip = AudioSystem.getClip();
                 clip.open(audioIn);
