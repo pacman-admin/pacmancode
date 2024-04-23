@@ -21,8 +21,7 @@ public final class pac_man extends PApplet {
     private final static int CANVAS_HEIGHT = (CELLWIDTH * 13);
     private final static Fruit[] FRUIT_POINTS = {Fruit.CHERRY, Fruit.STRAWBERRY, Fruit.ORANGE, Fruit.ORANGE, Fruit.APPLE, Fruit.APPLE, Fruit.MELON, Fruit.MELON, Fruit.GALAXIAN, Fruit.GALAXIAN, Fruit.BELL, Fruit.BELL, Fruit.KEY, Fruit.KEY};
     private final static boolean[][] MAP_DESIGN = {{true, false, true, true, true, true, true, true, true, true, true}, {true, true, true, false, false, false, false, false, false, false, true}, {true, false, true, true, true, true, true, true, true, false, true}, {true, false, true, false, false, false, false, false, true, false, true}, {true, true, true, true, true, true, true, true, true, true, true}, {true, false, true, false, true, false, false, true, false, true, true}, {true, false, true, false, true, false, true, true, false, true, true}, {true, false, true, true, true, true, false, true, false, false, true}, {true, false, false, false, true, false, false, true, false, true, true}, {true, true, true, true, true, true, false, true, false, true, true}, {true, true, false, false, false, true, true, true, false, true, true}};
-    //Strings
-    static String errorInfo; //                   |
+    static String errorInfo;
     private final Ghost blinky = new Ghost();
     private final Ghost inky = new Ghost();
     private final Ghost pinky = new Ghost();
@@ -48,12 +47,9 @@ public final class pac_man extends PApplet {
     private PImage maze_white;
     //private PImage pelletImg;
     // By Langdon S.
-    //current version:
-    // private boolean checkForUpdates;
-    private int lives = 3; //                             |
-    private int chompSpeed = 8; //                        |
-    private boolean playStartSound = true; //             |
-    //booleans
+    private int lives = 3;
+    private int chompSpeed = 8;
+    private boolean playStartSound = true;
     private boolean errorScreen;
     private boolean finishedDelay;
     private boolean first1 = true;
@@ -432,9 +428,6 @@ public final class pac_man extends PApplet {
         }
     }
 
-
-////// Calling Things //////
-
     private void addLife() {
         lives++;
         livesClaimed++;
@@ -442,8 +435,6 @@ public final class pac_man extends PApplet {
         messages.add("Claimed extra life!");
     }
 
-
-//////// FUNCTIONS ////////
 
     private void giveLives() {
         if (score >= 1000 && livesClaimed < 1) {
@@ -637,7 +628,6 @@ public final class pac_man extends PApplet {
 
     private void determineFruitType() {
         if (level == 8) {
-            //println(FRUIT_POINTS[level]);
             lazyLoad();
         }
         if (level < FRUIT_POINTS.length) {
@@ -708,7 +698,6 @@ public final class pac_man extends PApplet {
         }
     }
 
-    //// OBJECTS \\\\
     private final class Ghost {
         private int coordsX;
         private int coordsY;
@@ -787,7 +776,6 @@ public final class pac_man extends PApplet {
         }*/
 
         private void halt() {
-            //stopped = true;
             dir = Dir.STOPPED;
         }
 
@@ -805,7 +793,6 @@ public final class pac_man extends PApplet {
 
     }
 
-    //// Pellet \\\\
     final class Pellet {
         final private int x;
         final private int y;
@@ -887,7 +874,6 @@ public final class pac_man extends PApplet {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Pacman~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     final class Pacman {
         static final int size = CELLWIDTH - 1;
-        //private static final int speed = Settings.pacmanSpeed;
         int x = HALF_CELLWIDTH + CELLWIDTH;
         int y = HALF_CELLWIDTH + CELLWIDTH;
         private boolean stopped = true;
@@ -908,7 +894,6 @@ public final class pac_man extends PApplet {
 
             mouthOpenTop = map(mouthSize, 0, 60, 0, 0.52f);
             mouthOpenBottom = map(mouthSize, 0, 60, TWO_PI, 5.76f);
-            //push();
             fill(255, 255, 0);
             translate(x, y);
             switch (lastDir) {
@@ -1183,8 +1168,6 @@ public final class pac_man extends PApplet {
             } else {
                 nextDir = Dir.UP;
             }
-
-            // }
         }
 
         private void down() {
