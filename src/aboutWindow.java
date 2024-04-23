@@ -82,8 +82,4 @@ final class AboutWindow extends Window {
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(AboutWindow::createAndShowGUI);
     }
-
-    public void run() {
-        javax.swing.SwingUtilities.invokeLater(AboutWindow::createAndShowGUI);
-    }
 }

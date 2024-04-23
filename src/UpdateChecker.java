@@ -3,7 +3,7 @@ final class UpdateChecker extends Thread {
         this.start();
     }
 
-    public final void run() {
+    public void run() {
         System.out.println("Running thread...");
         Settings.load();
         if (Settings.useOpenGL) {

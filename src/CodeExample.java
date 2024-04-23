@@ -675,15 +675,6 @@ public final class CodeExample extends PApplet {
             }
         }
     }
-
-    static final class Cell {
-        final boolean open;
-
-        private Cell(boolean open1) {
-            open = open1;
-        }
-    }
-
     private final class Ghost {
         private int coordsX;
         private int coordsY;

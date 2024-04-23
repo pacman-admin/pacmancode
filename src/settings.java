@@ -19,7 +19,7 @@ final class Settings {
     static boolean useClassicHitbox = false; //   |
     static boolean useOpenGL = true; //          |
     static boolean updateOnStart = true; //       |
-    static float myVersion = 12f; //              |
+    final static float myVersion = 12f; //              |
     static float newVersion = 11f; //             |
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|

@@ -45,9 +45,6 @@ final class SettingsWindow extends Window implements ItemListener {
     //Show Ghosts When Stopped
     private final JCheckBox selectSGWS;
     private final JCheckBox chooseOpenGL;
-    //JLabel ;
-    //JLabel label3;
-    //JLabel pictureLabel;
 
     private SettingsWindow() {
         //  = createCheckbox("", KeyEvent.VK_, , this);
@@ -56,9 +53,6 @@ final class SettingsWindow extends Window implements ItemListener {
         JButton launchAbout = createButton("About Pac-Man", KeyEvent.VK_A, true, this, "launchAbout");
         JButton checkUpdate = createButton("Check for Updates", KeyEvent.VK_U, false, this, "update");
         JButton donate = createButton("Donate", KeyEvent.VK_D, true, this, "donate");
-        //Set up the picture label
-        //pictureLabel = new JLabel();
-        //pictureLabel.setFont(pictureLabel.getFont().deriveFont(Font.ITALIC));
         JLabel name = new JLabel("By Langdon Staab 2024");
         JLabel web = new JLabel("www.langdonstaab.ca");
         //Create the checkboxes.

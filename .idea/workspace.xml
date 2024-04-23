@@ -9,7 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0f76c9c-c62b-4bdd-8b11-4708cba682da" name="Changes" comment="Made performance improvements." />
+    <list default="true" id="d0f76c9c-c62b-4bdd-8b11-4708cba682da" name="Changes" comment="Made performance improvements.">
+      <change beforePath="$PROJECT_DIR$/src/UpdateChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UpdateChecker.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,7 +36,7 @@
     <option name="defaultAccountId" value="f36680d3-1e6b-408b-a011-f736f6f316a2" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -90,22 +92,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1693604523434</updated>
-    </task>
-    <task id="LOCAL-00024" summary="Add files">
-      <option name="closed" value="true" />
-      <created>1699210158508</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1699210158508</updated>
-    </task>
-    <task id="LOCAL-00025" summary="Add files">
-      <option name="closed" value="true" />
-      <created>1701124206165</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1701124206165</updated>
     </task>
     <task id="LOCAL-00026" summary="Add files">
       <option name="closed" value="true" />
@@ -483,7 +469,23 @@
       <option name="project" value="LOCAL" />
       <updated>1713812323462</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="Made performance improvements.">
+      <option name="closed" value="true" />
+      <created>1713814656697</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1713814656697</updated>
+    </task>
+    <task id="LOCAL-00074" summary="Made performance improvements.">
+      <option name="closed" value="true" />
+      <created>1713900652804</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1713900652804</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

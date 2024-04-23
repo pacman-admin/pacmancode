@@ -917,8 +917,6 @@ public final class pac_man extends PApplet {
                 case Dir.LEFT -> rotate(PI);
             }
             arc(0, 0, (CELLWIDTH / 16) * 15, (CELLWIDTH / 16) * 15, mouthOpenTop, mouthOpenBottom);
-            //pop();
-            //resetMatrix();
         }
 
         private void update() {
