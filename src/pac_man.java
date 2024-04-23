@@ -213,6 +213,7 @@ public final class pac_man extends PApplet {
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN PROGRAM ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+    @SuppressWarnings("StatementWithEmptyBody")
     public void draw() {
         try {
             updateKeys();
@@ -716,7 +717,7 @@ public final class pac_man extends PApplet {
             final float a = 3, b = 1;
             float offsetY = 0, offsetX = 0;
             switch (dir) {
-                case Dir.UP -> offsetY +=  (CELLWIDTH / a) + b;
+                case Dir.UP -> offsetY += (CELLWIDTH / a) + b;
                 case Dir.DOWN -> offsetY -= (CELLWIDTH / a) + b;
                 case Dir.RIGHT -> offsetX -= (CELLWIDTH / a) + b;
                 case Dir.LEFT -> offsetX += (CELLWIDTH / a) + b;
@@ -919,8 +920,8 @@ public final class pac_man extends PApplet {
                 coordsX = round((x + offsetX) / CELLWIDTH + 0.5f) - 1;
                 coordsY = round((y + offsetY) / CELLWIDTH + 0.5f) - 1;
             } else {
-                coordsX = Math.round(( (x / CELLWIDTH)) + 0.5f) - 1;
-                coordsY = Math.round(( (y / CELLWIDTH)) + 0.5f) - 1;
+                coordsX = Math.round(((x / CELLWIDTH)) + 0.5f) - 1;
+                coordsY = Math.round(((y / CELLWIDTH)) + 0.5f) - 1;
             }
             if (pelletsEaten >= pellet.length - 1) {
                 for (Pellet value : pellet) {
