@@ -9,8 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0f76c9c-c62b-4bdd-8b11-4708cba682da" name="Changes" comment="Made performance improvements.">
-      <change beforePath="$PROJECT_DIR$/src/UpdateChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UpdateChecker.java" afterDir="false" />
+    <list default="true" id="d0f76c9c-c62b-4bdd-8b11-4708cba682da" name="Changes" comment="Fixed tiny sprites">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,22 +92,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1693604523434</updated>
-    </task>
-    <task id="LOCAL-00026" summary="Add files">
-      <option name="closed" value="true" />
-      <created>1701886119149</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1701886119149</updated>
-    </task>
-    <task id="LOCAL-00027" summary="Add files">
-      <option name="closed" value="true" />
-      <created>1701889183913</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1701889183913</updated>
     </task>
     <task id="LOCAL-00028" summary="Add files">
       <option name="closed" value="true" />
@@ -485,7 +469,23 @@
       <option name="project" value="LOCAL" />
       <updated>1713900652804</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Made performance improvements.">
+      <option name="closed" value="true" />
+      <created>1713901015076</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1713901015076</updated>
+    </task>
+    <task id="LOCAL-00076" summary="Fixed tiny sprites">
+      <option name="closed" value="true" />
+      <created>1713901957363</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1713901957363</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -504,7 +504,8 @@
     <MESSAGE value="Add files" />
     <MESSAGE value="Added experimental update feature" />
     <MESSAGE value="Made performance improvements." />
-    <option name="LAST_COMMIT_MESSAGE" value="Made performance improvements." />
+    <MESSAGE value="Fixed tiny sprites" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed tiny sprites" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/pac_man_java$pac_man.ic" NAME="pac_man Coverage Results" MODIFIED="1691192296197" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
