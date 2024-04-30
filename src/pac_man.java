@@ -45,8 +45,6 @@ public final class pac_man extends PApplet {
     private PFont pxFont;
     private PImage maze_blue;
     private PImage maze_white;
-    //private PImage pelletImg;
-    // By Langdon S.
     private int lives = 3;
     private int chompSpeed = 8;
     private boolean playStartSound = true;
@@ -129,7 +127,6 @@ public final class pac_man extends PApplet {
         surface.setResizable(true);
         imageMode(CENTER);
         changeAppIcon();
-
         System.out.println("Loading Game Assets...");
         startSound = new Sound("game_start.wav");
         dotSound1 = new Sound("dot_1.wav");
@@ -139,7 +136,6 @@ public final class pac_man extends PApplet {
         dieS = new Sound("death.wav");
         fruit = new Sound("fruit.wav");
         extra_life = new Sound("extra_life.wav");
-
         cherry = loadImage("cherry.png");
         settingsB = loadImage("settings.png");
         restartB = loadImage("restart.png");
@@ -147,9 +143,7 @@ public final class pac_man extends PApplet {
         orange = loadImage("orange.png");
         apple = loadImage("apple.png");
         melon = loadImage("melon.png");
-
         pxFont = createFont("minecraft-seven-classic/minecraft-seven-classic.ttf", 8, false);
-
         pauseButtonImg = loadImage("pause_button.png");
         blinky_Down[0] = loadImage("ghost/blinky/down.png");
         blinky_Down[1] = loadImage("ghost/blinky/down2.png");
@@ -159,7 +153,6 @@ public final class pac_man extends PApplet {
         blinky_Left[1] = loadImage("ghost/blinky/left2.png");
         blinky_Right[0] = loadImage("ghost/blinky/right.png");
         blinky_Right[1] = loadImage("ghost/blinky/right2.png");
-
         inky_Down[0] = loadImage("ghost/inky/down.png");
         inky_Down[1] = loadImage("ghost/inky/down2.png");
         inky_Up[0] = loadImage("ghost/inky/up.png");
@@ -168,7 +161,6 @@ public final class pac_man extends PApplet {
         inky_Left[1] = loadImage("ghost/inky/left2.png");
         inky_Right[0] = loadImage("ghost/inky/right.png");
         inky_Right[1] = loadImage("ghost/inky/right2.png");
-
         pinky_Down[0] = loadImage("ghost/pinky/down.png");
         pinky_Down[1] = loadImage("ghost/pinky/down2.png");
         pinky_Up[0] = loadImage("ghost/pinky/up.png");
@@ -177,10 +169,8 @@ public final class pac_man extends PApplet {
         pinky_Left[1] = loadImage("ghost/pinky/left2.png");
         pinky_Right[0] = loadImage("ghost/pinky/right.png");
         pinky_Right[1] = loadImage("ghost/pinky/right2.png");
-
         maze_blue = loadImage("maze_blue.png");
         maze_white = loadImage("maze_white.png");
-
         System.out.println("Loading User Data...");
         Settings.updatePath();
         String temp = loadString(Settings.path + "/highscore.txt");
@@ -203,7 +193,6 @@ public final class pac_man extends PApplet {
         } else {
             prevHighScore = java.lang.Integer.parseInt(temp);
         }
-
         System.out.println("Initializing...");
         createMaze();
         pellet[5].isFruit = true;
@@ -212,14 +201,14 @@ public final class pac_man extends PApplet {
         System.out.println("Loading Complete!");
     }
 
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN PROGRAM ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN PROGRAM ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     @SuppressWarnings("StatementWithEmptyBody")
     public void draw() {
         try {
             updateKeys();
             if (errorScreen) {
                 background(0);
-                text(errorInfo, 4, height / 2f);
+                text(errorInfo, 4, 4);
             } else if (runSetup && millis() > 500) {
                 setup2();
                 runSetup = false;
@@ -234,6 +223,7 @@ public final class pac_man extends PApplet {
                 //wait until 2 seconds have passed
             else if (lives <= 0) {
                 background(0);
+                fill(255, 0, 0);
                 text("GAME OVER", CANVAS_WIDTH / 2f, CANVAS_HEIGHT / 2f);
                 text("Click the screen to play again", CANVAS_WIDTH / 2f, CANVAS_HEIGHT / 2f + 40);
                 text("By Langdon Staab\nwww.langdonstaab.ca", CANVAS_WIDTH / 2f, CANVAS_HEIGHT / 2f + 80);
@@ -255,9 +245,7 @@ public final class pac_man extends PApplet {
                         pinky.up();
                         finishedDelay = true;
                     }
-
                     destroyUselessMessages();
-
                     if (lostLife) {
                         if (chomp < 60) {
                             chomp++;
@@ -332,6 +320,8 @@ public final class pac_man extends PApplet {
             errorScreen = true;
             windowResize(1000, CANVAS_HEIGHT);
             frameRate(30);
+            textAlign(LEFT, TOP);
+            fill(255);
             Error.log(e);
         }
     }
@@ -418,7 +408,6 @@ public final class pac_man extends PApplet {
         return possDir;
     }
 
-
     private void changeAppIcon() {
         getSurface().setIcon(loadImage("icon.png"));
     }
@@ -436,7 +425,6 @@ public final class pac_man extends PApplet {
         extra_life.play();
         messages.add("Claimed extra life!");
     }
-
 
     private void giveLives() {
         if (score >= 1000 && livesClaimed < 1) {
@@ -646,7 +634,6 @@ public final class pac_man extends PApplet {
     }
 
     private void drawGhosts() {
-
         if (!blinky.dir.equals(Dir.STOPPED) || Settings.showGhostWhenStopped) {
             if ((frameCount - startFrames) % 100 < 45) {
                 switch (blinky.dir) {
@@ -771,11 +758,7 @@ public final class pac_man extends PApplet {
 
         private void up() {
             dir = Dir.UP;
-        }
-
-        /*private void right() {
-            dir = Dir.RIGHT;
-        }*/
+        }        /*private void right() {            dir = Dir.RIGHT;        }*/
 
         private void halt() {
             dir = Dir.STOPPED;
@@ -792,7 +775,6 @@ public final class pac_man extends PApplet {
                 updateCoords();
             }
         }
-
     }
 
     final class Pellet {
@@ -892,7 +874,6 @@ public final class pac_man extends PApplet {
                     playStartSound = false;
                 }
             }
-
             mouthOpenTop = map(mouthSize, 0, 60, 0, 0.52f);
             mouthOpenBottom = map(mouthSize, 0, 60, TWO_PI, 5.76f);
             fill(255, 255, 0);
@@ -935,7 +916,6 @@ public final class pac_man extends PApplet {
                 nextDir = Dir.STOPPED;
                 pelletsEaten = 0;
             }
-
             switch (nextDir) {
                 case Dir.UP -> {
                     if (cells[coordsX][coordsY - 1].open) {
@@ -1043,7 +1023,6 @@ public final class pac_man extends PApplet {
                         }
                     }
                 }
-
             } else {
                 int stopBuffer = 2;
                 switch (dir) {
@@ -1143,7 +1122,6 @@ public final class pac_man extends PApplet {
                     }
                 }
             }
-
             if (x > 400) {
                 x = CELLWIDTH + size / 2;
             }
@@ -1186,8 +1164,6 @@ public final class pac_man extends PApplet {
             } else {
                 nextDir = Dir.DOWN;
             }
-
-
         }
 
         private void right() {
@@ -1205,8 +1181,6 @@ public final class pac_man extends PApplet {
             } else {
                 nextDir = Dir.RIGHT;
             }
-
-
         }
 
         private void left() {
@@ -1224,9 +1198,7 @@ public final class pac_man extends PApplet {
             } else {
                 nextDir = Dir.LEFT;
             }
-
         }
-
 
         private void stop() {
             dir = Dir.STOPPED;
