@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author Langdon S.
  */
 public final class pac_man extends PApplet {
-    private final static String TITLE = "Pac-Man 12";
+    private final static String TITLE = "Pac-Man 12.1";
     private final static int CELLWIDTH = 32;
     private final static int HALF_CELLWIDTH = 16;
     private final static int pelletWorth = 10;
@@ -140,9 +140,6 @@ public final class pac_man extends PApplet {
         settingsB = loadImage("settings.png");
         restartB = loadImage("restart.png");
         strawberry = loadImage("strawberry.png");
-        orange = loadImage("orange.png");
-        apple = loadImage("apple.png");
-        melon = loadImage("melon.png");
         pxFont = createFont("minecraft-seven-classic/minecraft-seven-classic.ttf", 8, false);
         pauseButtonImg = loadImage("pause_button.png");
         blinky_Down[0] = loadImage("ghost/blinky/down.png");
@@ -209,7 +206,7 @@ public final class pac_man extends PApplet {
             if (errorScreen) {
                 background(0);
                 text(errorInfo, 4, 4);
-            } else if (runSetup && millis() > 500) {
+            } else if (runSetup) {
                 setup2();
                 runSetup = false;
                 startFrames = frameCount;
@@ -218,6 +215,7 @@ public final class pac_man extends PApplet {
                 startMillis = millis();
                 System.out.println(millis());
                 textFont(pxFont);
+                System.gc();
             } else if (millis() < 2000) ;
                 //display loading screen for a minimum of 2 seconds.
                 //wait until 2 seconds have passed
@@ -251,8 +249,9 @@ public final class pac_man extends PApplet {
                             chomp++;
                         }
                         if (first1) {
-                            first1 = false;
                             dieS.play();
+                            first1 = false;
+                            System.gc();
                         }
                         pacman.stop();
                         blinky.halt();
@@ -353,14 +352,6 @@ public final class pac_man extends PApplet {
         } catch (Exception ignored) {
             return "error";
         }
-    }
-
-    private void lazyLoad() {
-        messages.add("Loading more fruit sprites...");
-        galaxian = loadImage("galaxian.png");
-        bell = loadImage("bell.png");
-        keyI = loadImage("key.png");
-        messages.add("All fruit sprites loaded successfully.");
     }
 
     public void keyPressed() {
@@ -617,8 +608,8 @@ public final class pac_man extends PApplet {
     }
 
     private void determineFruitType() {
-        if (level == 8) {
-            lazyLoad();
+        if (level == 2) {
+            new LazySpriteLoader();
         }
         if (level < FRUIT_POINTS.length) {
             pellet[5].fruitType = FRUIT_POINTS[level];
@@ -777,6 +768,24 @@ public final class pac_man extends PApplet {
         }
     }
 
+    private final class LazySpriteLoader extends Thread {
+        LazySpriteLoader() {
+            this.start();
+        }
+
+        public void run() {
+            messages.add("Loading more fruit sprites...");
+            orange = loadImage("orange.png");
+            apple = loadImage("apple.png");
+            melon = loadImage("melon.png");
+            galaxian = loadImage("galaxian.png");
+            bell = loadImage("bell.png");
+            keyI = loadImage("key.png");
+            messages.add("All fruit sprites loaded successfully.");
+        }
+
+    }
+
     final class Pellet {
         final private int x;
         final private int y;
@@ -831,6 +840,7 @@ public final class pac_man extends PApplet {
                     determineFruitType();
                     durationStart = millis();
                     duration = 2000 + millis();
+                    System.gc();
                 }
             }
         }

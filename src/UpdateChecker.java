@@ -1,8 +1,7 @@
 final class UpdateChecker extends Thread {
-    public UpdateChecker() {
+    UpdateChecker() {
         this.start();
     }
-
     public void run() {
         System.out.println("Running thread...");
         Settings.load();
