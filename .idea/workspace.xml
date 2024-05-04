@@ -69,7 +69,7 @@
     <configuration name="pac_man" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="pac_man" />
       <module name="Pac-Man" />
-      <option name="VM_PARAMETERS" value="-XX:+UnlockExperimentalVMOptions -Dsun.java2d.trace=timestamp -Xms256M -Xmx256M -verbose:gc -XX:MetaspaceSize=512M -XX:+EnableDynamicAgentLoading" />
+      <option name="VM_PARAMETERS" value="-Dsun.java2d.trace=timestamp -Xms256M -Xmx256M -verbose:gc -XX:MetaspaceSize=512m -XX:+EnableDynamicAgentLoading" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
