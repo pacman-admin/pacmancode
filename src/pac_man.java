@@ -199,129 +199,131 @@ public final class pac_man extends PApplet {
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN PROGRAM ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    @SuppressWarnings("StatementWithEmptyBody")
+    //@SuppressWarnings("StatementWithEmptyBody")
     public void draw() {
-        try {
-            updateKeys();
-            if (errorScreen) {
-                background(0);
-                text(errorInfo, 4, 4);
-            } else if (runSetup) {
-                setup2();
-                runSetup = false;
-                startFrames = frameCount;
-                durationStart = millis();
-                duration = 4500 + millis();
-                startMillis = millis();
-                System.out.println(millis());
-                textFont(pxFont);
-                System.gc();
-            } else if (millis() < 2000) ;
-                //display loading screen for a minimum of 2 seconds.
-                //wait until 2 seconds have passed
-            else if (lives <= 0) {
-                background(0);
-                fill(255, 0, 0);
-                text("GAME OVER", CANVAS_WIDTH / 2f, CANVAS_HEIGHT / 2f);
-                text("Click the screen to play again", CANVAS_WIDTH / 2f, CANVAS_HEIGHT / 2f + 40);
-                text("By Langdon Staab\nwww.langdonstaab.ca", CANVAS_WIDTH / 2f, CANVAS_HEIGHT / 2f + 80);
-                if (mousePressed) {
-                    restart();
-                }
-            } else {
-                if (frameCount % 2 == 0 && !paused) {
-                    if (millis() < duration) {
-                        pacman.stop();
-                        pacman.stopped = true;
-                        finishedDelay = false;
-                        blinky.halt();
-                        inky.halt();
-                        pinky.halt();
-                    } else if (!finishedDelay) {
-                        blinky.up();
-                        inky.up();
-                        pinky.up();
-                        finishedDelay = true;
+        if (!paused) {
+            try {
+                //updateKeys();
+                if (errorScreen) {
+                    background(0);
+                    text(errorInfo, 4, 4);
+                } else if (runSetup) {
+                    setup2();
+                    runSetup = false;
+                    startFrames = frameCount;
+                    durationStart = millis();
+                    duration = 4500 + millis();
+                    startMillis = millis();
+                    System.out.println(millis());
+                    textFont(pxFont);
+                    System.gc();
+                    //} else if (millis() < 2000) ;
+                    //display loading screen for a minimum of 2 seconds.
+                    //wait until 2 seconds have passed
+                } else if (lives <= 0) {
+                    background(0);
+                    fill(255, 0, 0);
+                    text("GAME OVER", CANVAS_WIDTH / 2f, CANVAS_HEIGHT / 2f);
+                    text("Click the screen to play again", CANVAS_WIDTH / 2f, CANVAS_HEIGHT / 2f + 40);
+                    text("By Langdon Staab\nwww.langdonstaab.ca", CANVAS_WIDTH / 2f, CANVAS_HEIGHT / 2f + 80);
+                    if (mousePressed) {
+                        restart();
                     }
-                    destroyUselessMessages();
-                    if (lostLife) {
-                        if (chomp < 60) {
-                            chomp++;
-                        }
-                        if (first1) {
-                            dieS.play();
-                            first1 = false;
-                            System.gc();
-                        }
-                        pacman.stop();
-                        blinky.halt();
-                        inky.halt();
-                        pinky.halt();
-                        if (dieS.isPlaying()) {
-                            chomp += 3;
-                        } else {
-                            blinky.newGame();
-                            inky.newGame();
-                            pinky.newGame();
-                            pacman.x = CELLWIDTH + HALF_CELLWIDTH;
-                            pacman.y = CELLWIDTH + HALF_CELLWIDTH;
-                            first1 = true;
-                            lostLife = false;
-                            chomp = 16;
-                            duration = 2000 + millis();
+                } else {
+                    if (frameCount % 2 == 0) {
+                        if (millis() < duration) {
                             pacman.stop();
                             pacman.stopped = true;
-                            lives--;
-                        }
-                    }
-                    if (!pacman.dir.equals(Dir.STOPPED)) {
-                        if (chomp > 96) {
-                            chompSpeed = -chompSpeed;
-                        }
-                        if (chomp < 8) {
-                            chompSpeed = -chompSpeed;
-                        }
-                        chomp += chompSpeed;
-                    }
-                    if (pelletsEaten < pellet.length - 1 && !lostLife) {
-                        pacman.update();
-                    }
-                    blinky.update();
-                    inky.update();
-                    pinky.update();
-                    updateKeys();
-                    image(maze_blue, 208, 208);
-                    if (pelletsEaten >= pellet.length - 1) {
-                        blinky.halt();
-                        inky.halt();
-                        pinky.halt();
-                        pacman.stop();
-                        if ((millis() - durationStart < 250) || (millis() - durationStart < 750 && millis() - durationStart > 500) || (millis() - durationStart < 1250 && millis() - durationStart > 1000) || (millis() - durationStart < 1750 && millis() - durationStart > 1500)) {
-                            image(maze_white, 208, 208);
-                        }
-                        if (millis() - durationStart >= 2000) {
-                            pacman.update();
+                            finishedDelay = false;
+                            blinky.halt();
+                            inky.halt();
+                            pinky.halt();
+                        } else if (!finishedDelay) {
                             blinky.up();
                             inky.up();
                             pinky.up();
-                            pacman.stopped = true;
-                            pacman.stop();
-                            playStartSound = false;
+                            finishedDelay = true;
                         }
+                        destroyUselessMessages();
+                        if (lostLife) {
+                            if (chomp < 60) {
+                                chomp++;
+                            }
+                            if (first1) {
+                                dieS.play();
+                                first1 = false;
+                                System.gc();
+                            }
+                            pacman.stop();
+                            blinky.halt();
+                            inky.halt();
+                            pinky.halt();
+                            if (dieS.isPlaying()) {
+                                chomp += 3;
+                            } else {
+                                blinky.newGame();
+                                inky.newGame();
+                                pinky.newGame();
+                                pacman.x = CELLWIDTH + HALF_CELLWIDTH;
+                                pacman.y = CELLWIDTH + HALF_CELLWIDTH;
+                                first1 = true;
+                                lostLife = false;
+                                chomp = 16;
+                                duration = 2000 + millis();
+                                pacman.stop();
+                                pacman.stopped = true;
+                                lives--;
+                            }
+                        }
+                        if (!pacman.dir.equals(Dir.STOPPED)) {
+                            if (chomp > 96) {
+                                chompSpeed = -chompSpeed;
+                            }
+                            if (chomp < 8) {
+                                chompSpeed = -chompSpeed;
+                            }
+                            chomp += chompSpeed;
+                        }
+                        if (pelletsEaten < pellet.length - 1 && !lostLife) {
+                            pacman.update();
+                        }
+                        blinky.update();
+                        inky.update();
+                        pinky.update();
+                        updateKeys();
+                        image(maze_blue, 208, 208);
+                        if (pelletsEaten >= pellet.length - 1) {
+                            blinky.halt();
+                            inky.halt();
+                            pinky.halt();
+                            pacman.stop();
+                            if ((millis() - durationStart < 250) || (millis() - durationStart < 750 && millis() - durationStart > 500) || (millis() - durationStart < 1250 && millis() - durationStart > 1000) || (millis() - durationStart < 1750 && millis() - durationStart > 1500)) {
+                                image(maze_white, 208, 208);
+                            }
+                            if (millis() - durationStart >= 2000) {
+                                pacman.update();
+                                blinky.up();
+                                inky.up();
+                                pinky.up();
+                                pacman.stopped = true;
+                                pacman.stop();
+                                playStartSound = false;
+                            }
+                        }
+                        display();
+                        //int useless = 5 / 0;
                     }
-                    display();
-                    //int useless = 5 / 0;
                 }
+            } catch (Exception e) {
+                paused = true;
+                Error.save(e);
+                errorScreen = true;
+                windowResize(1000, CANVAS_HEIGHT);
+                frameRate(30);
+                textAlign(LEFT, TOP);
+                fill(255);
+                Error.log(e);
             }
-        } catch (Exception e) {
-            paused = true;
-            Error.save(e);
-            errorScreen = true;
-            windowResize(1000, CANVAS_HEIGHT);
-            frameRate(30);
-            textAlign(LEFT, TOP);
-            fill(255);
-            Error.log(e);
         }
     }
 
