@@ -10,9 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0f76c9c-c62b-4bdd-8b11-4708cba682da" name="Changes" comment="Made performance improvements">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pac_man.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pac_man.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,22 +92,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1693604523434</updated>
-    </task>
-    <task id="LOCAL-00035" summary="Add files">
-      <option name="closed" value="true" />
-      <created>1702941092842</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1702941092842</updated>
-    </task>
-    <task id="LOCAL-00036" summary="Add files">
-      <option name="closed" value="true" />
-      <created>1702941223099</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1702941223099</updated>
     </task>
     <task id="LOCAL-00037" summary="Add files">
       <option name="closed" value="true" />
@@ -487,7 +469,23 @@
       <option name="project" value="LOCAL" />
       <updated>1714766811571</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="Made performance improvements">
+      <option name="closed" value="true" />
+      <created>1714842472470</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1714842472470</updated>
+    </task>
+    <task id="LOCAL-00085" summary="Made performance improvements">
+      <option name="closed" value="true" />
+      <created>1714842703350</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1714842703350</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
