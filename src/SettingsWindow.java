@@ -144,7 +144,7 @@ final class SettingsWindow extends Window implements ItemListener {
     public void itemStateChanged(ItemEvent e) {
         boolean newVal = false;
         Object source = e.getItemSelectable();
-        System.out.println(e.getStateChange());
+        //System.out.println(e.getStateChange());
         if (e.getStateChange() == ItemEvent.SELECTED) {
             newVal = true;
         }

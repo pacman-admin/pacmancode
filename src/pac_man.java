@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author Langdon S.
  */
 public final class pac_man extends PApplet {
-    private final static String TITLE = "Pac-Man 12.1";
+    private final static String TITLE = "Pac-Man 13";
     private final static int CELLWIDTH = 32;
     private final static int HALF_CELLWIDTH = 16;
     private final static int pelletWorth = 10;
@@ -27,7 +27,7 @@ public final class pac_man extends PApplet {
     private final Ghost pinky = new Ghost();
     private final Pacman pacman = new Pacman();
     private final Cell[][] cells = {new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13]};
-    final private Pellet[] pellet = new Pellet[78];
+    private final Pellet[] pellet = new Pellet[78];
     private final ArrayList<String> messages = new ArrayList<>();
     private final PImage[] blinky_Up = {null, null};
     private final PImage[] blinky_Down = {null, null};
@@ -199,7 +199,7 @@ public final class pac_man extends PApplet {
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN PROGRAM ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //@SuppressWarnings("StatementWithEmptyBody")
+    @SuppressWarnings("StatementWithEmptyBody")
     public void draw() {
         if (!paused) {
             try {
@@ -209,18 +209,18 @@ public final class pac_man extends PApplet {
                     text(errorInfo, 4, 4);
                 } else if (runSetup) {
                     setup2();
-                    runSetup = false;
-                    startFrames = frameCount;
                     durationStart = millis();
-                    duration = 4500 + millis();
                     startMillis = millis();
                     System.out.println(millis());
-                    textFont(pxFont);
                     System.gc();
-                    //} else if (millis() < 2000) ;
+                    runSetup = false;
+                    textFont(pxFont);
+                    startFrames = frameCount;
+                    duration = 4500 + durationStart;
+                } else if (millis() < 2000) ;
                     //display loading screen for a minimum of 2 seconds.
                     //wait until 2 seconds have passed
-                } else if (lives <= 0) {
+                else if (lives <= 0) {
                     background(0);
                     fill(255, 0, 0);
                     text("GAME OVER", CANVAS_WIDTH / 2f, CANVAS_HEIGHT / 2f);
