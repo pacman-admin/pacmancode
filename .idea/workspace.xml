@@ -93,14 +93,6 @@
       <option name="presentableId" value="Default" />
       <updated>1693604523434</updated>
     </task>
-    <task id="LOCAL-00039" summary="Add files">
-      <option name="closed" value="true" />
-      <created>1702948992753</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1702948992753</updated>
-    </task>
     <task id="LOCAL-00040" summary="Add files">
       <option name="closed" value="true" />
       <created>1703019103771</created>
@@ -485,7 +477,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715122660114</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="Made performance improvements">
+      <option name="closed" value="true" />
+      <created>1715898461451</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1715898461452</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

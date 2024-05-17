@@ -19,8 +19,8 @@ final class Settings {
     static boolean useClassicHitbox = false; //   |
     static boolean useOpenGL = true; //          |
     static boolean updateOnStart = true; //       |
-    final static float myVersion = 12.1f; //              |
-    static float newVersion = 12f; //             |
+    final static float myVersion = 13f; //              |
+    static float newVersion = 13f; //             |
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 
@@ -62,7 +62,7 @@ final class Settings {
 
     static void getNewVersion() {
         try {
-            URI versionF = new URI("https://www2.langdonstaab.ca/files/Pac-Man_VERSION.txt");
+            URI versionF = new URI("https://raw.githubusercontent.com/pacman-admin/pacmancode/newmaster/Pac-Man_VERSION.txt");
             BufferedReader in = new BufferedReader(new InputStreamReader(versionF.toURL().openStream()));
             newVersion = parseFloat(in.readLine());
             in.close();
