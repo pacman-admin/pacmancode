@@ -444,11 +444,11 @@ public final class pac_man extends PApplet {
     }
 
     private int createPosition(boolean dirIsX) {
-        int newPos = (Math.round(random(CELLWIDTH, CANVAS_HEIGHT - CELLWIDTH * 2f) / CELLWIDTH) * CELLWIDTH + HALF_CELLWIDTH);
-        while (dirIsX && newPos <= (CELLWIDTH * 2) + HALF_CELLWIDTH) {
-            newPos = (Math.round(random(CELLWIDTH, CANVAS_HEIGHT - CELLWIDTH * 2f) / CELLWIDTH) * CELLWIDTH + HALF_CELLWIDTH);
+        if (dirIsX) {
+            return (Math.round(random(CELLWIDTH * 3, CANVAS_HEIGHT - CELLWIDTH) / CELLWIDTH) * CELLWIDTH + HALF_CELLWIDTH);
+        } else {
+            return (Math.round(random(CELLWIDTH, CANVAS_HEIGHT - CELLWIDTH) / CELLWIDTH) * CELLWIDTH + HALF_CELLWIDTH);
         }
-        return newPos;
     }
 
     private boolean checkGoodDir(Dir dir, int posX, int posY) {
