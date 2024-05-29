@@ -6,14 +6,13 @@ import processing.core.PImage;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 
 /**
  * @author Langdon S.
  */
 public final class pac_man extends PApplet {
-    private final static String TITLE = "Pac-Man 13";
+    private final static String TITLE = "Pac-Man 13.1";
     private final static int CELLWIDTH = 32;
     private final static int HALF_CELLWIDTH = 16;
     private final static int pelletWorth = 10;
@@ -22,13 +21,14 @@ public final class pac_man extends PApplet {
     private final static Fruit[] FRUIT_POINTS = {Fruit.CHERRY, Fruit.STRAWBERRY, Fruit.ORANGE, Fruit.ORANGE, Fruit.APPLE, Fruit.APPLE, Fruit.MELON, Fruit.MELON, Fruit.GALAXIAN, Fruit.GALAXIAN, Fruit.BELL, Fruit.BELL, Fruit.KEY, Fruit.KEY};
     private final static boolean[][] MAP_DESIGN = {{true, false, true, true, true, true, true, true, true, true, true}, {true, true, true, false, false, false, false, false, false, false, true}, {true, false, true, true, true, true, true, true, true, false, true}, {true, false, true, false, false, false, false, false, true, false, true}, {true, true, true, true, true, true, true, true, true, true, true}, {true, false, true, false, true, false, false, true, false, true, true}, {true, false, true, false, true, false, true, true, false, true, true}, {true, false, true, true, true, true, false, true, false, false, true}, {true, false, false, false, true, false, false, true, false, true, true}, {true, true, true, true, true, true, false, true, false, true, true}, {true, true, false, false, false, true, true, true, false, true, true}};
     static String errorInfo;
+    static int prevHighScore;
+    final ArrayList<String> messages = new ArrayList<>();
     private final Ghost blinky = new Ghost();
     private final Ghost inky = new Ghost();
     private final Ghost pinky = new Ghost();
     private final Pacman pacman = new Pacman();
     private final Cell[][] cells = {new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13], new Cell[13]};
     private final Pellet[] pellet = new Pellet[78];
-    private final ArrayList<String> messages = new ArrayList<>();
     private final PImage[] blinky_Up = {null, null};
     private final PImage[] blinky_Down = {null, null};
     private final PImage[] blinky_Left = {null, null};
@@ -68,7 +68,6 @@ public final class pac_man extends PApplet {
     private int startFrames;
     private int coordsX;
     private int coordsY;
-    private int prevHighScore;
     private PImage cherry;
     private PImage strawberry;
     private PImage apple;
@@ -168,38 +167,19 @@ public final class pac_man extends PApplet {
         pinky_Right[1] = loadImage("ghost/pinky/right2.png");
         maze_blue = loadImage("maze_blue.png");
         maze_white = loadImage("maze_white.png");
-        System.out.println("Loading User Data...");
-        Settings.updatePath();
-        String temp = loadString(Settings.path + "/highscore.txt");
-        if (temp.equals("error")) {
-            try {
-                PrintWriter file = new PrintWriter(Settings.path + "/highscore.txt");
-                file.println(0);
-                file.close();
-                prevHighScore = 0;
-            } catch (FileNotFoundException e) {
-                messages.add("An Error  occurred while creating high score file");
-                System.err.println("An error occurred while creating the high score file.");
-                Error.log(e);
-                prevHighScore = 0;
-                StringWriter sw = new StringWriter();
-                PrintWriter pw = new PrintWriter(sw);
-                e.printStackTrace(pw);
-                errorInfo += sw.toString();
-            }
-        } else {
-            prevHighScore = java.lang.Integer.parseInt(temp);
-        }
+
+        new LoadingThread(this);
+
         System.out.println("Initializing...");
         createMaze();
         pellet[5].isFruit = true;
         surface.setTitle(TITLE);
-        new UpdateChecker();
+
         System.out.println("Loading Complete!");
     }
 
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN PROGRAM ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    @SuppressWarnings("StatementWithEmptyBody")
     public void draw() {
         if (!paused) {
             try {
@@ -212,7 +192,6 @@ public final class pac_man extends PApplet {
                     durationStart = millis();
                     startMillis = millis();
                     System.out.println(millis());
-                    System.gc();
                     runSetup = false;
                     textFont(pxFont);
                     startFrames = frameCount;
@@ -344,7 +323,7 @@ public final class pac_man extends PApplet {
         pacman.show(chomp);
     }
 
-    private String loadString(String filename) {
+    String loadString(String filename) {
         String[] ret;
         String data;
         try {
@@ -445,9 +424,9 @@ public final class pac_man extends PApplet {
 
     private int createPosition(boolean dirIsX) {
         if (dirIsX) {
-            return (Math.round(random(CELLWIDTH * 3, CANVAS_HEIGHT - CELLWIDTH) / CELLWIDTH) * CELLWIDTH + HALF_CELLWIDTH);
+            return ((int) (random(3, 12)) * CELLWIDTH) + HALF_CELLWIDTH;
         } else {
-            return (Math.round(random(CELLWIDTH, CANVAS_HEIGHT - CELLWIDTH) / CELLWIDTH) * CELLWIDTH + HALF_CELLWIDTH);
+            return ((int) (random(1, 12)) * CELLWIDTH) + HALF_CELLWIDTH;
         }
     }
 
@@ -610,7 +589,7 @@ public final class pac_man extends PApplet {
     }
 
     private void determineFruitType() {
-        if (level == 2) {
+        if (level == 1) {
             new LazySpriteLoader();
         }
         if (level < FRUIT_POINTS.length) {
@@ -690,6 +669,7 @@ public final class pac_man extends PApplet {
         private Ghost() {
             x = createPosition(true);
             y = createPosition(false);
+            //println("Ghost position: " + x + ", " + y);
             dir = Dir.UP;
         }
 
@@ -760,10 +740,12 @@ public final class pac_man extends PApplet {
         private void newGame() {
             x = createPosition(true);
             y = createPosition(false);
+            //println("Ghost position: " + x + ", " + y);
             updateCoords();
             while (!cells[coordsX][coordsY].open || (x > CANVAS_WIDTH - CELLWIDTH || x < CELLWIDTH || y > CANVAS_HEIGHT - CELLWIDTH || y < CELLWIDTH)) {
                 x = createPosition(true);
                 y = createPosition(false);
+                //println("Ghost position: " + x + ", " + y);
                 messages.add("Adjustment in Progress...");
                 updateCoords();
             }

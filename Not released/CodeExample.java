@@ -213,33 +213,14 @@ public final class CodeExample extends PApplet {
         pinky_Right[1] = loadImage("ghost/pinky/right2.png");
         maze_blue = loadImage("maze_blue.png");
         maze_white = loadImage("maze_white.png");
-        System.out.println("Loading User Data...");
-        Settings.updatePath();
-        String temp = loadString(Settings.path + "/highscore.txt");
-        if (temp.equals("error")) {
-            try {
-                PrintWriter file = new PrintWriter(Settings.path + "/highscore.txt");
-                file.println(0);
-                file.close();
-                prevHighScore = 0;
-            } catch (FileNotFoundException e) {
-                messages.add("An Erroroccurred while creating high score file");
-                System.err.println("An error occurred while creating the high score file.");
-                Error.log(e);
-                prevHighScore = 0;
-                StringWriter sw = new StringWriter();
-                PrintWriter pw = new PrintWriter(sw);
-                e.printStackTrace(pw);
-                errorInfo += sw.toString();
-            }
-        } else {
-            prevHighScore = java.lang.Integer.parseInt(temp);
-        }
+
+        new LoadingThread(this);
+
         System.out.println("Initializing...");
         createMaze();
         pellet[5].isFruit = true;
         surface.setTitle(TITLE);
-        new UpdateChecker();
+
         System.out.println("Loading Complete!");
     }
 

@@ -11,16 +11,16 @@ final class Settings {
     //          G A M E  S E T T I N G S          |
     final static int ghostSpeed = 2; //           |
     final static int pacmanSpeed = 3; //          |
+    final static float myVersion = 13.1f; //              |
     static boolean startsAsCircle = true; //      |
     static boolean showGhostWhenStopped = true;// |
-    static boolean debug = false; //              |
+    private static boolean debug = false; //              |
     static String path; //                        |
     static boolean playPauseBeat = true; //       |
     static boolean useClassicHitbox = false; //   |
     static boolean useOpenGL = true; //          |
     static boolean updateOnStart = true; //       |
-    final static float myVersion = 13f; //              |
-    static float newVersion = 13f; //             |
+    static float newVersion = 13.1f; //             |
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 
