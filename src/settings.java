@@ -11,31 +11,28 @@ final class Settings {
     //          G A M E  S E T T I N G S          |
     final static int ghostSpeed = 2; //           |
     final static int pacmanSpeed = 3; //          |
-    final static float myVersion = 13.1f; //              |
+    final static float myVersion = 13.2f; //      |
     static boolean startsAsCircle = true; //      |
     static boolean showGhostWhenStopped = true;// |
-    private static boolean debug = false; //              |
     static String path; //                        |
     static boolean playPauseBeat = true; //       |
     static boolean useClassicHitbox = false; //   |
-    static boolean useOpenGL = true; //          |
     static boolean updateOnStart = true; //       |
-    static float newVersion = 13.1f; //             |
+    static float newVersion = 13.2f; //           |
+    private static boolean debug = false; //      |
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 
     static void load() {
         path = System.getProperty("user.home");
         try {
-            DataInputStream din = new DataInputStream(new BufferedInputStream(new FileInputStream(path + "/dat")));
+            DataInputStream din = new DataInputStream(new BufferedInputStream(new FileInputStream(path + "/settings.dat")));
             debug = din.readBoolean();
             playPauseBeat = din.readBoolean();
             showGhostWhenStopped = din.readBoolean();
             startsAsCircle = din.readBoolean();
             useClassicHitbox = din.readBoolean();
             updateOnStart = din.readBoolean();
-            useOpenGL = din.readBoolean();
-            //System.out.println(debug + ", " + playPauseBeat + ", " + showGhostWhenStopped + ", " + startsAsCircle/* + ", " + useClassicHitbox/*+", "+*/);
         } catch (IOException e) {
             System.err.println("An Error occurred while loading.");
             save();
@@ -44,14 +41,13 @@ final class Settings {
 
     static void save() {
         try {
-            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path + "/dat")));
+            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path + "/settings.dat")));
             dos.writeBoolean(debug);
             dos.writeBoolean(playPauseBeat);
             dos.writeBoolean(showGhostWhenStopped);
             dos.writeBoolean(startsAsCircle);
             dos.writeBoolean(useClassicHitbox);
             dos.writeBoolean(updateOnStart);
-            dos.writeBoolean(useOpenGL);
             dos.close();
         } catch (IOException ee) {
             System.err.println("An Error occurred while saving settings.");

@@ -169,7 +169,7 @@ public final class pac_man extends PApplet {
         maze_white = loadImage("maze_white.png");
 
 
-        System.out.println("Initializing...");
+        System.out.println("Initialising...");
         createMaze();
         pellet[5].isFruit = true;
         surface.setResizable(true);

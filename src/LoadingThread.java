@@ -6,12 +6,12 @@ final class LoadingThread extends Thread {
     private final pac_man app;
 
     LoadingThread(pac_man app1) {
+        //System.out.println("Running thread...");
         app = app1;
         this.start();
     }
 
     public void run() {
-        //System.out.println("Running thread...");
         Settings.updatePath();
 
         System.out.println("Loading High Score...");
