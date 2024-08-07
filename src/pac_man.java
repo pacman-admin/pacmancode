@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author Langdon S.
  */
 public final class pac_man extends PApplet {
-    private final static String TITLE = "Pac-Man 13.1";
+    private final static String TITLE = "Pac-Man 13.2";
     private final static int CELLWIDTH = 32;
     private final static int HALF_CELLWIDTH = 16;
     private final static int pelletWorth = 10;
@@ -89,12 +89,11 @@ public final class pac_man extends PApplet {
     private PImage pauseButtonImg;
 
     public static void main(String[] passedArgs) {
-        String[] appletArgs = new String[]{"pac_man"};
-        if (passedArgs != null) {
-            PApplet.main(concat(appletArgs, passedArgs));
-        } else {
-            PApplet.main(appletArgs);
-        }
+        /*if (passedArgs != null) {
+            PApplet.main(concat(new String[]{"pac_man"}, passedArgs));
+        } else {*/
+        PApplet.main(new String[]{"pac_man"});
+        /*}*/
     }
 
     private static boolean hitBoxCollision(int cellX, int cellY, float objectX, float objectY) {
@@ -123,9 +122,10 @@ public final class pac_man extends PApplet {
     }
 
     private void setup2() {
-        surface.setResizable(true);
-        imageMode(CENTER);
         changeAppIcon();
+        new LoadingThread(this);
+
+
         System.out.println("Loading Game Assets...");
         startSound = new Sound("game_start.wav");
         dotSound1 = new Sound("dot_1.wav");
@@ -168,13 +168,15 @@ public final class pac_man extends PApplet {
         maze_blue = loadImage("maze_blue.png");
         maze_white = loadImage("maze_white.png");
 
-        new LoadingThread(this);
 
         System.out.println("Initializing...");
         createMaze();
         pellet[5].isFruit = true;
-        surface.setTitle(TITLE);
+        surface.setResizable(true);
+        imageMode(CENTER);
 
+
+        surface.setTitle(TITLE);
         System.out.println("Loading Complete!");
     }
 

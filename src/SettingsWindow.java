@@ -40,11 +40,7 @@ final class SettingsWindow extends Window implements ItemListener {
     private final JCheckBox playPauseBeatBox;
     private final JCheckBox selectClassicHitbox;
     private final JCheckBox startsWMouthBox;
-    /*private final JCheckBox chooseDebug;*/
     private final JCheckBox chooseCheckUpdate;
-    /*Show Ghosts When Stopped*/
-    /*private final JCheckBox selectSGWS;*/
-    private final JCheckBox chooseOpenGL;
 
     private SettingsWindow() {
         JButton launchAbout = createButton("About Pac-Man", KeyEvent.VK_A, true, this, "launchAbout");
@@ -56,10 +52,7 @@ final class SettingsWindow extends Window implements ItemListener {
         playPauseBeatBox = createCheckbox("Play Pause Beat", KeyEvent.VK_P, Settings.playPauseBeat, this);
         selectClassicHitbox = createCheckbox("Use Old Hitbox\n(Glitchy)", KeyEvent.VK_H, Settings.useClassicHitbox, this);
         startsWMouthBox = createCheckbox("Pac-Man starts as circle", KeyEvent.VK_M, Settings.startsAsCircle, this);
-        /*selectSGWS = createCheckbox("Show Ghosts When Stopped", KeyEvent.VK_G, Settings.showGhostWhenStopped, this);*/
-        /*chooseDebug = createCheckbox("Debug Mode", KeyEvent.VK_B, Settings.debug, this);*/
         chooseCheckUpdate = createCheckbox("Check for Updates Automatically", KeyEvent.VK_U, Settings.updateOnStart, this);
-        chooseOpenGL = createCheckbox("Use Hardware Acceleration(Beta)", KeyEvent.VK_A, Settings.useOpenGL, this);
         /*Put the checkboxes in a column in a panel*/
         JPanel checkPanel = new JPanel(new GridLayout(0, 1));
         checkPanel.add(name);
@@ -70,7 +63,6 @@ final class SettingsWindow extends Window implements ItemListener {
         checkPanel.add(selectClassicHitbox);
         /*checkPanel.add(chooseDebug);*/
         checkPanel.add(chooseCheckUpdate);
-        checkPanel.add(chooseOpenGL);
         checkPanel.add(launchAbout);
         checkPanel.add(checkUpdate);
         checkPanel.add(donate);
@@ -80,9 +72,6 @@ final class SettingsWindow extends Window implements ItemListener {
     }
 
     private static void createAndShowGUI() {
-        if (Settings.useOpenGL) {
-            System.setProperty("sun.java2d.opengl", "True");
-        }
         /*Create and set up the Window.*/
         JFrame frame = new JFrame("Settings");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -97,9 +86,6 @@ final class SettingsWindow extends Window implements ItemListener {
     }
 
     private static void createAndShowPopout() {
-        if (Settings.useOpenGL) {
-            System.setProperty("sun.java2d.opengl", "True");
-        }
         /*Create and set up the Window.*/
         JFrame frame = new JFrame("Settings");
         /*frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
@@ -122,19 +108,12 @@ final class SettingsWindow extends Window implements ItemListener {
     }
 
     public static void main(String[] args) {
-        if (Settings.useOpenGL) {
-            System.setProperty("sun.java2d.opengl", "True");
-        }
         /*Schedule a job for the event-dispatching thread:*/
         /*creating and showing this application's GUI.*/
         javax.swing.SwingUtilities.invokeLater(SettingsWindow::createAndShowGUI);
     }
 
     public static void create() {
-        if (Settings.useOpenGL) {
-            System.setProperty("sun.java2d.opengl", "True");
-        }
-
         /*Schedule a job for the event-dispatching thread:*/
         /*creating and showing this application's GUI.*/
         javax.swing.SwingUtilities.invokeLater(SettingsWindow::createAndShowPopout);
@@ -156,8 +135,6 @@ final class SettingsWindow extends Window implements ItemListener {
             Settings.startsAsCircle = newVal;
         } else if (source == chooseCheckUpdate) {
             Settings.updateOnStart = newVal;
-        } else if (source == chooseOpenGL) {
-            Settings.useOpenGL = newVal;
         }
         Settings.save();
     }

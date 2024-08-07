@@ -11,9 +11,10 @@ final class LoadingThread extends Thread {
     }
 
     public void run() {
-        System.out.println("Running thread...");
-        System.out.println("Loading User Data...");
+        //System.out.println("Running thread...");
         Settings.updatePath();
+
+        System.out.println("Loading High Score...");
         String temp = app.loadString(Settings.path + "/highscore.txt");
         if (temp.equals("error")) {
             try {
@@ -34,18 +35,17 @@ final class LoadingThread extends Thread {
         } else {
             pac_man.prevHighScore = java.lang.Integer.parseInt(temp);
         }
+
+        System.out.println("Loading User Settings...");
         Settings.load();
-        if (Settings.useOpenGL) {
-            System.setProperty("sun.java2d.opengl", "True");
-        }
-        System.out.println("Checking for updates...");
-        Settings.getNewVersion();
+
         if (Settings.updateOnStart) {
+            System.out.println("Checking for updates...");
+            Settings.getNewVersion();
             if (Settings.newVersion > Settings.myVersion) {
                 UpdatePrompt.create();
             }
         }
-        System.out.println("Thread done!");
-        System.gc();
+        //System.out.println("Thread done!");
     }
 }

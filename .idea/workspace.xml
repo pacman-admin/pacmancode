@@ -11,6 +11,21 @@
   <component name="ChangeListManager">
     <list default="true" id="d0f76c9c-c62b-4bdd-8b11-4708cba682da" name="Changes" comment="Made performance improvements">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/SettingsWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/SettingsWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/Sound.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/Sound.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/aboutWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/aboutWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/error.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/error.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/errorWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/errorWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Ghost.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Ghost.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pacman.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pacman.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pellet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man$Pellet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/pac_man.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/pac_man.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/settings.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/settings.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Pac-Man/window.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Pac-Man/window.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LoadingThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LoadingThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Settings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SettingsWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SettingsWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pac_man.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pac_man.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,14 +107,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1693604523434</updated>
-    </task>
-    <task id="LOCAL-00046" summary="Add files">
-      <option name="closed" value="true" />
-      <created>1703109667358</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1703109667358</updated>
     </task>
     <task id="LOCAL-00047" summary="Add files">
       <option name="closed" value="true" />
@@ -485,7 +492,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717096881414</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="Made performance improvements">
+      <option name="closed" value="true" />
+      <created>1720809542050</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1720809542051</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
